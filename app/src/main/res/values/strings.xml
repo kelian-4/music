@@ -1332,4 +1332,6 @@
     <string name="diwali_title">BitChord wishes you a Happy Diwali</string>
     <string name="diwali_subtitle">May this festival of lights fill your home with joy and your days with music.</string>
     <string name="diwali_cta">Let\'s Celebrate</string>
+    <string name="data_saver">Data saver</string>
+    <string name="data_saver_subtitle">Lowers mobile-data quality, keeps downloads on Wi-Fi, and pauses animated covers, music videos and read-ahead on mobile data. Your previous settings come back when you turn it off.</string>
 </resources>

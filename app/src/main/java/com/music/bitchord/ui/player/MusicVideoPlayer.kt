@@ -146,7 +146,7 @@ object MusicVideoEngine {
             }
         }
         scope.launch {
-            AppSettings.preferMusicOnly.drop(1).collect { refresh() }
+            AppSettings.preferMusicOnlyNow.drop(1).collect { refresh() }
         }
     }
 

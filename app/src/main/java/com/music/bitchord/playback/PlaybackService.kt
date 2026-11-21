@@ -7234,7 +7234,7 @@ class PlaybackService : MediaLibraryService() {
         scope.launch {
             // The queue as it stands is re-judged at once, rather than at the
             // next track, and read-ahead may have been warming a video.
-            AppSettings.preferMusicOnly.drop(1).collect {
+            AppSettings.preferMusicOnlyNow.drop(1).collect {
                 MusicOnlyPlayback.reset()
                 cancelPrefetch()
                 player?.let { live ->

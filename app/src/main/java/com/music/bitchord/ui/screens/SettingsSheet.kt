@@ -228,6 +228,7 @@ fun SettingsScreen(
 
     val wifiQuality by AppSettings.audioQualityWifi.collectAsStateWithLifecycle()
     val cellularQuality by AppSettings.audioQualityCellular.collectAsStateWithLifecycle()
+    val dataSaver by AppSettings.dataSaver.collectAsStateWithLifecycle()
     val metered by AppSettings.meteredConnection.collectAsStateWithLifecycle()
     val crossfade by AppSettings.crossfadeSeconds.collectAsStateWithLifecycle()
     val smartFade by AppSettings.smartFadeEnabled.collectAsStateWithLifecycle()
@@ -506,6 +507,21 @@ fun SettingsScreen(
             // longer a setting at all — see
             // [SourceResolver.requestForNow][com.music.bitchord.data.sources.SourceResolver.requestForNow].
             SearchableSettingsGroup(search, header = stringResource(R.string.audio_quality)) {
+                val dataSaverTitle = stringResource(R.string.data_saver)
+                row(dataSaverTitle, "data", "cellular", "mobile", "save", "economy", "données") {
+                    SettingsRow(
+                        icon = SfIcons.SignalCellularAlt,
+                        title = dataSaverTitle,
+                        subtitle = stringResource(R.string.data_saver_subtitle),
+                        trailing = {
+                            IosSwitch(
+                                checked = dataSaver,
+                                onCheckedChange = AppSettings::setDataSaver,
+                            )
+                        },
+                        onClick = { AppSettings.setDataSaver(!dataSaver) },
+                    )
+                }
                 val sourceTitle = stringResource(R.string.source)
                 val sourceSubtitle = stringResource(R.string.sources_subtitle)
                 row(sourceTitle, sourceSubtitle, "addon", "lossless") {

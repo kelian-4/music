@@ -11,6 +11,7 @@ import com.music.bitchord.data.TrackLog
 import com.music.bitchord.data.listentogether.ListenTogether
 import com.music.bitchord.data.model.Song
 import com.music.bitchord.data.settings.AppSettings
+import com.music.bitchord.data.settings.DataSaverPolicy
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
@@ -55,7 +56,11 @@ object MusicOnlyPlayback {
 
     /** Never in a party, where everyone hears the one cut — see [ListenTogether]. */
     fun isActive(): Boolean =
-        AppSettings.preferMusicOnly.value && !ListenTogether.state.value.inParty
+        DataSaverPolicy.musicOnlyNow(
+            AppSettings.preferMusicOnly.value,
+            AppSettings.dataSaver.value,
+            AppSettings.meteredConnection.value,
+        ) && !ListenTogether.state.value.inParty
 
     /** Whether [videoId], a music video, shows its picture rather than its artwork. */
     fun showsPicture(videoId: String): Boolean = !isActive() || videoId in kept.value
@@ -94,7 +99,7 @@ object MusicOnlyPlayback {
     private suspend fun awaitAnswer(videoId: String) {
         withTimeoutOrNull(HOLD_LIMIT_MS) {
             combine(
-                AppSettings.preferMusicOnly,
+                AppSettings.preferMusicOnlyNow,
                 ListenTogether.state,
                 kept,
                 settled,

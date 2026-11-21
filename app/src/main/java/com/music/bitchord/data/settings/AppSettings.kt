@@ -15,7 +15,10 @@ import com.music.bitchord.data.lyrics.LyricsSource
 import com.music.bitchord.data.sources.SourceKind
 import com.music.bitchord.playback.EqLayout
 import com.music.bitchord.playback.EqualizerPreset
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 
 /**
@@ -254,6 +257,8 @@ object AppSettings {
     /** Whether the active network charges for data. `null` while offline. */
     val meteredConnection = MutableStateFlow<Boolean?>(null)
 
+    val dataSaver = MutableStateFlow(false)
+
     // `losslessAudio` used to live here, behind a "Prefer lossless" switch on
     // the Sources screen. It is gone: sources are asked for their best and each
     // degrades on its own terms, so the switch's only real effect was to ask a
@@ -468,6 +473,10 @@ object AppSettings {
 
     /** Music videos play as their audio version — see [com.music.bitchord.playback.MusicOnlyPlayback]. */
     val preferMusicOnly = MutableStateFlow(false)
+
+    val preferMusicOnlyNow: Flow<Boolean> = combine(preferMusicOnly, dataSaver, meteredConnection) { prefer, saver, metered ->
+        DataSaverPolicy.musicOnlyNow(prefer, saver, metered)
+    }.distinctUntilChanged()
 
     /** Home's Recents shelf. */
     val hideRecents = MutableStateFlow(false)
@@ -970,6 +979,7 @@ object AppSettings {
         migrateDownloadQuality()
         downloadQuality.value = readDownloadQuality()
         wifiOnlyDownloads.value = prefs.getBoolean(KEY_WIFI_ONLY_DOWNLOADS, true)
+        dataSaver.value = prefs.getBoolean(KEY_DATA_SAVER, false)
         exportDownloads.value = prefs.getBoolean(KEY_EXPORT_DOWNLOADS, false)
         syncDownloadedPlaylists.value = prefs.getBoolean(KEY_SYNC_DOWNLOADED_PLAYLISTS, false)
         crossfadeSeconds.value = prefs.getInt(KEY_CROSSFADE, 0)
@@ -1285,6 +1295,31 @@ object AppSettings {
     fun setWifiOnlyDownloads(value: Boolean) {
         wifiOnlyDownloads.value = value
         prefs.edit().putBoolean(KEY_WIFI_ONLY_DOWNLOADS, value).apply()
+    }
+
+    fun setDataSaver(on: Boolean) {
+        if (on == dataSaver.value) return
+        if (on) {
+            val before = DataSaverValues(
+                cellularQuality = audioQualityCellular.value,
+                wifiOnlyDownloads = wifiOnlyDownloads.value,
+                canvasOverCellular = canvasOverCellular.value,
+            )
+            prefs.edit().putString(KEY_DATA_SAVER_SNAPSHOT, DataSaverPolicy.encode(before)).apply()
+            val saving = DataSaverPolicy.applied(before)
+            setAudioQualityCellular(saving.cellularQuality)
+            setWifiOnlyDownloads(saving.wifiOnlyDownloads)
+            setCanvasOverCellular(saving.canvasOverCellular)
+        } else {
+            DataSaverPolicy.decode(prefs.getString(KEY_DATA_SAVER_SNAPSHOT, null))?.let { before ->
+                setAudioQualityCellular(before.cellularQuality)
+                setWifiOnlyDownloads(before.wifiOnlyDownloads)
+                setCanvasOverCellular(before.canvasOverCellular)
+            }
+            prefs.edit().remove(KEY_DATA_SAVER_SNAPSHOT).apply()
+        }
+        dataSaver.value = on
+        prefs.edit().putBoolean(KEY_DATA_SAVER, on).apply()
     }
 
     fun setCrossfadeSeconds(value: Int) {
@@ -2253,6 +2288,8 @@ object AppSettings {
     private const val KEY_UPGRADE_LENGTH_SLACK_SECONDS = "upgrade_length_slack_seconds"
     private const val KEY_QUALITY_DOWNLOAD = "audio_quality_download"
     private const val KEY_WIFI_ONLY_DOWNLOADS = "wifi_only_downloads"
+    private const val KEY_DATA_SAVER = "data_saver"
+    private const val KEY_DATA_SAVER_SNAPSHOT = "data_saver_snapshot"
     private const val KEY_EXPORT_DOWNLOADS = "export_downloads"
     private const val KEY_SYNC_DOWNLOADED_PLAYLISTS = "sync_downloaded_playlists"
     private const val KEY_CROSSFADE = "crossfade_seconds"

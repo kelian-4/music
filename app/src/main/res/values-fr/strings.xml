@@ -1458,4 +1458,6 @@
     <string name="bit_perfect_status_inexact">%1$s · inexact : cette source n\'est pas du PCM sans perte</string>
     <string name="bit_perfect_status_waiting">En attente d\'un morceau sans perte sur une sortie compatible</string>
     <string name="bit_perfect_status_unavailable">Indisponible pour ce morceau (%1$s)</string>
+    <string name="data_saver">Économie de données</string>
+    <string name="data_saver_subtitle">Réduit la qualité sur données mobiles, garde les téléchargements en Wi-Fi et coupe les pochettes animées, les clips vidéo et le préchargement sur données mobiles. Vos réglages précédents reviennent quand vous la désactivez.</string>
 </resources>

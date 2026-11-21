@@ -25,6 +25,7 @@ import java.io.IOException
 import com.music.bitchord.data.innertube.StreamResolver
 import com.music.bitchord.data.model.Song
 import com.music.bitchord.data.settings.AppSettings
+import com.music.bitchord.data.settings.DataSaverPolicy
 import com.music.bitchord.data.sources.DeviceCodecs
 import com.music.bitchord.data.sources.SourceKind
 import com.music.bitchord.data.sources.SourceRegistry
@@ -91,7 +92,12 @@ object AudioCache {
      * streams, without spending the listener's data on a track they may well
      * skip past.
      */
-    private const val PRELOAD_BYTES = 1L * 1024 * 1024
+    private const val PRELOAD_BYTES = DataSaverPolicy.PRELOAD_BYTES_NORMAL
+
+    private fun preloadBytes(): Long = DataSaverPolicy.preloadBytes(
+        AppSettings.dataSaver.value,
+        AppSettings.meteredConnection.value,
+    )
 
     /**
      * Size of each range the whole-track fetch asks for.
@@ -1454,8 +1460,12 @@ object AudioCache {
                 if (cacheBytes) {
                     launch(TrackLog.about(next)) {
                         delay(PREFETCH_DELAY_MS)
-                        fetch(next, 0, PRELOAD_BYTES)
-                        fetchWhole(next)
+                        fetch(next, 0, preloadBytes())
+                        if (DataSaverPolicy.prefetchesWholeTrack(
+                                AppSettings.dataSaver.value,
+                                AppSettings.meteredConnection.value,
+                            )
+                        ) fetchWhole(next)
                     }
                 }
                 launch {
@@ -1530,7 +1540,7 @@ object AudioCache {
                     if (addon == null) DirectSourceGate.startedOnYouTube(id, upcoming.target)
                 }
             }
-            fetch(id, 0, PRELOAD_BYTES)
+            fetch(id, 0, preloadBytes())
         }
     }
 
