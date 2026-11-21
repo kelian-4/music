@@ -1,0 +1,53 @@
+name: Build Android (dev debug)
+
+on:
+  push:
+    branches: ['feat/**', 'ci/**']
+  workflow_dispatch:
+
+concurrency:
+  group: build-android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # Empty keys are fine: the optional integrations (Last.fm, Listen Together)
+      # simply stay off in a fork build without secrets.
+      - name: Write local.properties
+        run: |
+          echo "LASTFM_API_KEY=${{ secrets.LASTFM_API_KEY }}" > local.properties
+          echo "LASTFM_SECRET=${{ secrets.LASTFM_SECRET }}" >> local.properties
+          echo "LISTEN_TOGETHER_SERVER=${{ secrets.LISTEN_TOGETHER_SERVER }}" >> local.properties
+
+      - run: chmod +x gradlew
+
+      - name: Unit tests
+        run: ./gradlew testDevDebugUnitTest --stacktrace
+
+      - name: Build dev debug APK
+        run: ./gradlew assembleDevDebug --stacktrace
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-dev-debug-apk
+          path: app/build/outputs/apk/dev/debug/*.apk
+
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-test-reports
+          path: |
+            **/build/reports/tests/
+            **/build/reports/*.html
