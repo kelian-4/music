@@ -227,10 +227,22 @@ object DownloadStore {
         /** The bytes being built, whether this is a MediaStore row or a legacy `.part` file. */
         val tagUri: Uri get() = part?.let(Uri::fromFile) ?: uri
 
-        fun openStream(): OutputStream =
-            part?.outputStream()
-                ?: context.contentResolver.openOutputStream(uri)
-                ?: error("Could not open $name for writing")
+        fun openStream(append: Boolean = false): OutputStream =
+            if (append) {
+                part?.let { java.io.FileOutputStream(it, true) }
+                    ?: context.contentResolver.openOutputStream(uri, "wa")
+                    ?: error("Could not open $name for writing")
+            } else {
+                part?.outputStream()
+                    ?: context.contentResolver.openOutputStream(uri)
+                    ?: error("Could not open $name for writing")
+            }
+
+        fun length(): Long = part?.length()
+            ?: runCatching {
+                context.contentResolver.openFileDescriptor(uri, "r")?.use { it.statSize }
+            }.getOrNull()
+            ?: 0L
 
         /** @return the uri the finished file can be reached at. */
         fun commit(): Uri {
@@ -307,6 +319,53 @@ object DownloadStore {
         part.delete()
         return Pending(context, Uri.fromFile(target), name, part = part, target = target)
     }
+
+    fun reopen(context: Context, name: String): Pending? {
+        if (!AppSettings.exportDownloads.value) {
+            val target = privateFile(context, name)
+            val folder = target.parentFile ?: return null
+            val part = File(folder, ".$name.part")
+            return if (part.exists()) Pending(context, Uri.fromFile(target), name, part = part, target = target) else null
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val uri = pendingEntry(context, name) ?: return null
+            return Pending(context, uri, name, part = null, target = null)
+        }
+        val target = legacyFile(name)
+        val folder = target.parentFile ?: return null
+        val part = File(folder, "$name.part")
+        return if (part.exists()) Pending(context, Uri.fromFile(target), name, part = part, target = target) else null
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    @Suppress("DEPRECATION")
+    private fun pendingEntry(context: Context, name: String): Uri? = runCatching {
+        val base = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        val selection = "${MediaStore.MediaColumns.DISPLAY_NAME} = ? AND " +
+            "${MediaStore.MediaColumns.RELATIVE_PATH} LIKE ? AND " +
+            "${MediaStore.MediaColumns.IS_PENDING} = 1"
+        val selectionArgs = arrayOf(name, "%$FOLDER%")
+        val cursor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val args = android.os.Bundle().apply {
+                putString(android.content.ContentResolver.QUERY_ARG_SQL_SELECTION, selection)
+                putStringArray(android.content.ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, selectionArgs)
+                putInt(MediaStore.QUERY_ARG_MATCH_PENDING, MediaStore.MATCH_INCLUDE)
+            }
+            context.contentResolver.query(base, arrayOf(MediaStore.MediaColumns._ID), args, null)
+        } else {
+            context.contentResolver.query(
+                MediaStore.setIncludePending(base),
+                arrayOf(MediaStore.MediaColumns._ID),
+                selection,
+                selectionArgs,
+                null,
+            )
+        }
+        cursor?.use {
+            if (!it.moveToFirst()) return@use null
+            base.buildUpon().appendPath(it.getLong(0).toString()).build()
+        }
+    }.onFailure { Log.w(TAG, "pending lookup failed for $name: ${it.message}") }.getOrNull()
 
     @Suppress("DEPRECATION")
     private fun legacyFile(name: String) = File(
