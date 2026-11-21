@@ -17,7 +17,13 @@ import com.music.bitchord.data.sources.SourceStream
 import com.music.bitchord.data.sources.StreamFormat
 import com.music.bitchord.data.sources.TrackMatcher
 import com.music.bitchord.playback.AudioCache
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -158,7 +164,71 @@ object Downloads {
         _collections.value = runCatching {
             json.decodeFromString(collectionSerializer, prefs.getString(KEY_SAVED_COLLECTIONS, null) ?: "{}")
         }.getOrDefault(emptyMap())
+
+        DownloadQueueStore.init(context)
+        NetworkResume.register(context)
+        val app = context.applicationContext
+        if (DownloadQueueStore.all().isNotEmpty()) DownloadResumeWork.schedule(app)
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onStart(owner: LifecycleOwner) {
+                resumeWaiting(app)
+            }
+        })
     }
+
+
+    private val cancelledByUser = java.util.concurrent.ConcurrentHashMap.newKeySet<String>()
+
+    private val retryTimers = java.util.concurrent.ConcurrentHashMap<String, Job>()
+
+    private val retryScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+    fun resumeWaiting(context: Context) {
+        retryTimers.values.forEach { it.cancel() }
+        retryTimers.clear()
+        for (entry in DownloadQueueStore.all()) {
+            enqueue(context, entry.toSong(), entry.from, fromRestore = true)
+        }
+    }
+
+    internal fun resumeWaitingSoon(context: Context) {
+        val app = context.applicationContext
+        retryScope.launch {
+            delay(RESUME_SETTLE_MS)
+            resumeWaiting(app)
+        }
+    }
+
+    private fun scheduleRetry(context: Context, song: Song, error: Exception): Boolean {
+        val id = song.videoId
+        if (!DownloadQueueStore.contains(id)) return false
+        if (!DownloadResumePolicy.isTransient(error)) {
+            DownloadQueueStore.remove(id)
+            return false
+        }
+        _active.update { it + (id to DownloadState.Queued) }
+        DownloadSession.queued(song)
+        val app = context.applicationContext
+        if (!NetworkResume.isOnline(app)) {
+            DownloadResumeWork.schedule(app)
+            return true
+        }
+
+        val failures = DownloadQueueStore.recordFailure(id)
+        if (!DownloadResumePolicy.shouldRetry(failures)) {
+            DownloadQueueStore.remove(id)
+            return false
+        }
+        retryTimers.remove(id)?.cancel()
+        retryTimers[id] = retryScope.launch {
+            delay(DownloadResumePolicy.backoffMs(failures))
+            retryTimers.remove(id)
+            enqueue(app, song, DownloadQueueStore.get(id)?.from, fromRestore = true)
+        }
+        return true
+    }
+
+    private const val RESUME_SETTLE_MS = 1_500L
 
     // ---- Asking -------------------------------------------------------------
 
@@ -180,11 +250,16 @@ object Downloads {
      *   one of many. Carried no further than [DownloadSession], which is the
      *   only thing that has to say *why* forty tracks are in the queue.
      */
-    fun enqueue(context: Context, song: Song, from: String? = null) {
+    fun enqueue(context: Context, song: Song, from: String? = null, fromRestore: Boolean = false) {
         val id = song.videoId
+        cancelledByUser.remove(id)
         // A copy straight out of the song cache spends no data, so the Wi-Fi
         // rule has nothing to say about it.
         if (!AppSettings.downloadsAllowedNow && !servableFromCache(id)) {
+            if (fromRestore) {
+                _active.update { it + (id to DownloadState.Queued) }
+                return
+            }
             // Distinct from the duplicate-tap no-op below: nothing is in flight
             // here to leave alone, and a refusal nobody is told about reads as a
             // dead button. A download already queued or running started on a
@@ -200,6 +275,7 @@ object Downloads {
             if (id in pending || id in running) return
             pending[id] = song
         }
+        DownloadQueueStore.add(song, from)
         _active.update { it + (id to DownloadState.Queued) }
         DownloadSession.queued(song, from)
 
@@ -212,7 +288,13 @@ object Downloads {
             // looking accepted forever.
             Log.w(TAG, "could not start the download service: ${it.message}")
             synchronized(lock) { pending.remove(id) }
-            fail(id, "Downloads can't start right now")
+            if (fromRestore) {
+                clear(id)
+                DownloadResumeWork.schedule(app)
+            } else {
+                DownloadQueueStore.remove(id)
+                fail(id, "Downloads can't start right now")
+            }
         }
     }
 
@@ -252,6 +334,9 @@ object Downloads {
      * told to run is no longer wanted, and stops it on arrival.
      */
     fun cancel(videoId: String) {
+        cancelledByUser.add(videoId)
+        retryTimers.remove(videoId)?.cancel()
+        DownloadQueueStore.remove(videoId)
         val job = synchronized(lock) {
             pending.remove(videoId)
             if (videoId !in running) return@synchronized null
@@ -962,12 +1047,13 @@ object Downloads {
             // the notification and with the Downloads page afterwards.
             DownloadSession.retitle(id, plan.track)
             transfer(context, song, plan)
+            DownloadQueueStore.remove(id)
         } catch (e: CancellationException) {
             clear(id)
             throw e
         } catch (e: Exception) {
             Log.w(TAG, "download failed for $id: ${e.message}", e)
-            fail(id, e.friendly())
+            if (!scheduleRetry(context, song, e)) fail(id, e.friendly())
         }
     }
 
@@ -1155,13 +1241,39 @@ object Downloads {
                     return@coroutineScope
                 }
 
-                val destination = DownloadStore.begin(context, name, route.mimeType)
-                pending = destination
-                destination.openStream().use { sink ->
-                    route.write(sink) { written, total ->
-                        val fraction = written.toFloat() / total
-                        _active.update { it + (id to DownloadState.Running(fraction)) }
-                        DownloadSession.running(id, fraction)
+                val resumeWrite = route.resumeWrite
+                var startAt = 0L
+                var destination: DownloadStore.Pending? = null
+                val earlier = DownloadQueueStore.get(id)
+                if (resumeWrite != null && earlier != null && earlier.partialName == name) {
+                    val reopened = DownloadStore.reopen(context, name)
+                    startAt = DownloadResumePolicy.resumeOffset(reopened?.length() ?: 0L, earlier.partialTotal)
+                    if (reopened != null && startAt > 0L) {
+                        destination = reopened
+                    } else {
+                        reopened?.abort()
+                        startAt = 0L
+                    }
+                }
+                val resuming = destination != null
+                val sinkTarget = destination ?: DownloadStore.begin(context, name, route.mimeType)
+                pending = sinkTarget
+                val expectedTotal = if (resuming) earlier?.partialTotal else null
+                var partialNoted = false
+                val onBytes: (Long, Long) -> Unit = { written, total ->
+                    if (!partialNoted && resumeWrite != null) {
+                        partialNoted = true
+                        DownloadQueueStore.notePartial(id, name, total)
+                    }
+                    val fraction = written.toFloat() / total
+                    _active.update { it + (id to DownloadState.Running(fraction)) }
+                    DownloadSession.running(id, fraction)
+                }
+                sinkTarget.openStream(append = resuming).use { sink ->
+                    if (resumeWrite != null) {
+                        resumeWrite(sink, startAt, expectedTotal, onBytes)
+                    } else {
+                        route.write(sink, onBytes)
                     }
                 }
                 val words = lyrics?.await()
@@ -1178,7 +1290,11 @@ object Downloads {
                 Log.d(TAG, "saved $name")
             }
         } catch (e: Throwable) {
-            pending?.abort()
+            if (shouldKeepPartial(id, route, e)) {
+            } else {
+                pending?.abort()
+                if (route.resumeWrite != null) DownloadQueueStore.clearPartial(id)
+            }
             throw e
         } finally {
             // Every exit needs this, not just the failing ones: the adopt-it
@@ -1210,6 +1326,12 @@ object Downloads {
         val downloadFormat: String? = null,
         val taggable: Boolean = true,
         val offlineHls: Manifest? = null,
+        val resumeWrite: (suspend (
+            output: OutputStream,
+            startAt: Long,
+            expectedTotal: Long?,
+            onProgress: (written: Long, total: Long) -> Unit,
+        ) -> Unit)? = null,
         val write: suspend (OutputStream, (written: Long, total: Long) -> Unit) -> Unit,
     )
 
@@ -1267,10 +1389,23 @@ object Downloads {
             mimeType = stream.downloadMimeType,
             describe = "${stream.kbps}kbps ${stream.mimeType}",
             downloadFormat = youtubeDownloadBadge(stream.downloadExtension, stream.kbps),
+            resumeWrite = { sink, startAt, expectedTotal, onProgress ->
+                Downloader.fetch(
+                    track.videoId, stream, quality.maxKbps, requireM4a, sink, onProgress,
+                    startAt = startAt, expectedTotal = expectedTotal,
+                )
+            },
             write = { sink, onProgress ->
                 Downloader.fetch(track.videoId, stream, quality.maxKbps, requireM4a, sink, onProgress)
             },
         )
+    }
+
+    private fun shouldKeepPartial(videoId: String, route: Route, error: Throwable): Boolean {
+        if (route.resumeWrite == null) return false
+        if (cancelledByUser.remove(videoId)) return false
+        if (error is Downloader.StreamChangedException) return false
+        return error is CancellationException || DownloadResumePolicy.isTransient(error)
     }
 
     /**

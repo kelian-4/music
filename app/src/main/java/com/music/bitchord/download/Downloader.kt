@@ -54,6 +54,8 @@ object Downloader {
 
     private const val BUFFER_BYTES = 64 * 1024
 
+    class StreamChangedException : IllegalStateException("The stream changed mid-download — try again")
+
     /**
      * Fetch all of [stream] into [sink].
      *
@@ -65,7 +67,6 @@ object Downloader {
      *   exported Music-folder destination.
      * @param onProgress called as bytes land, with the running total and the
      *   full size. Never called with a total of zero.
-     * @return how many bytes were written.
      */
     suspend fun fetch(
         videoId: String,
@@ -74,11 +75,14 @@ object Downloader {
         requireM4a: Boolean,
         sink: OutputStream,
         onProgress: (written: Long, total: Long) -> Unit,
+        startAt: Long = 0L,
+        expectedTotal: Long? = null,
     ): Long = withContext(Dispatchers.IO) {
         var url = stream.url
         val total = contentLength(url) ?: error("Track unavailable: no length to fetch")
+        if (expectedTotal != null && total != expectedTotal) throw StreamChangedException()
 
-        var position = 0L
+        var position = startAt
         var reresolved = false
         val buffer = ByteArray(BUFFER_BYTES)
 
