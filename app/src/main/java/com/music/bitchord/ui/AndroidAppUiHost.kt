@@ -17,6 +17,14 @@ object AndroidAppUiHost : AppUiHost {
     override val pinnedPlaylists = AppSettings.pinnedPlaylists
     override val pinnedItems = AppSettings.pinnedShelfItems
     override val librarySort = AppSettings.librarySort
+    override val playlistFolders = AppSettings.playlistFolders
+    override val supportsPlaylistFolders = true
+
+    override fun createPlaylistFolder(name: String) = AppSettings.createPlaylistFolder(name)
+
+    override fun renamePlaylistFolder(id: String, name: String) = AppSettings.renamePlaylistFolder(id, name)
+
+    override fun deletePlaylistFolder(id: String) = AppSettings.deletePlaylistFolder(id)
 
     @Composable
     override fun downloadedIds(): Set<String> {

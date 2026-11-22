@@ -198,4 +198,13 @@
     <string name="search_library_empty">Recherche les titres de votre dossier Musique locale.</string>
     <string name="search_library_hint">Titres, artistes et albums</string>
     <string name="search_library_no_results">Rien dans Musique locale ne correspond à « %1$s ».</string>
+    <string name="folder_all">Tout</string>
+    <string name="folder_new">Nouveau dossier</string>
+    <string name="folder_name">Nom du dossier</string>
+    <string name="folder_create">Créer</string>
+    <string name="folder_save">Enregistrer</string>
+    <string name="folder_rename">Renommer le dossier</string>
+    <string name="folder_delete">Supprimer le dossier</string>
+    <string name="folder_delete_confirm">Supprimer le dossier %1$s ? Ses playlists sont conservées.</string>
+    <string name="folder_name_refused">Choisis un nom non vide et pas déjà utilisé</string>
 </resources>

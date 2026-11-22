@@ -1336,4 +1336,6 @@
     <string name="data_saver_subtitle">Lowers mobile-data quality, keeps downloads on Wi-Fi, and pauses animated covers, music videos and read-ahead on mobile data. Your previous settings come back when you turn it off.</string>
     <string name="pinned_limit">Only %1$d items can be pinned</string>
     <string name="pin_move_first">Move pin to the front</string>
+    <string name="move_to_folder">Move to folder</string>
+    <string name="no_folder">No folder</string>
 </resources>

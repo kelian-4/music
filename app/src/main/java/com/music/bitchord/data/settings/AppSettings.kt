@@ -752,6 +752,8 @@ object AppSettings {
 
     val pinnedShelfItems = MutableStateFlow<List<ShelfItem>>(emptyList())
 
+    val playlistFolders = MutableStateFlow<List<PlaylistFolder>>(emptyList())
+
     // ── Scrobbling ──────────────────────────────────────────────────────
 
     /** One release gate shared by the settings UI and the playback service. */
@@ -1150,6 +1152,7 @@ object AppSettings {
         if (storedPins == null && pins.isNotEmpty()) {
             prefs.edit().putString(KEY_PINNED_ITEMS, PinnedItemsPolicy.encode(pins)).apply()
         }
+        playlistFolders.value = PlaylistFoldersPolicy.decode(prefs.getString(KEY_PLAYLIST_FOLDERS, null))
         discordToken.value = authStore.discordToken.orEmpty()
         discordUsername.value = prefs.getString(KEY_DISCORD_USERNAME, "").orEmpty()
         discordName.value = prefs.getString(KEY_DISCORD_NAME, "").orEmpty()
@@ -2184,6 +2187,27 @@ object AppSettings {
         browseId = if (pin.kind == PinKind.SONG) null else pin.id,
     )
 
+    fun createPlaylistFolder(name: String): Boolean =
+        updatePlaylistFolders { PlaylistFoldersPolicy.create(it, name, "f_" + java.util.UUID.randomUUID()) }
+
+    fun renamePlaylistFolder(id: String, name: String): Boolean =
+        updatePlaylistFolders { PlaylistFoldersPolicy.rename(it, id, name) }
+
+    fun deletePlaylistFolder(id: String) {
+        updatePlaylistFolders { PlaylistFoldersPolicy.delete(it, id) }
+    }
+
+    fun movePlaylistToFolder(playlistId: String, folderId: String?) {
+        updatePlaylistFolders { PlaylistFoldersPolicy.assign(it, playlistId, folderId) }
+    }
+
+    private fun updatePlaylistFolders(change: (List<PlaylistFolder>) -> List<PlaylistFolder>?): Boolean {
+        val updated = change(playlistFolders.value) ?: return false
+        playlistFolders.value = updated
+        prefs.edit().putString(KEY_PLAYLIST_FOLDERS, PlaylistFoldersPolicy.encode(updated)).apply()
+        return true
+    }
+
     private fun readDetailSongSorts(): Map<String, SongSort> =
         prefs.getString(KEY_DETAIL_SONG_SORTS, null)
             ?.split(",")
@@ -2416,6 +2440,7 @@ object AppSettings {
     private const val KEY_SMB_USERNAME = "smb_username"
     private const val KEY_PINNED_PLAYLISTS = "pinned_playlists"
     private const val KEY_PINNED_ITEMS = "pinned_items"
+    private const val KEY_PLAYLIST_FOLDERS = "playlist_folders"
 
     private const val KEY_LASTFM_ENABLED = "lastfm_enabled"
     private const val KEY_LASTFM_USERNAME = "lastfm_username"

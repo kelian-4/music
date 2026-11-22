@@ -5,8 +5,10 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import com.music.bitchord.data.canvas.CanvasArtwork
 import com.music.bitchord.data.model.ShelfItem
 import com.music.bitchord.data.settings.LibrarySort
+import com.music.bitchord.data.settings.PlaylistFolder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * What the shared pages — Home, Explore, Library, Search and the rows they are
@@ -26,6 +28,16 @@ interface AppUiHost {
 
     /** How a Library "Show all" grid is ordered. */
     val librarySort: StateFlow<LibrarySort>
+
+    val playlistFolders: StateFlow<List<PlaylistFolder>> get() = NO_FOLDERS
+
+    fun createPlaylistFolder(name: String): Boolean = false
+
+    fun renamePlaylistFolder(id: String, name: String): Boolean = false
+
+    fun deletePlaylistFolder(id: String) {}
+
+    val supportsPlaylistFolders: Boolean get() = false
 
     /** Video ids of the tracks already downloaded, for the mark on their rows. */
     @Composable
@@ -67,3 +79,5 @@ object AppUi {
  * refresh nobody asked for — so the desktop switches it off.
  */
 val LocalPullToRefreshEnabled = staticCompositionLocalOf { true }
+
+private val NO_FOLDERS = MutableStateFlow<List<PlaylistFolder>>(emptyList()).asStateFlow()

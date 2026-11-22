@@ -124,6 +124,9 @@ fun BrowseActionsMenu(
     isPinned: Boolean = false,
     onTogglePin: (() -> Unit)? = null,
     onMovePinToFront: (() -> Unit)? = null,
+    folders: List<com.music.bitchord.data.settings.PlaylistFolder> = emptyList(),
+    currentFolderId: String? = null,
+    onMoveToFolder: ((String?) -> Unit)? = null,
     onRename: ((String) -> Unit)? = null,
     /**
      * Opens the reorder page for one of the account's own playlists — set
@@ -150,6 +153,7 @@ fun BrowseActionsMenu(
 ) {
     var renaming by remember { mutableStateOf(startRenaming) }
     var confirmingDelete by remember { mutableStateOf(false) }
+    var choosingFolder by remember { mutableStateOf(false) }
     var confirmingDeleteDownload by remember { mutableStateOf(false) }
 
     val playlist = target.playlist
@@ -241,6 +245,23 @@ fun BrowseActionsMenu(
             }
             onMovePinToFront?.let {
                 ActionRow(SfIcons.Reorder, stringResource(R.string.pin_move_first), onClick = it)
+            }
+            if (onMoveToFolder != null && folders.isNotEmpty()) {
+                ActionRow(SfIcons.Folder, stringResource(R.string.move_to_folder)) { choosingFolder = !choosingFolder }
+                if (choosingFolder) {
+                    ActionRow(
+                        icon = if (currentFolderId == null) SfIcons.Check else SfIcons.Folder,
+                        label = stringResource(R.string.no_folder),
+                        onClick = { onMoveToFolder(null) },
+                    )
+                    folders.forEach { folder ->
+                        ActionRow(
+                            icon = if (folder.id == currentFolderId) SfIcons.Check else SfIcons.Folder,
+                            label = folder.name,
+                            onClick = { onMoveToFolder(folder.id) },
+                        )
+                    }
+                }
             }
             if (onRename != null) {
                 ActionRow(SfIcons.Pencil, stringResource(R.string.rename)) {

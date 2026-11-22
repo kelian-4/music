@@ -1462,4 +1462,6 @@
     <string name="data_saver_subtitle">Réduit la qualité sur données mobiles, garde les téléchargements en Wi-Fi et coupe les pochettes animées, les clips vidéo et le préchargement sur données mobiles. Vos réglages précédents reviennent quand vous la désactivez.</string>
     <string name="pinned_limit">Seulement %1$d éléments peuvent être épinglés</string>
     <string name="pin_move_first">Placer l\'épingle en premier</string>
+    <string name="move_to_folder">Déplacer vers un dossier</string>
+    <string name="no_folder">Aucun dossier</string>
 </resources>

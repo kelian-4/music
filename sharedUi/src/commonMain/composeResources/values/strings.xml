@@ -278,4 +278,13 @@
     <string name="mix_view_seconds">%1$d sec</string>
     <string name="mix_view_bpm">%1$d bpm</string>
     <string name="automix_overview_unavailable">No Automix transition coming up</string>
+    <string name="folder_all">All</string>
+    <string name="folder_new">New folder</string>
+    <string name="folder_name">Folder name</string>
+    <string name="folder_create">Create</string>
+    <string name="folder_save">Save</string>
+    <string name="folder_rename">Rename folder</string>
+    <string name="folder_delete">Delete folder</string>
+    <string name="folder_delete_confirm">Delete the folder %1$s? Its playlists are kept.</string>
+    <string name="folder_name_refused">Pick a name that is not empty and not already used</string>
 </resources>

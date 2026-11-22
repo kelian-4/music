@@ -5110,6 +5110,7 @@ private fun BitChordApp(
             val downloadable = remote ||
                 target.browseId?.startsWith("local:playlist:sp_local_") == true
             val pinnedItems by AppSettings.pinnedItems.collectAsStateWithLifecycle()
+            val playlistFolders by AppSettings.playlistFolders.collectAsStateWithLifecycle()
             // Device playlists and directories have nowhere on the Library
             // page to be pinned to that would still mean anything off-device.
             val pinKind = when (target.type) {
@@ -5228,6 +5229,14 @@ private fun BitChordApp(
                             AppSettings.movePinnedToFront(kind, id)
                             browseActions = null
                         }
+                    }
+                },
+                folders = playlistFolders,
+                currentFolderId = pinnableId?.let { com.music.bitchord.data.settings.PlaylistFoldersPolicy.folderOf(playlistFolders, it) },
+                onMoveToFolder = pinnableId?.let { id ->
+                    { folderId: String? ->
+                        AppSettings.movePlaylistToFolder(id, folderId)
+                        browseActions = null
                     }
                 },
                 onRename = playlist?.let { p ->
