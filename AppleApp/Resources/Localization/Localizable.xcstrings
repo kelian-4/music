@@ -14563,7 +14563,27 @@
     "sp_dc cookie": {},
     "{song_name}, {artist_name} and {album_name} are replaced with the track. The first button opens the song on YouTube Music, the second this project.": {},
     "“%@” is in two places": {},
-    "•": {}
+    "•": {},
+    "Data Saver": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Économiseur de données"
+          }
+        }
+      }
+    },
+    "Caps mobile streaming at Low, downloads on Wi-Fi only, no canvas videos on mobile data. Turning it off puts your own choices back": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limite le streaming mobile à Faible, télécharge en Wi-Fi uniquement, pas de vidéos canvas en données mobiles. En le désactivant, tes propres réglages reviennent"
+          }
+        }
+      }
+    }
   },
   "version": "1.0"
 }

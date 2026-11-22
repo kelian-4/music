@@ -32,6 +32,7 @@ struct SettingsView: View {
     @State var cellQuality = PlatformSettings.shared.getString(key: "audio_quality_cellular", default: "LOSSLESS")
     @State var downloadQuality = PlatformSettings.shared.getString(key: "download_quality", default: "LOSSLESS")
     @State var wifiOnlyDownloads = PlatformSettings.shared.getBoolean(key: "wifi_only_downloads", default: true)
+    @State var dataSaver = PlatformSettings.shared.getBoolean(key: "data_saver", default: false)
     @State var nerdStats = PlatformSettings.shared.getBoolean(key: "show_nerd_stats", default: false)
     @State var canvas = PlatformSettings.shared.getBoolean(key: "animated_canvas", default: true)
     @State var canvasCellular = PlatformSettings.shared.getBoolean(key: "canvas_over_cellular", default: false)
