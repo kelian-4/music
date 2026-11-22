@@ -1458,4 +1458,8 @@
     <string name="bit_perfect_status_inexact">%1$s · inexact : cette source n\'est pas du PCM sans perte</string>
     <string name="bit_perfect_status_waiting">En attente d\'un morceau sans perte sur une sortie compatible</string>
     <string name="bit_perfect_status_unavailable">Indisponible pour ce morceau (%1$s)</string>
+    <string name="new_release_notifications">Alertes nouveautés</string>
+    <string name="new_release_notifications_subtitle">Reçois une notification quand un artiste que tu suis sort quelque chose. Vérifié deux fois par jour, en Wi-Fi uniquement</string>
+    <string name="new_releases_channel">Nouveautés</string>
+    <string name="new_release_title">Du nouveau chez %1$s</string>
 </resources>

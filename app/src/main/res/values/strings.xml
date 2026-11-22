@@ -1332,4 +1332,8 @@
     <string name="diwali_title">BitChord wishes you a Happy Diwali</string>
     <string name="diwali_subtitle">May this festival of lights fill your home with joy and your days with music.</string>
     <string name="diwali_cta">Let\'s Celebrate</string>
+    <string name="new_release_notifications">New release alerts</string>
+    <string name="new_release_notifications_subtitle">Get a notification when an artist you follow releases something new. Checked twice a day, on Wi-Fi only</string>
+    <string name="new_releases_channel">New releases</string>
+    <string name="new_release_title">New from %1$s</string>
 </resources>
