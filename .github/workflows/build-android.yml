@@ -11,6 +11,9 @@ concurrency:
 
 jobs:
   android:
+    # Build minutes are a monthly budget: a push builds only when its commit
+    # message asks for it with [build]; a manual run always builds.
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[build]')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,18 +35,27 @@ jobs:
 
       - run: chmod +x gradlew
 
-      - name: Build dev debug APK
-        run: ./gradlew assembleDevDebug --stacktrace
-
-      # Upstream's own LocaleStringsTest is already red on 17 languages at the
-      # time of the fork, so the full suite is informative, not a gate. The
-      # tests of this fork's features run in the next step and do gate.
-      - name: Unit tests (full suite, informative)
-        continue-on-error: true
-        run: ./gradlew testDevDebugUnitTest --stacktrace
+      # One Gradle run, :app only (the --tests filter would fail in modules
+      # that have no such test). Each feature lists its own unit tests in
+      # .github/fork-tests.d/<feature>.txt (one file per feature, so branches
+      # merge without conflicts); they gate the APK. With none listed, only the
+      # APK is built: upstream's full suite has known failures of its own.
+      - name: Fork feature tests, then build the dev debug APK
+        run: |
+          args=""
+          for f in .github/fork-tests.d/*.txt; do
+            [ -f "$f" ] || continue
+            while read -r c; do
+              [ -n "$c" ] && args="$args --tests $c"
+            done < "$f"
+          done
+          if [ -n "$args" ]; then
+            ./gradlew :app:testDevDebugUnitTest $args :app:assembleDevDebug --stacktrace
+          else
+            ./gradlew :app:assembleDevDebug --stacktrace
+          fi
 
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: android-dev-debug-apk
           path: app/build/outputs/apk/dev/debug/*.apk
