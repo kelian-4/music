@@ -155,6 +155,10 @@ import kotlinx.coroutines.withContext
 import com.music.bitchord.data.model.durationMillis
 import com.music.bitchord.data.scrobbling.LastFM
 import com.music.bitchord.data.settings.AppSettings
+import com.music.bitchord.data.settings.PinKind
+import com.music.bitchord.data.settings.PinnedItem
+import com.music.bitchord.data.settings.PinnedItemsPolicy
+import com.music.bitchord.ui.togglePinWithNotice
 import com.music.bitchord.data.settings.BitPerfectMode
 import com.music.bitchord.ui.AddonBlockedAlert
 import com.music.bitchord.data.settings.LibrarySort
@@ -4443,10 +4447,39 @@ private fun BitChordApp(
                 value = song.localUri == null &&
                     withContext(Dispatchers.IO) { AudioCache.holds(song.videoId) }
             }
+            val pinnedItems by AppSettings.pinnedItems.collectAsStateWithLifecycle()
+            val pinContext = LocalContext.current
+            val songPinned = PinnedItemsPolicy.isPinned(pinnedItems, PinKind.SONG, song.videoId)
             SongActionsMenu(
                 song = song,
                 signedIn = signedIn,
                 likeStatus = likeStatusOf(song),
+                isPinned = songPinned,
+                onTogglePin = if (song.localUri == null) {
+                    {
+                        togglePinWithNotice(
+                            pinContext,
+                            PinnedItem(
+                                PinKind.SONG,
+                                song.videoId,
+                                song.title,
+                                song.artist,
+                                song.thumbnailUrl,
+                            ),
+                        )
+                        songActions = null
+                    }
+                } else {
+                    null
+                },
+                onMovePinToFront = if (songPinned && pinnedItems.firstOrNull()?.id != song.videoId) {
+                    {
+                        AppSettings.movePinnedToFront(PinKind.SONG, song.videoId)
+                        songActions = null
+                    }
+                } else {
+                    null
+                },
                 onPlayNext = { playNext(song); songActions = null },
                 onAddToQueue = { addToQueue(song); songActions = null },
                 onStartRadio = { startRadio(song); songActions = null },
@@ -5076,11 +5109,17 @@ private fun BitChordApp(
             // "local:all", …) are neither.
             val downloadable = remote ||
                 target.browseId?.startsWith("local:playlist:sp_local_") == true
-            val pinnedPlaylists by AppSettings.pinnedPlaylists.collectAsStateWithLifecycle()
+            val pinnedItems by AppSettings.pinnedItems.collectAsStateWithLifecycle()
             // Device playlists and directories have nowhere on the Library
             // page to be pinned to that would still mean anything off-device.
+            val pinKind = when (target.type) {
+                BrowseType.PLAYLIST -> PinKind.PLAYLIST
+                BrowseType.ALBUM -> PinKind.ALBUM
+                BrowseType.ARTIST -> PinKind.ARTIST
+                else -> null
+            }
             val pinnableId = target.browseId?.takeIf {
-                target.type == BrowseType.PLAYLIST &&
+                pinKind != null &&
                     !it.startsWith(OfflinePlaylists.PREFIX) && !it.startsWith(LocalGroups.PREFIX)
             }
             // One of the offline player's own playlists, which are the user's
@@ -5168,21 +5207,27 @@ private fun BitChordApp(
                             browseActions = null
                         }
                     },
-                isPinned = pinnableId != null && pinnableId in pinnedPlaylists,
+                isPinned = pinnableId != null && pinKind != null &&
+                    PinnedItemsPolicy.isPinned(pinnedItems, pinKind, pinnableId),
                 onTogglePin = pinnableId?.let { id ->
-                    {
-                        val nowPinned = AppSettings.togglePinnedPlaylist(id)
-                        if (!nowPinned && id !in pinnedPlaylists) {
-                            Toast.makeText(
+                    pinKind?.let { kind ->
+                        {
+                            togglePinWithNotice(
                                 context,
-                                context.getString(
-                                    R.string.pinned_playlist_limit,
-                                    AppSettings.MAX_PINNED_PLAYLISTS,
-                                ),
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                                PinnedItem(kind, id, target.title, target.subtitle, target.thumbnailUrl),
+                            )
+                            browseActions = null
                         }
-                        browseActions = null
+                    }
+                },
+                onMovePinToFront = pinnableId?.let { id ->
+                    pinKind?.takeIf {
+                        pinnedItems.indexOfFirst { pin -> pin.kind == it && pin.id == id } > 0
+                    }?.let { kind ->
+                        {
+                            AppSettings.movePinnedToFront(kind, id)
+                            browseActions = null
+                        }
                     }
                 },
                 onRename = playlist?.let { p ->

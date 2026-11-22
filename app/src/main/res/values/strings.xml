@@ -1332,4 +1332,6 @@
     <string name="diwali_title">BitChord wishes you a Happy Diwali</string>
     <string name="diwali_subtitle">May this festival of lights fill your home with joy and your days with music.</string>
     <string name="diwali_cta">Let\'s Celebrate</string>
+    <string name="pinned_limit">Only %1$d items can be pinned</string>
+    <string name="pin_move_first">Move pin to the front</string>
 </resources>

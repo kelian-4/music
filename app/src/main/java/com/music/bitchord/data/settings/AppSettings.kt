@@ -1,6 +1,7 @@
 package com.music.bitchord.data.settings
 
 import com.music.bitchord.data.webdav.update
+import com.music.bitchord.data.model.ShelfItem
 import com.music.bitchord.ui.components.VideoThumbnails
 import android.content.Context
 import android.content.SharedPreferences
@@ -736,8 +737,11 @@ object AppSettings {
      */
     val pinnedPlaylists = MutableStateFlow<List<String>>(emptyList())
 
-    /** How many playlists [pinnedPlaylists] can hold at once. */
-    const val MAX_PINNED_PLAYLISTS = 5
+    const val MAX_PINNED_PLAYLISTS = PinnedItemsPolicy.MAX_PINNED
+
+    val pinnedItems = MutableStateFlow<List<PinnedItem>>(emptyList())
+
+    val pinnedShelfItems = MutableStateFlow<List<ShelfItem>>(emptyList())
 
     // ── Scrobbling ──────────────────────────────────────────────────────
 
@@ -1128,7 +1132,14 @@ object AppSettings {
             webdavUsername.value,
             webdavPassword.value,
         )
-        pinnedPlaylists.value = readPinnedPlaylists()
+        val storedPins = PinnedItemsPolicy.decode(prefs.getString(KEY_PINNED_ITEMS, null))
+        val pins = storedPins ?: PinnedItemsPolicy.migrate(readPinnedPlaylists())
+        pinnedItems.value = pins
+        pinnedPlaylists.value = PinnedItemsPolicy.playlistIds(pins)
+        pinnedShelfItems.value = pins.map(::pinnedShelfItem)
+        if (storedPins == null && pins.isNotEmpty()) {
+            prefs.edit().putString(KEY_PINNED_ITEMS, PinnedItemsPolicy.encode(pins)).apply()
+        }
         discordToken.value = authStore.discordToken.orEmpty()
         discordUsername.value = prefs.getString(KEY_DISCORD_USERNAME, "").orEmpty()
         discordName.value = prefs.getString(KEY_DISCORD_NAME, "").orEmpty()
@@ -2105,17 +2116,38 @@ object AppSettings {
      * disappears from the row without them ever having touched it, the moment
      * they pin a sixth. Unpinning always succeeds.
      */
-    fun togglePinnedPlaylist(browseId: String): Boolean {
-        val current = pinnedPlaylists.value
-        val updated = when {
-            browseId in current -> current - browseId
-            current.size >= MAX_PINNED_PLAYLISTS -> return false
-            else -> current + browseId
-        }
-        pinnedPlaylists.value = updated
-        prefs.edit().putString(KEY_PINNED_PLAYLISTS, updated.joinToString(",")).apply()
-        return browseId in updated
+    fun togglePinnedPlaylist(browseId: String): Boolean =
+        togglePinned(PinnedItem(PinKind.PLAYLIST, browseId)) != PinChange.LIMIT &&
+            PinnedItemsPolicy.isPinned(pinnedItems.value, PinKind.PLAYLIST, browseId)
+
+    fun togglePinned(item: PinnedItem): PinChange {
+        val result = PinnedItemsPolicy.toggle(pinnedItems.value, item)
+        if (result.change != PinChange.LIMIT) setPinnedItems(result.items)
+        return result.change
     }
+
+    fun movePinnedToFront(kind: PinKind, id: String) {
+        setPinnedItems(PinnedItemsPolicy.moveToFront(pinnedItems.value, kind, id))
+    }
+
+    private fun setPinnedItems(items: List<PinnedItem>) {
+        if (items == pinnedItems.value) return
+        pinnedItems.value = items
+        pinnedPlaylists.value = PinnedItemsPolicy.playlistIds(items)
+        pinnedShelfItems.value = items.map(::pinnedShelfItem)
+        prefs.edit()
+            .putString(KEY_PINNED_ITEMS, PinnedItemsPolicy.encode(items))
+            .putString(KEY_PINNED_PLAYLISTS, PinnedItemsPolicy.playlistIds(items).joinToString(","))
+            .apply()
+    }
+
+    private fun pinnedShelfItem(pin: PinnedItem): ShelfItem = ShelfItem(
+        title = pin.title,
+        subtitle = pin.subtitle,
+        thumbnailUrl = pin.thumbnailUrl,
+        videoId = if (pin.kind == PinKind.SONG) pin.id else null,
+        browseId = if (pin.kind == PinKind.SONG) null else pin.id,
+    )
 
     private fun readDetailSongSorts(): Map<String, SongSort> =
         prefs.getString(KEY_DETAIL_SONG_SORTS, null)
@@ -2346,6 +2378,7 @@ object AppSettings {
     private const val KEY_SMB_BASE_PATH = "smb_base_path"
     private const val KEY_SMB_USERNAME = "smb_username"
     private const val KEY_PINNED_PLAYLISTS = "pinned_playlists"
+    private const val KEY_PINNED_ITEMS = "pinned_items"
 
     private const val KEY_LASTFM_ENABLED = "lastfm_enabled"
     private const val KEY_LASTFM_USERNAME = "lastfm_username"

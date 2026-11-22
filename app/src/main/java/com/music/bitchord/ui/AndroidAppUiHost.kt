@@ -15,6 +15,7 @@ import com.music.bitchord.download.Downloads
 object AndroidAppUiHost : AppUiHost {
     override val swipeToPlayNext = AppSettings.swipeToPlayNext
     override val pinnedPlaylists = AppSettings.pinnedPlaylists
+    override val pinnedItems = AppSettings.pinnedShelfItems
     override val librarySort = AppSettings.librarySort
 
     @Composable

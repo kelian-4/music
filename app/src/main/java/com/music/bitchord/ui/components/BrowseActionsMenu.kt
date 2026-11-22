@@ -120,13 +120,10 @@ fun BrowseActionsMenu(
      */
     onShare: (() -> Unit)? = null,
     /**
-     * Set whenever [target] is a playlist, regardless of who owns it — pinning
-     * doesn't touch the account, only what sits at the top of this device's
-     * Library tab. Null everywhere else (albums, artists), where "pin" has
-     * nothing to mean.
      */
     isPinned: Boolean = false,
     onTogglePin: (() -> Unit)? = null,
+    onMovePinToFront: (() -> Unit)? = null,
     onRename: ((String) -> Unit)? = null,
     /**
      * Opens the reorder page for one of the account's own playlists — set
@@ -241,6 +238,9 @@ fun BrowseActionsMenu(
                     stringResource(if (isPinned) R.string.unpin else R.string.pin),
                     onClick = it,
                 )
+            }
+            onMovePinToFront?.let {
+                ActionRow(SfIcons.Reorder, stringResource(R.string.pin_move_first), onClick = it)
             }
             if (onRename != null) {
                 ActionRow(SfIcons.Pencil, stringResource(R.string.rename)) {
