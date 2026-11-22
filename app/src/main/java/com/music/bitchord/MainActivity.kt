@@ -4452,9 +4452,19 @@ private fun BitChordApp(
             val pinnedItems by AppSettings.pinnedItems.collectAsStateWithLifecycle()
             val pinContext = LocalContext.current
             val songPinned = PinnedItemsPolicy.isPinned(pinnedItems, PinKind.SONG, song.videoId)
+            val singModeOn by AppSettings.singMode.collectAsStateWithLifecycle()
             SongActionsMenu(
                 song = song,
                 signedIn = signedIn,
+                singModeOn = singModeOn,
+                onToggleSingMode = if (fromPlayer) {
+                    {
+                        AppSettings.setSingMode(!singModeOn)
+                        songActions = null
+                    }
+                } else {
+                    null
+                },
                 onShowCredits = if (song.localUri == null) {
                     {
                         songActions = null

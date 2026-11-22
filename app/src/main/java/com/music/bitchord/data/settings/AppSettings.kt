@@ -256,6 +256,7 @@ object AppSettings {
     val syncDownloadedPlaylists = MutableStateFlow(false)
 
     val newReleaseNotifications = MutableStateFlow(false)
+    val singMode = MutableStateFlow(false)
 
     /** Whether the active network charges for data. `null` while offline. */
     val meteredConnection = MutableStateFlow<Boolean?>(null)
@@ -991,6 +992,8 @@ object AppSettings {
         exportDownloads.value = prefs.getBoolean(KEY_EXPORT_DOWNLOADS, false)
         syncDownloadedPlaylists.value = prefs.getBoolean(KEY_SYNC_DOWNLOADED_PLAYLISTS, false)
         newReleaseNotifications.value = prefs.getBoolean(KEY_NEW_RELEASE_NOTIFICATIONS, false)
+        singMode.value = prefs.getBoolean(KEY_SING_MODE, false)
+        com.music.bitchord.playback.audio.SingModeState.enabled = singMode.value
         crossfadeSeconds.value = prefs.getInt(KEY_CROSSFADE, 0)
         smartFadeEnabled.value = prefs.getBoolean(KEY_SMART_FADE, false)
         automixPerformanceMode.value = runCatching {
@@ -1889,6 +1892,12 @@ object AppSettings {
         prefs.edit().putBoolean(KEY_NEW_RELEASE_NOTIFICATIONS, value).apply()
     }
 
+    fun setSingMode(value: Boolean) {
+        singMode.value = value
+        com.music.bitchord.playback.audio.SingModeState.enabled = value
+        prefs.edit().putBoolean(KEY_SING_MODE, value).apply()
+    }
+
     fun setSyncDownloadedPlaylists(value: Boolean) {
         syncDownloadedPlaylists.value = value
         prefs.edit().putBoolean(KEY_SYNC_DOWNLOADED_PLAYLISTS, value).apply()
@@ -2357,6 +2366,7 @@ object AppSettings {
     private const val KEY_EXPORT_DOWNLOADS = "export_downloads"
     private const val KEY_SYNC_DOWNLOADED_PLAYLISTS = "sync_downloaded_playlists"
     private const val KEY_NEW_RELEASE_NOTIFICATIONS = "new_release_notifications"
+    private const val KEY_SING_MODE = "sing_mode"
     private const val KEY_CROSSFADE = "crossfade_seconds"
     private const val KEY_SMART_FADE = "smart_fade_enabled"
     private const val KEY_AUTOMIX_PERFORMANCE_MODE = "automix_performance_mode"

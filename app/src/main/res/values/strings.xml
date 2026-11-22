@@ -1332,6 +1332,7 @@
     <string name="diwali_title">BitChord wishes you a Happy Diwali</string>
     <string name="diwali_subtitle">May this festival of lights fill your home with joy and your days with music.</string>
     <string name="diwali_cta">Let\'s Celebrate</string>
+<<<<<<< HEAD
     <string name="data_saver">Data saver</string>
     <string name="data_saver_subtitle">Lowers mobile-data quality, keeps downloads on Wi-Fi, and pauses animated covers, music videos and read-ahead on mobile data. Your previous settings come back when you turn it off.</string>
     <string name="pinned_limit">Only %1$d items can be pinned</string>
@@ -1358,4 +1359,10 @@
     <string name="credit_engineer">Engineered by</string>
     <string name="credit_recording">Recorded by</string>
     <string name="credit_mastering">Mastered by</string>
+=======
+    <string name="sing_mode">Sing mode</string>
+    <string name="sing_mode_subtitle">Lowers the voice in the centre of the mix, keeping bass and drums. Stereo songs only</string>
+    <string name="sing_mode_on">Sing mode: turn on</string>
+    <string name="sing_mode_off">Sing mode: turn off</string>
+>>>>>>> feat/sing-mode
 </resources>

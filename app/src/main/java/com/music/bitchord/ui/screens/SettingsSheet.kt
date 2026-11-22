@@ -286,6 +286,7 @@ fun SettingsScreen(
     val newReleaseNotifications by AppSettings.newReleaseNotifications.collectAsStateWithLifecycle()
     val notifyPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
     val settingsContext = androidx.compose.ui.platform.LocalContext.current
+    val singMode by AppSettings.singMode.collectAsStateWithLifecycle()
     val stopOnTaskRemoved by AppSettings.stopOnTaskRemoved.collectAsStateWithLifecycle()
     val hideVolumeBar by AppSettings.hideVolumeBar.collectAsStateWithLifecycle()
     val hideStatusBarInPlayer by AppSettings.hideStatusBarInPlayer.collectAsStateWithLifecycle()
@@ -692,6 +693,15 @@ fun SettingsScreen(
             header = stringResource(R.string.playback),
             footer = stringResource(R.string.bit_perfect_bypassed_footer).takeIf { bitPerfectReady },
         ) {
+            val singModeTitle = stringResource(R.string.sing_mode)
+            row(singModeTitle, "karaoke", "vocals", "voice", "sing", "instrumental") {
+                SettingsSubRow(
+                    title = singModeTitle,
+                    checked = singMode,
+                    onCheckedChange = AppSettings::setSingMode,
+                    subtitle = stringResource(R.string.sing_mode_subtitle),
+                )
+            }
             val outputPrecisionTitle = stringResource(R.string.output_precision)
             row(outputPrecisionTitle, "pcm", "bit depth", "sample rate", "dac") {
                 SettingsRow(

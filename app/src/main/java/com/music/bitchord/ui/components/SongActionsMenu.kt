@@ -172,6 +172,8 @@ fun SongActionsMenu(
     /** Opens the timing control offered only by the main player's menu. */
     onLyricsOffset: (() -> Unit)? = null,
     onShowCredits: (() -> Unit)? = null,
+    singModeOn: Boolean = false,
+    onToggleSingMode: (() -> Unit)? = null,
     /**
      * Opens the Automix mix popup on the next transition. Null hides the row —
      * the player passes one only while Automix is on.
@@ -422,6 +424,14 @@ fun SongActionsMenu(
             // control just as much as streamed songs do.
             onShowCredits?.let {
                 ActionRow(SfIcons.Info, stringResource(R.string.credits), accent = palette.accent, onClick = it)
+            }
+            onToggleSingMode?.let {
+                ActionRow(
+                    icon = SfIcons.GraphicEq,
+                    label = stringResource(if (singModeOn) R.string.sing_mode_off else R.string.sing_mode_on),
+                    accent = palette.accent,
+                    onClick = it,
+                )
             }
             onLyricsOffset?.let {
                 ActionRow(

@@ -36,6 +36,7 @@ class DspChain(
     val equalizer: EqualizerProcessor = EqualizerProcessor(),
     val transition: TransitionFilterProcessor = TransitionFilterProcessor(),
     val loudness: LoudnessProcessor = LoudnessProcessor(),
+    val vocalReducer: VocalReducer = VocalReducer(),
 ) : FloatAudioProcessor {
 
     private var currentSampleRate: Int = 0
@@ -47,6 +48,7 @@ class DspChain(
         equalizer.configure(sampleRate, channelCount)
         transition.configure(sampleRate, channelCount)
         loudness.configure(sampleRate, channelCount)
+        vocalReducer.configure(sampleRate, channelCount)
     }
 
     /** A new track has begun gaplessly on this sink; see [LoudnessProcessor.onStreamBoundary]. */
@@ -77,6 +79,8 @@ class DspChain(
             }
         }
 
+        vocalReducer.enabled = SingModeState.enabled
+        vocalReducer.process(block)
         spatial.process(block)
         equalizer.process(block)
         transition.process(block)
@@ -92,6 +96,7 @@ class DspChain(
         equalizer.flush()
         transition.flush()
         loudness.flush()
+        vocalReducer.flush()
     }
 
     override fun reset() {
@@ -100,6 +105,7 @@ class DspChain(
         equalizer.reset()
         transition.reset()
         loudness.reset()
+        vocalReducer.reset()
     }
 
     companion object {
