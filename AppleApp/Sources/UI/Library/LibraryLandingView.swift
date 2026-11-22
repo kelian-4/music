@@ -20,6 +20,7 @@ struct LibraryLandingView: View {
     @State private var downloadStore = DownloadStore.shared
     @State private var local = LocalLibrary.shared
     @State private var shelves: [FeedShelf] = []
+    @AppStorage(PinnedItems.storageKey) private var pinnedRevision = ""
     @State private var dataGeneration: Int64?
     @State private var loading = true
     @State private var error: String?
@@ -164,6 +165,11 @@ struct LibraryLandingView: View {
         VStack(alignment: .leading, spacing: 26) {
             let sortedShelves = pinnedShelves(shelves)
             let hasPlaylists = sortedShelves.contains { isPlaylistsShelf($0) }
+            let _ = pinnedRevision
+            let pinnedCards = PinnedItems.cards()
+            if !pinnedCards.isEmpty {
+                shelfSection(FeedShelf(title: String(localized: "Pinned"), items: pinnedCards))
+            }
 
             // Upstream parity: fresh account has no Playlists shelf yet, but
             // needs the New Playlist tile to start one.

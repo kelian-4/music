@@ -403,6 +403,7 @@ struct BrowseActionButtons: View {
             Button("Play Next") { controller.playNext(entry) }
             Button("Add to Queue") { controller.addToQueue(entry) }
         }
+        PinMenuButton(card: card)
         if let browseId = card.browseId, !browseId.isEmpty {
             #if os(macOS)
             Button("Open in New Window") {
@@ -437,18 +438,6 @@ struct BrowseActionButtons: View {
         }
         Button("Shuffle") {
             Task { await playCollection(browseId, shuffle: true) }
-        }
-        // Pinning is a local list of ids, not an account write — upstream
-        // offers it signed out too, and only for playlists
-        // (MainActivity.kt:4672).
-        if isPlaylist(browseId) {
-            let pinned = PlatformSettings.shared.getString(key: "pinned_playlists", default: "")
-                .split(separator: ",").map(String.init)
-            Button(pinned.contains(browseId) ? "Unpin" : "Pin") {
-                if !PlaylistPinning.toggle(browseId: browseId) {
-                    appModel.pinLimitAlert = true
-                }
-            }
         }
         if auth.signedIn {
             if browseId.hasPrefix("VL") || browseId.hasPrefix("PL") {
