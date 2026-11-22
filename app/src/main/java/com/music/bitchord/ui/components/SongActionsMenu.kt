@@ -184,6 +184,9 @@ fun SongActionsMenu(
      * as before — present when the id is there, absent when it never was.
      */
     resolvingLinks: Boolean = false,
+    isPinned: Boolean = false,
+    onTogglePin: (() -> Unit)? = null,
+    onMovePinToFront: (() -> Unit)? = null,
 ) {
     var showingSongInfo by remember(song.videoId) { mutableStateOf(false) }
     var pickingSleepTimer by remember { mutableStateOf(false) }
@@ -328,6 +331,22 @@ fun SongActionsMenu(
             accent = palette.accent,
             onClick = onAddToQueue,
         )
+        onTogglePin?.let {
+            ActionRow(
+                icon = SfIcons.Pin,
+                label = stringResource(if (isPinned) R.string.unpin else R.string.pin),
+                accent = palette.accent,
+                onClick = it,
+            )
+        }
+        onMovePinToFront?.let {
+            ActionRow(
+                icon = SfIcons.Reorder,
+                label = stringResource(R.string.pin_move_first),
+                accent = palette.accent,
+                onClick = it,
+            )
+        }
         DownloadRow(song, palette, isOffline, onDownload)
         onRemoveFromCache?.let {
             ActionRow(

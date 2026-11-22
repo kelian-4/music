@@ -3,7 +3,9 @@ package com.music.bitchord.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.music.bitchord.data.canvas.CanvasArtwork
+import com.music.bitchord.data.model.ShelfItem
 import com.music.bitchord.data.settings.LibrarySort
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 /**
@@ -19,6 +21,8 @@ interface AppUiHost {
 
     /** Playlist browse ids pinned to the front of the Library's Playlists shelf, in pin order. */
     val pinnedPlaylists: StateFlow<List<String>>
+
+    val pinnedItems: StateFlow<List<ShelfItem>> get() = NoPinnedItems
 
     /** How a Library "Show all" grid is ordered. */
     val librarySort: StateFlow<LibrarySort>
@@ -40,6 +44,8 @@ interface AppUiHost {
      */
     suspend fun artistMotion(browseId: String, artistName: String): CanvasArtwork? = null
 }
+
+private val NoPinnedItems: StateFlow<List<ShelfItem>> = MutableStateFlow(emptyList())
 
 object AppUi {
     @Volatile

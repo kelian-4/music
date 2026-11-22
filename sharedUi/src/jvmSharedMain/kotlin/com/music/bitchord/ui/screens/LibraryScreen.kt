@@ -118,7 +118,16 @@ fun LibraryScreen(
     showTitle: Boolean = true,
 ) {
     val pinnedPlaylists by AppUi.host.pinnedPlaylists.collectAsStateWithLifecycle()
+    val pinnedCards by AppUi.host.pinnedItems.collectAsStateWithLifecycle()
     val onDevice = stringResource(Res.string.on_device)
+    val pinnedTitle = stringResource(Res.string.pinned)
+    val playlistCards = (if (state is UiState.Success) state.data.shelves else emptyList())
+        .firstOrNull { it.title == PLAYLISTS }?.items.orEmpty()
+        .filter { it.browseId != null }
+        .associateBy { it.browseId }
+    val pinnedShown = pinnedCards.mapNotNull { card ->
+        if (card.title.isNotBlank()) card else playlistCards[card.browseId]
+    }
     PullToRefresh(
         refreshing = refreshing,
         onRefresh = onRefresh,
@@ -152,6 +161,17 @@ fun LibraryScreen(
                         onItemClick = onShelfItemClick,
                         onItemLongPress = onShelfItemLongPress,
                         onShowAll = { onShowAll(onDeviceShelf) },
+                    )
+                }
+            }
+            if (pinnedShown.isNotEmpty()) {
+                item(key = "shelf:pinned") {
+                    val pinnedShelf = HomeShelf(title = pinnedTitle, items = pinnedShown)
+                    LibraryGridShelf(
+                        shelf = pinnedShelf,
+                        onItemClick = onShelfItemClick,
+                        onItemLongPress = onShelfItemLongPress,
+                        onShowAll = { onShowAll(pinnedShelf) },
                     )
                 }
             }
