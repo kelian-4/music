@@ -1280,9 +1280,9 @@ object Downloads {
                 val cover = artwork?.await()
                 // Publish only after metadata is part of the file. This keeps
                 // concurrent album workers from exposing untagged tracks.
-                MediaTagger.embed(context, destination.tagUri, track, route.extension, words, cover)
+                MediaTagger.embed(context, sinkTarget.tagUri, track, route.extension, words, cover)
                 val artworkUri = MediaTagger.persistArtwork(context, track.thumbnailUrl, cover)
-                val savedUri = destination.commit()
+                val savedUri = sinkTarget.commit()
                 pending = null
                 remember(song, track, savedUri, route.downloadFormat, artworkUri)
                 DownloadSession.done(id)

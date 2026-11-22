@@ -25,7 +25,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import java.util.concurrent.TimeUnit
@@ -48,7 +47,7 @@ object NewReleases {
     fun init(app: Application) {
         CoroutineScope(SupervisorJob() + Dispatchers.Default).launch {
             var firstLook = true
-            AppSettings.newReleaseNotifications.distinctUntilChanged().collect { on ->
+            AppSettings.newReleaseNotifications.collect { on ->
                 if (on) {
                     schedule(app, replace = !firstLook)
                     if (!firstLook) checkNow(app)
