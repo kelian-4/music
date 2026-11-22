@@ -450,6 +450,7 @@ struct BrowseActionButtons: View {
                 }
             }
         }
+        PlaylistFolderMenu(browseId: browseId)
         if auth.signedIn {
             if browseId.hasPrefix("VL") || browseId.hasPrefix("PL") {
                 Button("Rename Playlist…") {

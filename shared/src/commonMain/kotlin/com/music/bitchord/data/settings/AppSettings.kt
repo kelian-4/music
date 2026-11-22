@@ -674,6 +674,41 @@ object AppSettings {
         return browseId in updated
     }
 
+    private val _playlistFolders = MutableStateFlow(PlaylistFoldersPolicy.decode(settings.getString("playlist_folders", "")))
+    private val _playlistFoldersJson = MutableStateFlow(PlaylistFoldersPolicy.encode(_playlistFolders.value))
+    val playlistFoldersJson: StateFlow<String> = _playlistFoldersJson.asStateFlow()
+
+    private fun commitPlaylistFolders(folders: List<PlaylistFolder>) {
+        _playlistFolders.value = folders
+        _playlistFoldersJson.value = PlaylistFoldersPolicy.encode(folders)
+        settings.putString("playlist_folders", _playlistFoldersJson.value)
+    }
+
+    fun createPlaylistFolder(name: String): Boolean {
+        val id = "f_" + kotlin.random.Random.nextLong().toString(16)
+        val updated = PlaylistFoldersPolicy.create(_playlistFolders.value, name, id) ?: return false
+        commitPlaylistFolders(updated)
+        return true
+    }
+
+    fun renamePlaylistFolder(id: String, name: String): Boolean {
+        val updated = PlaylistFoldersPolicy.rename(_playlistFolders.value, id, name) ?: return false
+        commitPlaylistFolders(updated)
+        return true
+    }
+
+    fun deletePlaylistFolder(id: String) {
+        commitPlaylistFolders(PlaylistFoldersPolicy.delete(_playlistFolders.value, id))
+    }
+
+    fun movePlaylistToFolder(playlistId: String, folderId: String?) {
+        commitPlaylistFolders(PlaylistFoldersPolicy.assign(_playlistFolders.value, playlistId, folderId))
+    }
+
+    fun setPlaylistFoldersJson(value: String) {
+        commitPlaylistFolders(PlaylistFoldersPolicy.decode(value))
+    }
+
     private val _spotifySpdc = MutableStateFlow(settings.getSecret("spotify_spdc_token").orEmpty())
     val spotifySpdc: StateFlow<String> = _spotifySpdc.asStateFlow()
     fun setSpotifySpdc(value: String) {
@@ -1099,7 +1134,7 @@ object AppSettings {
             KEY_UPGRADE_LENGTH_SLACK_SECONDS, "loudness_off_on_speaker", "hide_status_bar_in_player",
             "show_queue_history", "stop_music_on_close", "artist_signatures_enabled", "artist_signatures_wikimedia_url",
             "audio_cache_limit_bytes",
-            "eq_gains", "pinned_playlists", "jiosaavn_enabled", "stop_when_backgrounded",
+            "eq_gains", "playlist_folders", "pinned_playlists", "jiosaavn_enabled", "stop_when_backgrounded",
             "prioritize_syllable_sync", "replay_genres", "scrobble_min_duration", "scrobble_delay_percent",
             "sound_mode", "clarity_preset", "clarity_wet", "clarity_trims", "loudness_mode",
             "scrobble_delay_seconds", "output_pcm_mode", "prefer_usb_dac", "loudness_normalization",
@@ -1190,6 +1225,7 @@ object AppSettings {
                 "lyrics_source_order" -> setLyricsSourceOrder(value)
                 "audio_cache_limit_bytes" -> setAudioCacheLimitBytes(value.toLongOrNull() ?: DEFAULT_CACHE_LIMIT_BYTES)
                 "eq_gains" -> setEqGains(value)
+                "playlist_folders" -> setPlaylistFoldersJson(value)
                 "pinned_playlists" -> setPinnedPlaylists(value)
                 "jiosaavn_enabled" -> setJiosaavnEnabled(value.toBoolean())
                 "stop_when_backgrounded" -> setStopWhenBackgrounded(value.toBoolean())
