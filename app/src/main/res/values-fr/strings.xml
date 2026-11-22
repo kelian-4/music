@@ -1458,7 +1458,6 @@
     <string name="bit_perfect_status_inexact">%1$s · inexact : cette source n\'est pas du PCM sans perte</string>
     <string name="bit_perfect_status_waiting">En attente d\'un morceau sans perte sur une sortie compatible</string>
     <string name="bit_perfect_status_unavailable">Indisponible pour ce morceau (%1$s)</string>
-<<<<<<< HEAD
     <string name="data_saver">Économie de données</string>
     <string name="data_saver_subtitle">Réduit la qualité sur données mobiles, garde les téléchargements en Wi-Fi et coupe les pochettes animées, les clips vidéo et le préchargement sur données mobiles. Vos réglages précédents reviennent quand vous la désactivez.</string>
     <string name="pinned_limit">Seulement %1$d éléments peuvent être épinglés</string>
@@ -1485,10 +1484,8 @@
     <string name="credit_engineer">Ingénierie du son</string>
     <string name="credit_recording">Enregistré par</string>
     <string name="credit_mastering">Mastérisé par</string>
-=======
     <string name="sing_mode">Mode chant</string>
     <string name="sing_mode_subtitle">Atténue la voix au centre du mix en gardant les basses et la batterie. Titres stéréo uniquement</string>
     <string name="sing_mode_on">Mode chant : activer</string>
     <string name="sing_mode_off">Mode chant : désactiver</string>
->>>>>>> feat/sing-mode
 </resources>
