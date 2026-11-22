@@ -1468,4 +1468,20 @@
     <string name="new_release_notifications_subtitle">Reçois une notification quand un artiste que tu suis sort quelque chose. Vérifié deux fois par jour, en Wi-Fi uniquement</string>
     <string name="new_releases_channel">Nouveautés</string>
     <string name="new_release_title">Du nouveau chez %1$s</string>
+    <string name="credits">Crédits</string>
+    <string name="credits_failed">Impossible de charger les crédits. Réessaie plus tard.</string>
+    <string name="credits_none">Aucun crédit trouvé pour ce titre.</string>
+    <string name="credits_source">Crédits fournis par MusicBrainz</string>
+    <string name="credit_performer">Interprètes</string>
+    <string name="credit_vocals">Voix</string>
+    <string name="credit_instrument">Instruments</string>
+    <string name="credit_composer">Composé par</string>
+    <string name="credit_lyricist">Paroles de</string>
+    <string name="credit_writer">Écrit par</string>
+    <string name="credit_arranger">Arrangé par</string>
+    <string name="credit_producer">Produit par</string>
+    <string name="credit_mix">Mixé par</string>
+    <string name="credit_engineer">Ingénierie du son</string>
+    <string name="credit_recording">Enregistré par</string>
+    <string name="credit_mastering">Mastérisé par</string>
 </resources>
