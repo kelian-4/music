@@ -283,6 +283,9 @@ fun SettingsScreen(
     val wifiOnlyDownloads by AppSettings.wifiOnlyDownloads.collectAsStateWithLifecycle()
     val exportDownloads by AppSettings.exportDownloads.collectAsStateWithLifecycle()
     val syncDownloadedPlaylists by AppSettings.syncDownloadedPlaylists.collectAsStateWithLifecycle()
+    val newReleaseNotifications by AppSettings.newReleaseNotifications.collectAsStateWithLifecycle()
+    val notifyPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
+    val settingsContext = androidx.compose.ui.platform.LocalContext.current
     val stopOnTaskRemoved by AppSettings.stopOnTaskRemoved.collectAsStateWithLifecycle()
     val hideVolumeBar by AppSettings.hideVolumeBar.collectAsStateWithLifecycle()
     val hideStatusBarInPlayer by AppSettings.hideStatusBarInPlayer.collectAsStateWithLifecycle()
@@ -661,6 +664,25 @@ fun SettingsScreen(
                     checked = syncDownloadedPlaylists,
                     onCheckedChange = AppSettings::setSyncDownloadedPlaylists,
                     subtitle = stringResource(R.string.sync_downloaded_playlists_subtitle),
+                )
+            }
+            val newReleasesTitle = stringResource(R.string.new_release_notifications)
+            row(newReleasesTitle, "release", "new music", "notification", "artist", "follow") {
+                SettingsSubRow(
+                    title = newReleasesTitle,
+                    checked = newReleaseNotifications,
+                    onCheckedChange = { on ->
+                        AppSettings.setNewReleaseNotifications(on)
+                        if (on && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                            androidx.core.content.ContextCompat.checkSelfPermission(
+                                settingsContext,
+                                android.Manifest.permission.POST_NOTIFICATIONS,
+                            ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                        ) {
+                            notifyPermission.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                        }
+                    },
+                    subtitle = stringResource(R.string.new_release_notifications_subtitle),
                 )
             }
         }

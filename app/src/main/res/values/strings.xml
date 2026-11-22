@@ -1338,4 +1338,8 @@
     <string name="pin_move_first">Move pin to the front</string>
     <string name="move_to_folder">Move to folder</string>
     <string name="no_folder">No folder</string>
+    <string name="new_release_notifications">New release alerts</string>
+    <string name="new_release_notifications_subtitle">Get a notification when an artist you follow releases something new. Checked twice a day, on Wi-Fi only</string>
+    <string name="new_releases_channel">New releases</string>
+    <string name="new_release_title">New from %1$s</string>
 </resources>

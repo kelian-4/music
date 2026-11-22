@@ -1464,4 +1464,8 @@
     <string name="pin_move_first">Placer l\'épingle en premier</string>
     <string name="move_to_folder">Déplacer vers un dossier</string>
     <string name="no_folder">Aucun dossier</string>
+    <string name="new_release_notifications">Alertes nouveautés</string>
+    <string name="new_release_notifications_subtitle">Reçois une notification quand un artiste que tu suis sort quelque chose. Vérifié deux fois par jour, en Wi-Fi uniquement</string>
+    <string name="new_releases_channel">Nouveautés</string>
+    <string name="new_release_title">Du nouveau chez %1$s</string>
 </resources>
