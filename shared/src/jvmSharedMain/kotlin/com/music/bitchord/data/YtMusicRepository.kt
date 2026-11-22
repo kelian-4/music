@@ -1032,6 +1032,10 @@ object YtMusicRepository {
     /**
      * All playlists in user library (including Liked Music and saved playlists).
      */
+    suspend fun subscribedArtists(): Result<List<ShelfItem>> = call("subscribedArtists") {
+        libraryItemsPaged("FEmusic_library_corpus_artists")
+    }
+
     suspend fun libraryPlaylists(): Result<List<ShelfItem>> = call("libraryPlaylists") {
         InnertubeParser.parseLibraryItems(Innertube.browse(LIBRARY_PLAYLISTS))
     }
