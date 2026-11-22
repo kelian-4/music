@@ -38,6 +38,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -50,6 +53,8 @@ import com.music.bitchord.data.model.LibraryPage
 import com.music.bitchord.data.model.ShelfItem
 import com.music.bitchord.data.model.UiState
 import com.music.bitchord.data.settings.LibrarySort
+import com.music.bitchord.data.settings.PlaylistFoldersPolicy
+import com.music.bitchord.ui.components.PlaylistFolderBar
 import com.music.bitchord.ui.AppUi
 import com.music.bitchord.ui.icons.BitChordIcons
 import com.music.bitchord.ui.components.LIBRARY_GRID_SPACING
@@ -203,9 +208,34 @@ fun LibraryScreen(
                     shelves.forEach { shelf ->
                         item(key = "shelf:${shelf.title}") {
                             if (shelf.title == PLAYLISTS) {
-                                val pinnedFirst = shelf.pinnedFirst(pinnedPlaylists)
+                                val folders by AppUi.host.playlistFolders.collectAsStateWithLifecycle()
+                                var selectedFolder by rememberSaveable { mutableStateOf<String?>(null) }
+                                val pinnedFirst = shelf.pinnedFirst(pinnedPlaylists).let { ordered ->
+                                    ordered.copy(
+                                        items = PlaylistFoldersPolicy.visible(
+                                            ordered.items,
+                                            { it.browseId },
+                                            folders,
+                                            selectedFolder,
+                                        ),
+                                    )
+                                }
                                 PlaylistShelf(
                                     shelf = pinnedFirst,
+                                    belowHeader = if (AppUi.host.supportsPlaylistFolders) {
+                                        {
+                                            PlaylistFolderBar(
+                                                folders = folders,
+                                                selectedId = selectedFolder,
+                                                onSelect = { selectedFolder = it },
+                                                onCreate = AppUi.host::createPlaylistFolder,
+                                                onRename = AppUi.host::renamePlaylistFolder,
+                                                onDelete = AppUi.host::deletePlaylistFolder,
+                                            )
+                                        }
+                                    } else {
+                                        null
+                                    },
                                     onItemClick = onShelfItemClick,
                                     onItemLongPress = onShelfItemLongPress,
                                     onNewPlaylist = onNewPlaylist,
@@ -311,6 +341,7 @@ private fun PlaylistShelf(
     onImportSpotifyPlaylist: (() -> Unit)? = null,
     onShowAll: () -> Unit,
     pinnedPlaylists: List<String> = emptyList(),
+    belowHeader: (@Composable () -> Unit)? = null,
 ) {
     LibraryGridShelf(
         shelf = shelf,
@@ -318,6 +349,7 @@ private fun PlaylistShelf(
         onItemLongPress = onItemLongPress,
         onShowAll = onShowAll,
         pinnedPlaylists = pinnedPlaylists,
+        belowHeader = belowHeader,
         leadingCard = {
             Row(horizontalArrangement = Arrangement.spacedBy(LIBRARY_GRID_SPACING)) {
                 NewShelfCard(
@@ -361,6 +393,7 @@ internal fun LibraryGridShelf(
     onShowAll: () -> Unit,
     leadingCard: (@Composable () -> Unit)? = null,
     pinnedPlaylists: List<String> = emptyList(),
+    belowHeader: (@Composable () -> Unit)? = null,
 ) {
     val leadingCount = if (leadingCard != null) 1 else 0
     val visibleItems = shelf.items.take((LIBRARY_ROW_MAX_ITEMS - leadingCount).coerceAtLeast(0))
@@ -370,6 +403,7 @@ internal fun LibraryGridShelf(
             subtitle = shelf.subtitle,
             onShowAll = onShowAll.takeIf { shelf.items.size + leadingCount > LIBRARY_ROW_MAX_ITEMS },
         )
+        belowHeader?.invoke()
         ShelfRow(
             contentPadding = PaddingValues(horizontal = PAGE_GUTTER),
             horizontalArrangement = Arrangement.spacedBy(LIBRARY_GRID_SPACING),

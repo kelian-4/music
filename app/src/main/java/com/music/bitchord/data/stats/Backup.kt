@@ -23,8 +23,6 @@ import java.time.format.DateTimeFormatter
  *
  * ## What is in it
  *
- * Every preference except credentials (see [AppSettings.exportPrefs]), and every
- * month of listening. Not the audio cache, the downloads or the artwork: those
  * are megabytes that re-fetch themselves, and a backup that is mostly cache is
  * one nobody keeps.
  *
