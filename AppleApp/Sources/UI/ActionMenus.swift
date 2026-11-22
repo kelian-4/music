@@ -113,6 +113,11 @@ struct SongActionButtons: View {
                 appModel.pendingDetail = .detail(browseId: artistId, title: entry.artist)
             }
         }
+        if entry.videoId != nil {
+            Button("Credits", systemImage: "person.2") {
+                toast.showCredits(entry)
+            }
+        }
         ShareLink(item: shareURL) {
             Label("Share", systemImage: "square.and.arrow.up")
         }

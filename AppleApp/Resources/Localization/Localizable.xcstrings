@@ -14563,7 +14563,167 @@
     "sp_dc cookie": {},
     "{song_name}, {artist_name} and {album_name} are replaced with the track. The first button opens the song on YouTube Music, the second this project.": {},
     "“%@” is in two places": {},
-    "•": {}
+    "•": {},
+    "Credits": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crédits"
+          }
+        }
+      }
+    },
+    "Could not load the credits. Try again later.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de charger les crédits. Réessaie plus tard."
+          }
+        }
+      }
+    },
+    "No credits found for this song.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun crédit trouvé pour ce titre."
+          }
+        }
+      }
+    },
+    "Credits from MusicBrainz": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crédits fournis par MusicBrainz"
+          }
+        }
+      }
+    },
+    "Performers": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Interprètes"
+          }
+        }
+      }
+    },
+    "Vocals": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voix"
+          }
+        }
+      }
+    },
+    "Instruments": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instruments"
+          }
+        }
+      }
+    },
+    "Composed by": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Composé par"
+          }
+        }
+      }
+    },
+    "Lyrics by": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paroles de"
+          }
+        }
+      }
+    },
+    "Written by": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écrit par"
+          }
+        }
+      }
+    },
+    "Arranged by": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrangé par"
+          }
+        }
+      }
+    },
+    "Produced by": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Produit par"
+          }
+        }
+      }
+    },
+    "Mixed by": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mixé par"
+          }
+        }
+      }
+    },
+    "Engineered by": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ingénierie du son par"
+          }
+        }
+      }
+    },
+    "Recorded by": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistré par"
+          }
+        }
+      }
+    },
+    "Mastered by": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masterisé par"
+          }
+        }
+      }
+    }
   },
   "version": "1.0"
 }
