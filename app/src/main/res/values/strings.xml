@@ -1332,4 +1332,20 @@
     <string name="diwali_title">BitChord wishes you a Happy Diwali</string>
     <string name="diwali_subtitle">May this festival of lights fill your home with joy and your days with music.</string>
     <string name="diwali_cta">Let\'s Celebrate</string>
+    <string name="credits">Credits</string>
+    <string name="credits_failed">Could not load the credits. Try again later.</string>
+    <string name="credits_none">No credits found for this song.</string>
+    <string name="credits_source">Credits from MusicBrainz</string>
+    <string name="credit_performer">Performers</string>
+    <string name="credit_vocals">Vocals</string>
+    <string name="credit_instrument">Instruments</string>
+    <string name="credit_composer">Composed by</string>
+    <string name="credit_lyricist">Lyrics by</string>
+    <string name="credit_writer">Written by</string>
+    <string name="credit_arranger">Arranged by</string>
+    <string name="credit_producer">Produced by</string>
+    <string name="credit_mix">Mixed by</string>
+    <string name="credit_engineer">Engineered by</string>
+    <string name="credit_recording">Recorded by</string>
+    <string name="credit_mastering">Mastered by</string>
 </resources>

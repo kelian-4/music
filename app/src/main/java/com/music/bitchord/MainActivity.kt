@@ -677,6 +677,8 @@ private fun BitChordApp(
     var showSpotifyLogin by remember { mutableStateOf(false) }
     var discordDialog by remember { mutableStateOf<DiscordDialog?>(null) }
     var songActions by remember { mutableStateOf<Song?>(null) }
+    var creditsSong by remember { mutableStateOf<Song?>(null) }
+    creditsSong?.let { com.music.bitchord.ui.components.CreditsSheet(it) { creditsSong = null } }
     var showLyricsOffset by remember { mutableStateOf(false) }
     /**
      * Whether the track menu that is up was opened from the player.
@@ -4446,6 +4448,14 @@ private fun BitChordApp(
             SongActionsMenu(
                 song = song,
                 signedIn = signedIn,
+                onShowCredits = if (song.localUri == null) {
+                    {
+                        songActions = null
+                        creditsSong = song
+                    }
+                } else {
+                    null
+                },
                 likeStatus = likeStatusOf(song),
                 onPlayNext = { playNext(song); songActions = null },
                 onAddToQueue = { addToQueue(song); songActions = null },
