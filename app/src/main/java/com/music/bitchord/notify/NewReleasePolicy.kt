@@ -1,7 +1,9 @@
 package com.music.bitchord.notify
 
-import org.json.JSONArray
-import org.json.JSONObject
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.json.Json
 
 data class ReleaseRef(val id: String, val title: String)
 
@@ -39,20 +41,15 @@ object NewReleasePolicy {
     fun toAnnounce(findings: List<Pair<String, List<ReleaseRef>>>): List<Pair<String, List<ReleaseRef>>> =
         findings.filter { it.second.isNotEmpty() }.take(MAX_NOTIFICATIONS_PER_CHECK)
 
-    fun encode(seen: Map<String, Set<String>>): String {
-        val root = JSONObject()
-        seen.forEach { (artist, ids) -> root.put(artist, JSONArray(ids.toList())) }
-        return root.toString()
-    }
+    private val serializer = MapSerializer(String.serializer(), ListSerializer(String.serializer()))
+
+    fun encode(seen: Map<String, Set<String>>): String =
+        Json.encodeToString(serializer, seen.mapValues { it.value.toList() })
 
     fun decode(stored: String?): Map<String, Set<String>> {
         if (stored.isNullOrBlank()) return emptyMap()
         return runCatching {
-            val root = JSONObject(stored)
-            root.keys().asSequence().associateWith { key ->
-                val array = root.getJSONArray(key)
-                (0 until array.length()).mapTo(LinkedHashSet()) { array.getString(it) }
-            }
+            Json.decodeFromString(serializer, stored).mapValues { it.value.toCollection(LinkedHashSet()) }
         }.getOrDefault(emptyMap())
     }
 }
