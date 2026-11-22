@@ -171,6 +171,8 @@ fun SongActionsMenu(
     onCopyLog: (() -> Unit)? = null,
     /** Opens the timing control offered only by the main player's menu. */
     onLyricsOffset: (() -> Unit)? = null,
+    singModeOn: Boolean = false,
+    onToggleSingMode: (() -> Unit)? = null,
     /**
      * Opens the Automix mix popup on the next transition. Null hides the row —
      * the player passes one only while Automix is on.
@@ -400,6 +402,14 @@ fun SongActionsMenu(
             // Local files and completed downloads use the same player lyric
             // clock (including embedded synced lyrics), so they need this
             // control just as much as streamed songs do.
+            onToggleSingMode?.let {
+                ActionRow(
+                    icon = SfIcons.GraphicEq,
+                    label = stringResource(if (singModeOn) R.string.sing_mode_off else R.string.sing_mode_on),
+                    accent = palette.accent,
+                    onClick = it,
+                )
+            }
             onLyricsOffset?.let {
                 ActionRow(
                     icon = SfIcons.Sliders,

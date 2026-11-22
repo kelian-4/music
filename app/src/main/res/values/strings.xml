@@ -1332,4 +1332,8 @@
     <string name="diwali_title">BitChord wishes you a Happy Diwali</string>
     <string name="diwali_subtitle">May this festival of lights fill your home with joy and your days with music.</string>
     <string name="diwali_cta">Let\'s Celebrate</string>
+    <string name="sing_mode">Sing mode</string>
+    <string name="sing_mode_subtitle">Lowers the voice in the centre of the mix, keeping bass and drums. Stereo songs only</string>
+    <string name="sing_mode_on">Sing mode: turn on</string>
+    <string name="sing_mode_off">Sing mode: turn off</string>
 </resources>

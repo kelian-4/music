@@ -4443,9 +4443,19 @@ private fun BitChordApp(
                 value = song.localUri == null &&
                     withContext(Dispatchers.IO) { AudioCache.holds(song.videoId) }
             }
+            val singModeOn by AppSettings.singMode.collectAsStateWithLifecycle()
             SongActionsMenu(
                 song = song,
                 signedIn = signedIn,
+                singModeOn = singModeOn,
+                onToggleSingMode = if (fromPlayer) {
+                    {
+                        AppSettings.setSingMode(!singModeOn)
+                        songActions = null
+                    }
+                } else {
+                    null
+                },
                 likeStatus = likeStatusOf(song),
                 onPlayNext = { playNext(song); songActions = null },
                 onAddToQueue = { addToQueue(song); songActions = null },
