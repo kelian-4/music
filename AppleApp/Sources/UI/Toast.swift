@@ -46,6 +46,7 @@ final class ToastCenter {
     /// is torn down with it and never appears. This rides the one presenter
     /// that is always in the hierarchy instead.
     private(set) var trackLogEntry: QueueEntry?
+    private(set) var creditsEntry: QueueEntry?
     /// A destructive-action confirmation, served by `ToastHost`'s sheet.
     /// Same reason as `trackLogEntry`: confirmations raised from menus need a
     /// presenter that outlives the menu.
@@ -103,6 +104,14 @@ final class ToastCenter {
 
     func dismissTrackLog() {
         trackLogEntry = nil
+    }
+
+    func showCredits(_ entry: QueueEntry) {
+        creditsEntry = entry
+    }
+
+    func dismissCredits() {
+        creditsEntry = nil
     }
 
     /// Ask for confirmation before a destructive action. The dialog's Confirm
@@ -164,6 +173,9 @@ struct ToastHost: View {
         .sheet(item: trackLogBinding) { entry in
             TrackLogSheet(entry: entry)
         }
+        .sheet(item: creditsBinding) { entry in
+            CreditsSheet(entry: entry)
+        }
         .sheet(item: confirmationBinding) { request in
             ConfirmationDialog(
                 title: request.title,
@@ -185,6 +197,13 @@ struct ToastHost: View {
         Binding(
             get: { center.trackLogEntry },
             set: { if $0 == nil { center.dismissTrackLog() } }
+        )
+    }
+
+    private var creditsBinding: Binding<QueueEntry?> {
+        Binding(
+            get: { center.creditsEntry },
+            set: { if $0 == nil { center.dismissCredits() } }
         )
     }
 
