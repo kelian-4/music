@@ -597,6 +597,7 @@ final class AppModel {
         /// One of the listener's own playlists, opened from the iPad sidebar.
         /// Which one is the sidebar's state; the tab only gives it a page.
         case sidebarPlaylist
+        case radio
     }
 }
 

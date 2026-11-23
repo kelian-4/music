@@ -695,8 +695,11 @@ struct RootView: View {
                 Tab("Home", systemImage: "house.fill", value: RootPage.tab(.home)) {
                     HomeView(feed: homeFeed)
                 }
-                Tab("Explore", systemImage: "square.grid.2x2.fill", value: RootPage.tab(.explore)) {
+                Tab("New", systemImage: "square.grid.2x2.fill", value: RootPage.tab(.explore)) {
                     ExploreView()
+                }
+                Tab("Radio", systemImage: "dot.radiowaves.left.and.right", value: RootPage.tab(.radio)) {
+                    RadioView()
                 }
                 Tab("Library", systemImage: "square.stack.fill", value: RootPage.tab(.library)) {
                     LibraryView()
@@ -815,7 +818,7 @@ enum MacSide: Hashable {
     /// has one row for each of them.
     init(tab: AppModel.Tab) {
         switch tab {
-        case .home: self = .home
+        case .home, .radio: self = .home
         case .explore: self = .explore
         case .library, .libraryYouTube: self = .recent
         case .librarySongs: self = .songs
