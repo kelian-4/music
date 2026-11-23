@@ -516,6 +516,18 @@ final class DownloadStore {
         if removedAsset || jobs.count != previousJobs || index.bindings.count != previousBindings { persist() }
     }
     func networkPolicyChanged() { pump() }
+    @ObservationIgnored private var retryWake: Task<Void, Never>?
+    private func scheduleRetryWake() {
+        retryWake?.cancel()
+        retryWake = nil
+        let queued = jobs.filter { $0.status == .queued && !$0.cancelled }.map(\.retryAt)
+        guard let delay = DownloadRetryPolicy.nextWake(retryDates: queued) else { return }
+        retryWake = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(delay + 0.2))
+            guard !Task.isCancelled else { return }
+            self?.pump()
+        }
+    }
     private func pump() {
         guard writable, workersEnabled else { return }
         guard jobs.contains(where: { $0.status == .queued || $0.status == .running }) else { return }
@@ -557,8 +569,8 @@ final class DownloadStore {
                             self.jobs[i].attempts = max(0, self.jobs[i].attempts - 1)
                             self.jobs[i].retryAt = nil
                         } else {
-                            self.jobs[i].status = self.jobs[i].attempts < 3 ? .queued : .failed
-                            self.jobs[i].retryAt = Date().addingTimeInterval(pow(2, Double(self.jobs[i].attempts)) * 2)
+                            self.jobs[i].status = DownloadRetryPolicy.shouldRetry(afterAttempts: self.jobs[i].attempts) ? .queued : .failed
+                            self.jobs[i].retryAt = Date().addingTimeInterval(DownloadRetryPolicy.backoff(afterAttempts: self.jobs[i].attempts))
                         }
                         PlaybackDebugLog.shared.record("download failed: \(error)", about: id)
                     }
@@ -567,6 +579,7 @@ final class DownloadStore {
                 self.persist(); self.refresh(); self.pump()
             }
         }
+        scheduleRetryWake()
     }
     private func transfer(_ job: Job, version: UUID) async throws {
         let progress: DownloadProgressHandler = { [weak self] received, total in
