@@ -72,9 +72,9 @@ struct AudioSettingsPageView: View {
                 SettingsLine(glyph: .sources, title: item.title, subtitle: "Where audio comes from, and in what order") { EmptyView() }
             }
         case .wifi:
-            qualityPicker(LocalizedStringKey(item.title), selection: preferences.$wifiQuality, inUse: !metered)
+            qualityPicker(item.title, selection: preferences.$wifiQuality, inUse: !metered)
         case .cellular:
-            qualityPicker(LocalizedStringKey(item.title), selection: preferences.$cellQuality, inUse: metered)
+            qualityPicker(item.title, selection: preferences.$cellQuality, inUse: metered)
         case .soundMode:
             VStack(alignment: .leading, spacing: 6) {
                 Picker(LocalizedStringKey(item.title), selection: Binding(get: { controller.soundMode }, set: { controller.updateSoundMode($0) })) {

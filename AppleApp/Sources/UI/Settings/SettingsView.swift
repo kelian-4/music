@@ -285,7 +285,7 @@ struct SettingsView: View {
             let access = url.startAccessingSecurityScopedResource()
             defer { if access { url.stopAccessingSecurityScopedResource() } }
             if let data = try? Data(contentsOf: url), let text = String(data: data, encoding: .utf8) {
-                AmberBackup.importText(LocalizedStringKey(text))
+                AmberBackup.importText(text)
                 backupNote = "Imported — reopen Settings to see them"
             }
         }
