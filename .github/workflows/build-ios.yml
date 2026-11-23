@@ -1,0 +1,68 @@
+# Builds the unsigned iOS IPA only (no Mac DMG, no release, no appcast), as a
+# workflow artifact to install with SideStore.
+#
+# macOS minutes are the expensive ones, so a push builds only when its commit
+# message contains [build]; a manual run from the Actions tab always builds.
+name: Build iOS (unsigned IPA)
+
+on:
+  push:
+    branches: ['feat/**', 'ci/**']
+  workflow_dispatch:
+
+concurrency:
+  group: build-ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ios:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[build]')
+    # Xcode 27 image, generally available since October 2026.
+    runs-on: xcode-27
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode 27
+        run: |
+          xcode="$(ls -d /Applications/Xcode_27*.app 2>/dev/null | grep -vi beta | sort -V | tail -1)"
+          [[ -n "$xcode" ]] || { echo "::error::This runner image has no Xcode 27"; ls -d /Applications/Xcode*.app; exit 1; }
+          sudo xcode-select -s "$xcode/Contents/Developer"
+          xcodebuild -version
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Install Rust target and XcodeGen
+        run: |
+          rustup target add aarch64-apple-ios
+          brew install xcodegen
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.konan
+            ~/.cargo/registry
+            ~/.cargo/git
+            native-core/target
+          key: build-${{ runner.os }}-${{ hashFiles('native-core/Cargo.lock', '*.gradle.kts', 'shared/*.gradle.kts','gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: build-${{ runner.os }}-
+
+      - name: Build the unsigned IPA
+        run: |
+          version="$(sed -n 's/^ *MARKETING_VERSION: "\(.*\)"$/\1/p' AppleApp/project.yml | head -1)"
+          # Device slice only: the IPA never runs in the Simulator.
+          NATIVE_TARGETS="aarch64-apple-ios" scripts/build-native-core.sh
+          CONFIG=release scripts/build-shared-framework.sh
+          (cd AppleApp && xcodegen generate --spec project.yml)
+          BITCHORD_BUILD_REVISION="$(git rev-parse --short=12 HEAD)" \
+            scripts/package-ios-ipa.sh "$version" --output-dir build/ipa --overwrite
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bitchord-ios-unsigned-ipa
+          path: build/ipa/*.ipa
+          retention-days: 14
