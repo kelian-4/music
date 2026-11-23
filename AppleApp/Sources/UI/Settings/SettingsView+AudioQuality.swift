@@ -43,7 +43,29 @@ extension SettingsView {
 
     // MARK: - Downloads
 
+    var dataSaverBinding: Binding<Bool> {
+        Binding(
+            get: { dataSaver },
+            set: { value in
+                dataSaver = value
+                AppSettings.shared.setDataSaver(value: value)
+                cellQuality = PlatformSettings.shared.getString(key: "audio_quality_cellular", default: "LOSSLESS")
+                wifiOnlyDownloads = PlatformSettings.shared.getBoolean(key: "wifi_only_downloads", default: true)
+                canvasCellular = PlatformSettings.shared.getBoolean(key: "canvas_over_cellular", default: false)
+                DownloadStore.shared.networkPolicyChanged()
+            }
+        )
+    }
+
     func buildDownloadRows(_ rows: inout SettingsRows) {
+        rows.row("Data Saver", "data", "saver", "low data", "cellular", "mobile data", "bandwidth", "quality") {
+            SettingsToggleLine(
+                glyph: .download,
+                title: String(localized: "Data Saver"),
+                subtitle: String(localized: "Caps mobile streaming at Low, downloads on Wi-Fi only, no canvas videos on mobile data. Turning it off puts your own choices back"),
+                isOn: dataSaverBinding
+            )
+        }
         qualityRow(
             &rows,
             glyph: .download,

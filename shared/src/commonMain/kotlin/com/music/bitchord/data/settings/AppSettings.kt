@@ -196,6 +196,32 @@ object AppSettings {
         settings.putBoolean("wifi_only_downloads", value)
     }
 
+    private val _dataSaver = MutableStateFlow(settings.getBoolean("data_saver", false))
+    val dataSaver: StateFlow<Boolean> = _dataSaver.asStateFlow()
+    fun setDataSaver(value: Boolean) {
+        if (value == _dataSaver.value) return
+        if (value) {
+            val current = DataSaverValues(
+                _audioQualityCellular.value,
+                _wifiOnlyDownloads.value,
+                _canvasOverCellular.value,
+            )
+            settings.putString("data_saver_snapshot", DataSaverPolicy.encode(current))
+            val saving = DataSaverPolicy.applied(current)
+            setAudioQualityCellular(saving.cellularQuality.name)
+            setWifiOnlyDownloads(saving.wifiOnlyDownloads)
+            setCanvasOverCellular(saving.canvasOverCellular)
+        } else {
+            DataSaverPolicy.decode(settings.getString("data_saver_snapshot", ""))?.let { before ->
+                setAudioQualityCellular(before.cellularQuality.name)
+                setWifiOnlyDownloads(before.wifiOnlyDownloads)
+                setCanvasOverCellular(before.canvasOverCellular)
+            }
+        }
+        _dataSaver.value = value
+        settings.putBoolean("data_saver", value)
+    }
+
     private val _showNerdStats = MutableStateFlow(settings.getBoolean("show_nerd_stats", false))
     val showNerdStats: StateFlow<Boolean> = _showNerdStats.asStateFlow()
     fun setShowNerdStats(value: Boolean) {
@@ -1093,6 +1119,7 @@ object AppSettings {
             "crossfade_seconds", "smart_fade_enabled", "spatial_audio", "autoplay",
             "skip_silence", "trim_edge_silence", "skip_non_music", "playback_speed", "audio_quality_wifi", "audio_quality_cellular",
             "download_quality", "wifi_only_downloads", "show_nerd_stats", "animated_canvas",
+            "data_saver", "data_saver_snapshot",
             "canvas_over_cellular", "prioritize_spotify_canvas", "theme_mode", "reduce_dynamic_blur", "reduce_animation",
             "full_bleed_artwork", "synced_lyrics", "dolby_atmos", "lyrics_blur", "translation_language", "convert_video_to_audio", "swipe_to_play_next",
             "dont_repeat_suggestions", "hide_volume_bar", "lyrics_sources", "lyrics_source_order",
@@ -1128,7 +1155,7 @@ object AppSettings {
                 "clarity_wet", "scrobble_delay_percent", "playback_speed" -> settings.getFloat(key, 0f).toString()
                 "smart_fade_enabled", "spatial_audio", "autoplay", "skip_silence", "trim_edge_silence", "skip_non_music",
                 "wifi_only_downloads", "show_nerd_stats", "animated_canvas", "canvas_over_cellular",
-                "prioritize_spotify_canvas",
+                "prioritize_spotify_canvas", "data_saver",
                 "reduce_dynamic_blur", "reduce_animation", "full_bleed_artwork", "synced_lyrics",
                 "convert_video_to_audio", "swipe_to_play_next", "dont_repeat_suggestions",
                 "hide_volume_bar", "jiosaavn_enabled", "stop_when_backgrounded",
@@ -1170,6 +1197,11 @@ object AppSettings {
                 "audio_quality_cellular" -> setAudioQualityCellular(value)
                 "download_quality" -> setDownloadQuality(value)
                 "wifi_only_downloads" -> setWifiOnlyDownloads(value.toBoolean())
+                "data_saver" -> {
+                    _dataSaver.value = value.toBoolean()
+                    settings.putBoolean("data_saver", _dataSaver.value)
+                }
+                "data_saver_snapshot" -> settings.putString("data_saver_snapshot", value)
                 "show_nerd_stats" -> setShowNerdStats(value.toBoolean())
                 "animated_canvas" -> setAnimatedCanvas(value.toBoolean())
                 "canvas_over_cellular" -> setCanvasOverCellular(value.toBoolean())
