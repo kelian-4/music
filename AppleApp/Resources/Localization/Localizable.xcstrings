@@ -1936,7 +1936,16 @@
     "Core ML · Neural Engine": {},
     "Could not translate this lyric": {},
     "Couldn't load": {},
-    "Create": {},
+    "Create": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Créer"
+          }
+        }
+      }
+    },
     "Create a party": {
       "localizations": {
         "de": {
@@ -14580,6 +14589,96 @@
           "stringUnit": {
             "state": "translated",
             "value": "Limite le streaming mobile à Faible, télécharge en Wi-Fi uniquement, pas de vidéos canvas en données mobiles. En le désactivant, tes propres réglages reviennent"
+          }
+        }
+      }
+    },
+    "All": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout"
+          }
+        }
+      }
+    },
+    "New Folder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouveau dossier"
+          }
+        }
+      }
+    },
+    "Rename Folder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renommer le dossier"
+          }
+        }
+      }
+    },
+    "Delete Folder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer le dossier"
+          }
+        }
+      }
+    },
+    "Folder Name": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nom du dossier"
+          }
+        }
+      }
+    },
+    "The playlists in this folder are kept.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les playlists de ce dossier sont conservées."
+          }
+        }
+      }
+    },
+    "Pick a name that is not empty and not already used": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisis un nom non vide et pas déjà utilisé"
+          }
+        }
+      }
+    },
+    "Move to Folder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Déplacer vers un dossier"
+          }
+        }
+      }
+    },
+    "No Folder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun dossier"
           }
         }
       }

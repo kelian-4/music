@@ -439,6 +439,7 @@ struct BrowseActionButtons: View {
         Button("Shuffle") {
             Task { await playCollection(browseId, shuffle: true) }
         }
+        PlaylistFolderMenu(browseId: browseId)
         if auth.signedIn {
             if browseId.hasPrefix("VL") || browseId.hasPrefix("PL") {
                 Button("Rename Playlist…") {

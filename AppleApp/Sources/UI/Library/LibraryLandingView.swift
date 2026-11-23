@@ -21,6 +21,8 @@ struct LibraryLandingView: View {
     @State private var local = LocalLibrary.shared
     @State private var shelves: [FeedShelf] = []
     @AppStorage(PinnedItems.storageKey) private var pinnedRevision = ""
+    @State private var selectedFolder: String?
+    @AppStorage(PlaylistFolders.storageKey) private var foldersRevision = ""
     @State private var dataGeneration: Int64?
     @State private var loading = true
     @State private var error: String?
@@ -164,6 +166,7 @@ struct LibraryLandingView: View {
     private var signedInShelves: some View {
         VStack(alignment: .leading, spacing: 26) {
             let sortedShelves = pinnedShelves(shelves)
+            let _ = foldersRevision
             let hasPlaylists = sortedShelves.contains { isPlaylistsShelf($0) }
             let _ = pinnedRevision
             let pinnedCards = PinnedItems.cards()
@@ -204,6 +207,9 @@ struct LibraryLandingView: View {
                     }
                 }
             }
+            if isPlaylists {
+                PlaylistFolderBar(selectedId: $selectedFolder)
+            }
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .top, spacing: 14) {
                     if isPlaylists {
@@ -237,7 +243,11 @@ struct LibraryLandingView: View {
                 if ap == bp { return false }
                 return ap && !bp
             }
-            return FeedShelf(title: shelf.title, items: items, subtitle: shelf.subtitle)
+            return FeedShelf(
+                title: shelf.title,
+                items: PlaylistFolders.visible(items, selectedId: selectedFolder),
+                subtitle: shelf.subtitle
+            )
         }
     }
 
