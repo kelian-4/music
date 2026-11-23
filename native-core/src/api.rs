@@ -525,7 +525,7 @@ mod memory_tests {
 
     #[test]
     fn analysis_wav_matches_the_region_decode() {
-        let dir = std::env::temp_dir().join(format!("bitchord-wav-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("amber-wav-{}", std::process::id()));
         std::fs::create_dir_all(&dir).unwrap();
         let dest = dir.join("a.wav");
         write_analysis_wav_impl(&fixture(), dest.to_str().unwrap(), &Default::default(), 0.0, None).unwrap();

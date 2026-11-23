@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 import os
 #if os(iOS)
 import UIKit
@@ -60,7 +60,7 @@ extension PlaybackController {
     }
 
     func pollWidgetCommands() {
-        guard let defaults = UserDefaults(suiteName: "group.app.bitchord.Nyx Music"),
+        guard let defaults = UserDefaults(suiteName: "group.app.amber.Amber"),
               let cmd = defaults.string(forKey: "widget.command") else { return }
         defaults.removeObject(forKey: "widget.command")
         switch cmd {

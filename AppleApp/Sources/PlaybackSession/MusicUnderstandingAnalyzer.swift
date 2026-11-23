@@ -164,7 +164,7 @@ enum MusicUnderstandingAnalyzer {
                 guard let decode, let pcm = await Task.detached(priority: .utility, operation: {
                     PCMTranscode.write(path: path, writer: decode)
                 }).value else {
-                    NSLog("[BitChord] Music Understanding: could not decode %@", path)
+                    NSLog("[Amber] Music Understanding: could not decode %@", path)
                     return false
                 }
                 transcoded = pcm
@@ -212,7 +212,7 @@ enum MusicUnderstandingAnalyzer {
         } catch {
             guard !Task.isCancelled else { return false }
             if await isForeground() {
-                NSLog("[BitChord] Music Understanding failed for %@: %@", path, String(describing: error))
+                NSLog("[Amber] Music Understanding failed for %@: %@", path, String(describing: error))
             } else {
                 // Expected, not news: the GPU submission raced a lock and lost.
                 // Suspend the rest of this background stretch so the failure —

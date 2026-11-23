@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 
 extension PlaybackController {
     func pollStreamRecovery() {

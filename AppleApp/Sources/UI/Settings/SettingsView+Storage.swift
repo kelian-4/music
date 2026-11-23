@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 import UniformTypeIdentifiers
 #if os(iOS)
 import UIKit

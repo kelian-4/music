@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "bitchord-apple"
+rootProject.name = "amber-apple"
 
 include(":shared")
 

@@ -1,5 +1,5 @@
 // AppKit dispatches the same mouse/key events that the app's views receive.
-// Keep this probe's preferences separate from the listener's BitChord settings.
+// Keep this probe's preferences separate from the listener's Amber settings.
 @MainActor @Observable
 final class PlaybackController {
     var toggles = 0
@@ -118,7 +118,7 @@ private struct MacInteractionProbe {
     }
 
     @MainActor static func runChecks() -> Int32 {
-        let suite = "app.bitchord.interaction-tests.\(UUID().uuidString)"
+        let suite = "app.amber.interaction-tests.\(UUID().uuidString)"
         let preferences = UserDefaults(suiteName: suite)!
         defer {
             preferences.removePersistentDomain(forName: suite)

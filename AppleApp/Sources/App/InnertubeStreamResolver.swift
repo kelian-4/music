@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 
 /// A resolved YouTube Music stream: the URL the engine fetches plus the
 /// headers the CDN demands and the quality description for display.
@@ -181,7 +181,7 @@ final class InnertubeStreamResolver: Sendable {
                 return "That track isn’t available right now."
             }
             if said.contains("no signature timestamp") {
-                return "Nyx Music could not read YouTube’s player, so it could not open a stream. Check the connection and try again."
+                return "Amber could not read YouTube’s player, so it could not open a stream. Check the connection and try again."
             }
             return "Couldn’t open a stream for that track."
         }

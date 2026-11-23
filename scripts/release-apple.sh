@@ -34,7 +34,7 @@ if ! git diff --quiet HEAD -- || [[ -n "$(git ls-files --others --exclude-standa
   fail 'the working tree has uncommitted changes; a release is built from a clean commit'
 fi
 revision="$(git rev-parse --short=12 HEAD)"
-printf 'Building BitChord %s (build %s) at %s\n' "$version" "$spec_build" "$revision"
+printf 'Building Amber %s (build %s) at %s\n' "$version" "$spec_build" "$revision"
 
 if [[ "$skip_prereqs" -eq 0 ]]; then
   # Device slices only: a release never runs in the Simulator.
@@ -42,7 +42,7 @@ if [[ "$skip_prereqs" -eq 0 ]]; then
   CONFIG=release scripts/build-shared-framework.sh
   (cd AppleApp && xcodegen generate --spec project.yml)
 fi
-[[ -d AppleApp/BitChord.xcodeproj ]] || fail 'AppleApp/BitChord.xcodeproj is missing; run without --skip-prereqs'
+[[ -d AppleApp/Amber.xcodeproj ]] || fail 'AppleApp/Amber.xcodeproj is missing; run without --skip-prereqs'
 
 mkdir -p "$output_dir"
 output_dir="$(cd "$output_dir" && pwd)"
@@ -50,29 +50,29 @@ work="$repo_root/build/release-work"
 rm -rf "$work"
 mkdir -p "$work"
 
-BITCHORD_BUILD_REVISION="$revision" scripts/package-ios-ipa.sh "$version" --output-dir "$output_dir" --overwrite
+AMBER_BUILD_REVISION="$revision" scripts/package-ios-ipa.sh "$version" --output-dir "$output_dir" --overwrite
 
-archive="$work/BitChord-mac.xcarchive"
+archive="$work/Amber-mac.xcarchive"
 xcodebuild \
-  -project AppleApp/BitChord.xcodeproj \
-  -scheme BitChord \
+  -project AppleApp/Amber.xcodeproj \
+  -scheme Amber \
   -configuration Release \
   -destination 'generic/platform=macOS' \
   -archivePath "$archive" \
   -derivedDataPath "$work/DerivedData-mac" \
   archive \
-  BITCHORD_BUILD_REVISION="$revision" \
+  AMBER_BUILD_REVISION="$revision" \
   CODE_SIGNING_ALLOWED=NO \
   CODE_SIGNING_REQUIRED=NO \
   CODE_SIGN_IDENTITY=
 export_dir="$work/mac-export"
 mkdir -p "$export_dir"
-ditto "$archive/Products/Applications/BitChord.app" "$export_dir/BitChord.app"
+ditto "$archive/Products/Applications/Amber.app" "$export_dir/Amber.app"
 ditto "$archive/dSYMs" "$export_dir/dSYMs"
 scripts/package-mac-dmg.sh "$version" "$export_dir" --output-dir "$output_dir" --overwrite
 
-ipa="$output_dir/BitChord-$version-build$spec_build-ios-unsigned.ipa"
-dmg="$output_dir/BitChord-$version-build$spec_build-mac-arm64.dmg"
+ipa="$output_dir/Amber-$version-build$spec_build-ios-unsigned.ipa"
+dmg="$output_dir/Amber-$version-build$spec_build-mac-arm64.dmg"
 [[ -f "$ipa" ]] || fail "expected IPA not found: $ipa"
 [[ -f "$dmg" ]] || fail "expected DMG not found: $dmg"
 python3 scripts/prepare-apple-release.py --ipa "$ipa" --dmg "$dmg" --output-dir "$output_dir"

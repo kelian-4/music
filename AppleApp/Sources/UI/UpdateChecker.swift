@@ -4,7 +4,7 @@ import Observation
 /// One latest-release record supplies version, notes and the platform download.
 @MainActor @Observable final class UpdateChecker {
     static let shared = UpdateChecker()
-    static let latestReleaseURL = URL(string: "https://github.com/bagumamartin/BitChord/releases/latest")!
+    static let latestReleaseURL = URL(string: "https://github.com/kelian-4/music/releases/latest")!
     private(set) var available: AppReleaseUpdate?
     private(set) var latest: AppReleaseUpdate?
     private(set) var checking = false
@@ -26,7 +26,7 @@ import Observation
         #endif
     }
     var revision: String? {
-        guard let value = Bundle.main.object(forInfoDictionaryKey: "BitChordRevision") as? String,
+        guard let value = Bundle.main.object(forInfoDictionaryKey: "AmberRevision") as? String,
               !value.isEmpty, value != "unknown", !value.contains("$(") else { return nil }
         return value
     }
@@ -73,11 +73,11 @@ import Observation
     }
     private func fetchLatest() async -> AppReleaseUpdate? {
         do {
-            let data = try await fetch(URL(string: "https://api.github.com/repos/bagumamartin/BitChord/releases/latest")!)
+            let data = try await fetch(URL(string: "https://api.github.com/repos/kelian-4/music/releases/latest")!)
             let payload = try JSONDecoder().decode(GitHubReleasePayload.self, from: data)
             guard !payload.draft, !payload.prerelease,
                   let page = URL(string: payload.html_url), page.scheme == "https", page.host == "github.com",
-                  page.path.hasPrefix("/bagumamartin/BitChord/releases/tag/") else { return nil }
+                  page.path.hasPrefix("/kelian-4/music/releases/tag/") else { return nil }
             let version = payload.tag_name.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "^[vV]", with: "", options: .regularExpression)
             guard ReleaseIdentity(version: version, build: nil).compared(to: currentIdentity) != nil else { return nil }
             #if os(iOS)
@@ -85,7 +85,7 @@ import Observation
             #else
             let platform = "macos"
             #endif
-            let prefix = "/bagumamartin/BitChord/releases/download/\(payload.tag_name)/"
+            let prefix = "/kelian-4/music/releases/download/\(payload.tag_name)/"
             let assets = payload.assets.filter { $0.url?.path.hasPrefix(prefix) == true }
             var manifest: ReleaseManifest?
             let manifests = assets.filter { $0.name == "release.json" }
@@ -110,7 +110,7 @@ import Observation
     private func fetch(_ url: URL) async throws -> Data {
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
-        request.setValue("BitChord Apple updater", forHTTPHeaderField: "User-Agent")
+        request.setValue("Amber Apple updater", forHTTPHeaderField: "User-Agent")
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else { throw URLError(.badServerResponse) }
         return data
@@ -118,7 +118,7 @@ import Observation
 }
 
 enum UpdateAcknowledgementStore {
-    private static let key = "bitchord.acknowledgedUpdateVersions"
+    private static let key = "amber.acknowledgedUpdateVersions"
     static func contains(_ version: String) -> Bool { (UserDefaults.standard.stringArray(forKey: key) ?? []).contains(version) }
     static func record(_ version: String) {
         var versions = Set(UserDefaults.standard.stringArray(forKey: key) ?? [])
@@ -173,11 +173,11 @@ struct ReleaseInstallationView: View {
                 Link("View older release", destination: release.releaseUrl)
             } else {
                 #if os(macOS)
-                Text("Use Nyx Music’s Mac updater to download, verify and replace the app. It uses the project’s signed update feed.")
+                Text("Use Amber’s Mac updater to download, verify and replace the app. It uses the project’s signed update feed.")
                 Button("Open Mac Updater") { MacUpdateManager.shared.checkNow() }.buttonStyle(.borderedProminent)
-                Text("For a first installation or manual recovery, download the DMG, open it and move Nyx Music into Applications, replacing the existing app.").font(.footnote).foregroundStyle(.secondary)
+                Text("For a first installation or manual recovery, download the DMG, open it and move Amber into Applications, replacing the existing app.").font(.footnote).foregroundStyle(.secondary)
                 #else
-                Text("Download the IPA, then sign and install it with the same signing app and identity used for your current Nyx Music. Keeping the same app identity preserves its local data.")
+                Text("Download the IPA, then sign and install it with the same signing app and identity used for your current Amber. Keeping the same app identity preserves its local data.")
                 #endif
                 if let download = release.download, let url = download.url {
                     Link(destination: url) { Text(download.name.lowercased().hasSuffix(".ipa") ? "Download iOS IPA" : "Download Mac DMG") }

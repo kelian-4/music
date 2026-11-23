@@ -7,7 +7,7 @@ import BackgroundTasks
 @MainActor
 final class NewReleaseNotifier {
     static let shared = NewReleaseNotifier()
-    static let taskIdentifier = "app.bitchord.newreleases"
+    static let taskIdentifier = "app.amber.newreleases"
 
     private static let enabledKey = "new_release_notifications"
     private static let seenKey = "new_release_seen"

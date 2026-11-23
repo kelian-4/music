@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 import UniformTypeIdentifiers
 #if os(iOS)
 import UIKit
@@ -130,7 +130,7 @@ extension SettingsView {
             SettingsToggleLine(
                 glyph: .musicOnly,
                 title: "Play Alongside Other Apps",
-                subtitle: "Keep other apps audible alongside Nyx Music. This can prevent iOS Lock Screen, Control Center and headphone controls from controlling Nyx Music. Turn off to give Nyx Music audio priority. Applies immediately while playing, or on the next play.",
+                subtitle: "Keep other apps audible alongside Amber. This can prevent iOS Lock Screen, Control Center and headphone controls from controlling Amber. Turn off to give Amber audio priority. Applies immediately while playing, or on the next play.",
                 isOn: Binding(
                     get: { controller.mixWithOtherAudio },
                     set: { controller.setMixWithOtherAudio($0) }

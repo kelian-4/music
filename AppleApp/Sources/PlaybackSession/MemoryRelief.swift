@@ -10,7 +10,7 @@ import Foundation
 /// is over brings the footprint back down without waiting for the system to
 /// complain. Debounced: several bursts ending together cost one pass.
 enum MemoryRelief {
-    private static let queue = DispatchQueue(label: "bitchord.memory-relief", qos: .utility)
+    private static let queue = DispatchQueue(label: "amber.memory-relief", qos: .utility)
     nonisolated(unsafe) private static var pending: DispatchWorkItem?
 
     static func soon(after seconds: Double = 3) {

@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 
 // How the lyric list is drawn, and how little of it has to move.
 //
@@ -79,7 +79,7 @@ struct LyricTimeline {
     /// between the timed lines around it (a few seconds a line past the last
     /// one) instead of reading as "started at zero", which made the last
     /// untimed line in the song the current one and threw the highlight to a
-    /// chorus minutes away while BitChord was still timing the words.
+    /// chorus minutes away while Amber was still timing the words.
     static func startTimes(_ lines: [LyricLineDto]) -> [Int64] {
         let raw = lines.map(startMs)
         let known = raw.indices.map { $0 == 0 || raw[$0] > 0 }

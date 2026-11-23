@@ -14,8 +14,8 @@ native-core/build-xcframework/
 AppleApp/*.xcodeproj
 AppleApp/Frameworks/
 AppleApp/Generated/
-AppleApp/BitChord-Info.plist
-AppleApp/BitChordWidget-Info.plist
+AppleApp/Amber-Info.plist
+AppleApp/AmberWidget-Info.plist
 AppleApp/*.entitlements
 xcuserdata/
 DerivedData/

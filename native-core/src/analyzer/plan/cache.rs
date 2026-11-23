@@ -125,7 +125,7 @@ pub(super) mod analysis_cache {
         #[cfg(not(test))]
         std::env::var_os("HOME")
             .map(std::path::PathBuf::from)
-            .map(|home| home.join("Library/Caches/BitChord/Analysis"))
+            .map(|home| home.join("Library/Caches/Amber/Analysis"))
     }
 
     #[cfg(test)]

@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 
 /// Who is listening, from inside the player.
 ///

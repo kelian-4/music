@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 
 struct PlaylistFolderItem: Decodable, Identifiable, Hashable {
     let id: String

@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 
 @MainActor
 enum PageSession {

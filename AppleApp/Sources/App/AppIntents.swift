@@ -59,13 +59,13 @@ final class AppServices {
 
 // MARK: - What an intent may say
 
-/// The ways a BitChord intent can fail, in words Siri can say.
+/// The ways a Amber intent can fail, in words Siri can say.
 ///
 /// `LocalizedError` rather than a bare error carrying a message: Shortcuts speaks
 /// the error's `localizedDescription`, and an ordinary struct reads "The operation
-/// couldn't be completed. (BitChordIntentError error 1.)" — the same trap the
+/// couldn't be completed. (AmberIntentError error 1.)" — the same trap the
 /// session-expiry matcher hit in I10a-1.
-enum BitChordIntentError: LocalizedError {
+enum AmberIntentError: LocalizedError {
     case emptyQuery
     case nothingPlaying
     case signedOut
@@ -75,13 +75,13 @@ enum BitChordIntentError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .emptyQuery:
-            "What should Nyx Music look for?"
+            "What should Amber look for?"
         case .nothingPlaying:
-            "Nothing is playing in Nyx Music."
+            "Nothing is playing in Amber."
         case .signedOut:
-            "Sign in to Nyx Music to like songs."
+            "Sign in to Amber to like songs."
         case .noResults(let query):
-            "Nyx Music couldn't find a song for “\(query)”."
+            "Amber couldn't find a song for “\(query)”."
         case .refused(let message):
             message
         }
@@ -203,7 +203,7 @@ enum AppIntentActions {
     /// Play or pause, and say which happened.
     static func togglePlayback() async throws -> String {
         let controller = AppServices.shared.controller
-        guard let current = controller.current else { throw BitChordIntentError.nothingPlaying }
+        guard let current = controller.current else { throw AmberIntentError.nothingPlaying }
         // The state is read *before* the toggle: `togglePlayPause` starts (or
         // keeps) an asynchronous load, so what it leaves behind is not always the
         // outcome this call asked for, and reading it after named the wrong one.
@@ -238,7 +238,7 @@ enum AppIntentActions {
     }
 
     /// Open Search with the term already in the field — the same request shape a
-    /// `bitchord://search` link makes, so both roads end in the same place.
+    /// `amber://search` link makes, so both roads end in the same place.
     static func search(query: String) throws -> String {
         let term = try cleaned(query)
         let appModel = AppServices.shared.appModel
@@ -251,12 +251,12 @@ enum AppIntentActions {
     /// Like or unlike what is playing.
     static func likeCurrent() async throws -> String {
         let services = AppServices.shared
-        guard services.auth.signedIn else { throw BitChordIntentError.signedOut }
+        guard services.auth.signedIn else { throw AmberIntentError.signedOut }
         guard let current = services.controller.current, let videoId = current.videoId else {
-            throw BitChordIntentError.nothingPlaying
+            throw AmberIntentError.nothingPlaying
         }
         if let failure = await services.controller.toggleLikeAndWait(videoId: videoId) {
-            throw BitChordIntentError.refused(failure)
+            throw AmberIntentError.refused(failure)
         }
         return services.controller.isLiked
             ? "Liked \(current.title)"
@@ -293,7 +293,7 @@ enum AppIntentActions {
 
     private static func cleaned(_ query: String) throws -> String {
         let term = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !term.isEmpty else { throw BitChordIntentError.emptyQuery }
+        guard !term.isEmpty else { throw AmberIntentError.emptyQuery }
         return term
     }
 }
@@ -304,7 +304,7 @@ enum AppIntentActions {
 /// "pause" is not asking for a window.
 struct PlayPauseIntent: AppIntent {
     static var title: LocalizedStringResource = "Play or Pause"
-    static var description = IntentDescription("Play or pause what Nyx Music is playing.")
+    static var description = IntentDescription("Play or pause what Amber is playing.")
     static var openAppWhenRun = false
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -318,7 +318,7 @@ struct PlayPauseIntent: AppIntent {
 /// stream wiring settles behind the first window.
 struct PlaySongIntent: AppIntent {
     static var title: LocalizedStringResource = "Play a Song"
-    static var description = IntentDescription("Search Nyx Music for a song and start playing it.")
+    static var description = IntentDescription("Search Amber for a song and start playing it.")
     static var openAppWhenRun = true
 
     @Parameter(title: "Song", requestValueDialog: "Which song?")
@@ -332,7 +332,7 @@ struct PlaySongIntent: AppIntent {
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let title = try await AppIntentActions.play(song: song)
-        return .result(dialog: "Playing \(title) in Nyx Music")
+        return .result(dialog: "Playing \(title) in Amber")
     }
 }
 
@@ -340,10 +340,10 @@ struct PlaySongIntent: AppIntent {
 /// result is the screen.
 struct SearchIntent: AppIntent {
     static var title: LocalizedStringResource = "Search"
-    static var description = IntentDescription("Open Nyx Music's search with a query.")
+    static var description = IntentDescription("Open Amber's search with a query.")
     static var openAppWhenRun = true
 
-    @Parameter(title: "Search For", requestValueDialog: "What should Nyx Music search for?")
+    @Parameter(title: "Search For", requestValueDialog: "What should Amber search for?")
     var query: String
 
     init() {}
@@ -358,7 +358,7 @@ struct SearchIntent: AppIntent {
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let term = try await AppIntentActions.search(query: query)
-        return .result(dialog: "Searching Nyx Music for \(term)")
+        return .result(dialog: "Searching Amber for \(term)")
     }
 }
 
@@ -367,7 +367,7 @@ struct SearchIntent: AppIntent {
 /// already alive in the audio session.
 struct LikeCurrentSongIntent: AppIntent {
     static var title: LocalizedStringResource = "Like the Current Song"
-    static var description = IntentDescription("Like or unlike what is playing in Nyx Music.")
+    static var description = IntentDescription("Like or unlike what is playing in Amber.")
     static var openAppWhenRun = false
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -379,7 +379,7 @@ struct LikeCurrentSongIntent: AppIntent {
 /// Add a song by name to the end of the queue.
 struct AddToQueueIntent: AppIntent {
     static var title: LocalizedStringResource = "Add to the Queue"
-    static var description = IntentDescription("Find a song and add it to the end of Nyx Music's queue.")
+    static var description = IntentDescription("Find a song and add it to the end of Amber's queue.")
     static var openAppWhenRun = true
 
     @Parameter(title: "Song", requestValueDialog: "Which song?")
@@ -404,7 +404,7 @@ struct AddToQueueIntent: AppIntent {
 /// Shortcuts does not need this: every intent above is already a Shortcuts action
 /// by existing. These phrases are what make them reachable by voice and from a
 /// Spotlight search for the app.
-struct BitChordShortcuts: AppShortcutsProvider {
+struct AmberShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
             intent: PlaySongIntent(),
@@ -460,6 +460,6 @@ enum AppShortcutRefresh {
         let now = Date()
         guard now.timeIntervalSince(lastUpdate) >= interval else { return }
         lastUpdate = now
-        BitChordShortcuts.updateAppShortcutParameters()
+        AmberShortcuts.updateAppShortcutParameters()
     }
 }

@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 
 /// Binds a party to this device's player.
 ///

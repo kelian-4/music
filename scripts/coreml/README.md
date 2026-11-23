@@ -43,7 +43,7 @@ needs Python 3.10 or later). On Python 3.9 the script adds
 ```bash
 python3 -m venv .venv && . .venv/bin/activate
 pip install -r scripts/coreml/requirements.txt          # exact pins
-python scripts/coreml/convert_beat_this.py --out /tmp/bitchord-coreml/release
+python scripts/coreml/convert_beat_this.py --out /tmp/amber-coreml/release
 ```
 
 `--out` also accepts already-downloaded `--checkpoint PATH` (still SHA-checked)
@@ -65,7 +65,7 @@ clone and two runs on the same machine: same `.aar` SHA-256). Pin the `.aar` byt
 
 **Contract (fixed):** input `spectrogram` Float32 `[1,1500,128]`; outputs
 `beat`, `downbeat` Float32 `[1,1500]` logits, same meaning as the ONNX heads.
-Metadata: author `BitChord`, license `MIT`, short description, and
+Metadata: author `Amber`, license `MIT`, short description, and
 `source_commit` / `checkpoint_sha256` / `provenance` user keys.
 
 ## Parity
@@ -75,15 +75,15 @@ app's decode → stereo downmix → `StreamResampler(22.05 kHz)` →
 `compute_beat_spectrogram` path. It writes `u32 frames` then row-major f32.
 
 ```bash
-CARGO_TARGET_DIR=/tmp/bitchord-coreml/meldump-target \
+CARGO_TARGET_DIR=/tmp/amber-coreml/meldump-target \
   cargo run --release --manifest-path scripts/coreml/mel_dumper/Cargo.toml -- \
-  ~/Library/Caches/BitChord/audio/<track>.m4a /tmp/mel/<track>.bin
+  ~/Library/Caches/Amber/audio/<track>.m4a /tmp/mel/<track>.bin
 
 python scripts/coreml/parity_beat_this.py \
   --mels /tmp/mel --out /tmp/parity \
-  --coreml-dir /tmp/bitchord-coreml/release \
-  --onnx /tmp/bitchord-coreml/beat_final0.onnx \
-  --rten-cli /tmp/bitchord-coreml/proto/bin/rten_cli
+  --coreml-dir /tmp/amber-coreml/release \
+  --onnx /tmp/amber-coreml/beat_final0.onnx \
+  --rten-cli /tmp/amber-coreml/proto/bin/rten_cli
 ```
 
 Picking, tempo and ±1 matching are 1:1 ports of `native-core/src/analyzer/beat.rs`.

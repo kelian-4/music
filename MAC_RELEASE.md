@@ -11,22 +11,22 @@ container are unavailable in this ad-hoc package.
 ## Build and package
 
 Create an Apple Silicon Release archive without code signing, then copy its app
-bundle into a folder named `BitChord.app` inside an export directory:
+bundle into a folder named `Amber.app` inside an export directory:
 
 ```sh
 xcodebuild \
-  -project AppleApp/BitChord.xcodeproj \
-  -scheme BitChord \
+  -project AppleApp/Amber.xcodeproj \
+  -scheme Amber \
   -configuration Release \
   -destination 'platform=macOS,arch=arm64' \
-  -archivePath "$TMPDIR/BitChord-mac.xcarchive" \
+  -archivePath "$TMPDIR/Amber-mac.xcarchive" \
   archive CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=
 
-mkdir -p "$TMPDIR/BitChord-mac-export"
-ditto "$TMPDIR/BitChord-mac.xcarchive/Products/Applications/BitChord.app" \
-  "$TMPDIR/BitChord-mac-export/BitChord.app"
-ditto "$TMPDIR/BitChord-mac.xcarchive/dSYMs" "$TMPDIR/BitChord-mac-export/dSYMs"
-scripts/package-mac-dmg.sh 1.0.0 "$TMPDIR/BitChord-mac-export"
+mkdir -p "$TMPDIR/Amber-mac-export"
+ditto "$TMPDIR/Amber-mac.xcarchive/Products/Applications/Amber.app" \
+  "$TMPDIR/Amber-mac-export/Amber.app"
+ditto "$TMPDIR/Amber-mac.xcarchive/dSYMs" "$TMPDIR/Amber-mac-export/dSYMs"
+scripts/package-mac-dmg.sh 1.0.0 "$TMPDIR/Amber-mac-export"
 ```
 
 The script refuses an export whose `dSYMs` folder has no match for the app, and
@@ -50,23 +50,23 @@ and ask before changing GitHub; `--create-release` requires an existing pushed
 `vVERSION` tag. No tag, signature, notarization, or upload is created by this
 local packaging command.
 
-## Open BitChord on macOS
+## Open Amber on macOS
 
 Because the download is not Developer ID signed or notarized, Gatekeeper may
 block its first launch. Only continue if you downloaded the DMG from the
-official BitChord release and trust it.
+official Amber release and trust it.
 
-1. Drag BitChord to Applications.
-2. In Applications, Control-click BitChord and choose **Open**, then confirm
+1. Drag Amber to Applications.
+2. In Applications, Control-click Amber and choose **Open**, then confirm
    **Open** in the warning dialog. If that choice is not available, open
-   System Settings → Privacy & Security and choose **Open Anyway** for BitChord.
+   System Settings → Privacy & Security and choose **Open Anyway** for Amber.
 
 After moving the app to Applications, an informed user can also clear the
 quarantine flag in Terminal:
 
 ```sh
-xattr -dr com.apple.quarantine "/Applications/BitChord.app"
-open "/Applications/BitChord.app"
+xattr -dr com.apple.quarantine "/Applications/Amber.app"
+open "/Applications/Amber.app"
 ```
 
 This removes the downloaded-file quarantine attribute; it does not add a

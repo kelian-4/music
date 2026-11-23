@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 
 struct PinnedItem: Decodable, Identifiable, Hashable {
     let kind: String

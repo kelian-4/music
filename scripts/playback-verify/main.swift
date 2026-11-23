@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 
 // Playback resolution, against YouTube.
 //

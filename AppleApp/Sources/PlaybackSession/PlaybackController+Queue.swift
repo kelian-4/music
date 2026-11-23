@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 import os
 #if os(iOS)
 import UIKit

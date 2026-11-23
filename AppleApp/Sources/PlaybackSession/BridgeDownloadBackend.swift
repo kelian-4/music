@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 
 struct BridgeDownloadBackend: DownloadBackend {
     func artwork(for entry: QueueEntry) async -> Data? { await OfflineArtwork.data(for: entry) }

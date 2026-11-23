@@ -4,7 +4,7 @@ import AppKit
 #else
 import UIKit
 #endif
-import BitChordShared
+import AmberShared
 import UniformTypeIdentifiers
 
 /// Signed-in YouTube Music library: playlists, albums, artists.

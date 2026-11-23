@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 
 struct SearchHitDTO: Codable, Identifiable, Hashable {
     let kind: String

@@ -21,24 +21,24 @@ require AppleApp/Sources/UI/MacMiniPlayer.swift \
 require AppleApp/Sources/UI/MacMiniPlayer.swift \
   'mac.closeToTray' 'close-to-tray preference is shared with the menu-bar toggle'
 require AppleApp/Sources/UI/MacMiniPlayer.swift \
-  'Keep BitChord open when windows close' 'menu-bar player exposes the close-to-tray toggle'
+  'Keep Amber open when windows close' 'menu-bar player exposes the close-to-tray toggle'
 require AppleApp/Sources/UI/MacMiniPlayer.swift \
   'stop_music_on_close' 'window close honors the Stop Music on Close preference'
 require AppleApp/Sources/UI/MacShell.swift \
   'MacCompactNavigationBar()' 'compact-width shell shows navigation'
 require AppleApp/Sources/UI/MacShell.swift \
   'appModel.requestedTab = tab' 'compact navigation routes through the root tab request'
-require AppleApp/Sources/App/BitChordApp.swift \
+require AppleApp/Sources/App/AmberApp.swift \
   '.modifier(MacWindowAccountToolbar())' 'window-level toolbar exposes account switching once'
 require AppleApp/Sources/UI/MacMiniPlayer.swift \
   'window.deminiaturize(nil)' 'Dock reopen restores a minimized main window'
 require AppleApp/Sources/UI/MacMiniPlayer.swift \
   'contains(MiniPlayerWindow.id)' 'Dock reopen excludes the mini-player window'
-require AppleApp/Sources/App/BitChordApp.swift \
+require AppleApp/Sources/App/AmberApp.swift \
   'SettingsDeepLink.handle(url)' 'scene accepts Settings deep links'
-require AppleApp/Sources/App/BitChordApp.swift \
+require AppleApp/Sources/App/AmberApp.swift \
   '.background(SettingsDeepLinkOpener())' 'Mac opens Settings for a deep-link request'
-require AppleApp/Sources/App/BitChordApp.swift \
+require AppleApp/Sources/App/AmberApp.swift \
   'NSApp.isHidden || (!NSApp.isActive && hasVisibleWindow)' 'background pausing does not mistake a last-window close for app deactivation'
 require AppleApp/Sources/UI/FeedViews.swift \
   '.animation(reduceMotion ? nil : .easeOut(duration: 0.14), value: hovering)' 'cards animate their hover lift unless Reduce Motion is on'

@@ -74,7 +74,7 @@ fn a_resume_seek_is_not_treated_as_a_mix_in() {
 /// overlapped and the listener heard a song end and a song start.
 #[test]
 fn a_planned_transition_overlaps_rather_than_waits_for_the_end() {
-    let dir = std::env::temp_dir().join("bitchord-mixer-overlap");
+    let dir = std::env::temp_dir().join("amber-mixer-overlap");
     std::fs::create_dir_all(&dir).unwrap();
     let a = dir.join("a.wav");
     let b = dir.join("b.wav");
@@ -203,7 +203,7 @@ fn a_container_without_a_duration_falls_back_to_the_callers_figure() {
 /// duration still limits the fade and protects the recording's tail.
 #[test]
 fn the_recording_duration_takes_precedence_over_its_mix_out_anchor() {
-    let dir = std::env::temp_dir().join("bitchord-mixer-anchor-duration");
+    let dir = std::env::temp_dir().join("amber-mixer-anchor-duration");
     std::fs::create_dir_all(&dir).unwrap();
     let path = dir.join("duration.wav");
     test_wav(&path, 10.0, 440.0);
@@ -297,7 +297,7 @@ fn the_recording_duration_takes_precedence_over_its_mix_out_anchor() {
 /// reading of "how far into the outgoing track the blend started".
 #[test]
 fn the_blend_ends_at_the_plans_anchor_not_the_file_end() {
-    let dir = std::env::temp_dir().join("bitchord-mixer-anchor");
+    let dir = std::env::temp_dir().join("amber-mixer-anchor");
     std::fs::create_dir_all(&dir).unwrap();
     let a = dir.join("out.wav");
     let b = dir.join("in.wav");

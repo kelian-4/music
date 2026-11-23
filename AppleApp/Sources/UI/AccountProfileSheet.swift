@@ -2,7 +2,7 @@ import SwiftUI
 #if os(iOS)
 import UIKit
 #endif
-import BitChordShared
+import AmberShared
 
 /// Account & Settings hub — Apple-style modal account sheet and profile switcher.
 ///
@@ -534,7 +534,7 @@ struct Avatar: View {
 }
 
 #if os(iOS)
-/// A page's leading top-bar items: the BitChord mark and, on the iPad, back and
+/// A page's leading top-bar items: the Amber mark and, on the iPad, back and
 /// forward through the tab's pages, beside it as the Mac's titlebar has them.
 struct TopBarLeadingItems: ToolbarContent {
     @Environment(\.pageHistory) private var history
@@ -580,7 +580,7 @@ struct PageHistoryButtons: View {
 }
 #endif
 
-/// Root-page brand mark: upstream FrostedTopBar's leading BitChord logo,
+/// Root-page brand mark: upstream FrostedTopBar's leading Amber logo,
 /// sized and positioned for native Apple navigation bars across all primary tabs.
 struct TopBarLeadingMark: View {
     var body: some View {

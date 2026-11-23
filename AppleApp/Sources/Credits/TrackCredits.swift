@@ -96,7 +96,7 @@ actor MusicBrainz {
     static let shared = MusicBrainz()
 
     private static let base = "https://musicbrainz.org/ws/2"
-    private static let agent = "BitChord (https://github.com/kelian-4/music)"
+    private static let agent = "Amber (https://github.com/kelian-4/music)"
     private static let gap: TimeInterval = 1.1
     private static let cacheSize = 64
 

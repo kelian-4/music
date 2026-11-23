@@ -6,7 +6,7 @@ import AppKit
 import UIKit
 #endif
 import MediaPlayer
-import BitChordShared
+import AmberShared
 #if os(iOS)
 import NowPlaying
 import AVFoundation
@@ -320,7 +320,7 @@ final class NowPlayingController {
 @Observable
 @MainActor
 private final class ModernNowPlaying: MediaSessionRepresentable {
-    let id = "bitchord-player-\(UUID().uuidString)"
+    let id = "amber-player-\(UUID().uuidString)"
     weak var delegate: NowPlayingController?
     var title = ""
     var artist = ""
@@ -350,7 +350,7 @@ private final class ModernNowPlaying: MediaSessionRepresentable {
         foreground: { UIApplication.shared.applicationState != .background },
         log: { message in
             PlaybackDebugLog.shared.record(message)
-            NSLog("[BitChord] %@", message)
+            NSLog("[Amber] %@", message)
         }
     )
 
@@ -442,7 +442,7 @@ private final class ModernNowPlaying: MediaSessionRepresentable {
         let message = "Now Playing \(event) session=\(id) content=\(contentID ?? "none") "
             + "rate=\(rate) preparing=\(preparing) appState=\(UIApplication.shared.applicationState.rawValue)"
         PlaybackDebugLog.shared.record(message)
-        NSLog("[BitChord] %@", message)
+        NSLog("[Amber] %@", message)
     }
 
     func prepare(id: String, title: String, artist: String, duration: Double,
@@ -602,7 +602,7 @@ private final class ModernNowPlayingSession: NowPlayingSessionDriver {
                 let message = "Now Playing status session=\(self.session.id) eligible=\(eligible) "
                     + "applicationPrimary=\(applicationPrimary) systemPrimary=\(self.isSystemPrimary)"
                 PlaybackDebugLog.shared.record(message)
-                NSLog("[BitChord] %@", message)
+                NSLog("[Amber] %@", message)
                 // A superseded uncancellable request can steal application
                 // primary from the new session. Recover on that status edge;
                 // system prominence changes alone never trigger takeover.
@@ -628,7 +628,7 @@ private final class ModernNowPlayingSession: NowPlayingSessionDriver {
 final class WidgetStatePublisher {
     func publish(entry: QueueEntry?, isPlaying: Bool, canNext: Bool, canPrevious: Bool) {
         guard let entry else { return }
-        let group = "group.app.bitchord.Nyx Music"
+        let group = "group.app.amber.Amber"
         // Unprovisioned App Groups hang cfprefsd on write — skip when the
         // container is missing rather than compiling DEBUG out entirely.
         guard FileManager.default.containerURL(
@@ -658,7 +658,7 @@ final class WidgetStatePublisher {
 
     nonisolated private static func artworkFileURL() -> URL? {
         guard let container = FileManager.default.containerURL(
-            forSecurityApplicationGroupIdentifier: "group.app.bitchord.Nyx Music"
+            forSecurityApplicationGroupIdentifier: "group.app.amber.Amber"
         ) else { return nil }
         return container.appendingPathComponent("widget-artwork.jpg")
     }

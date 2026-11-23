@@ -58,11 +58,11 @@ jobs:
           NATIVE_TARGETS="aarch64-apple-darwin aarch64-apple-ios" scripts/build-native-core.sh
           CONFIG=release scripts/build-shared-framework.sh
           (cd AppleApp && xcodegen generate --spec project.yml)
-          BITCHORD_BUILD_REVISION="$(git rev-parse --short=12 HEAD)" \
+          AMBER_BUILD_REVISION="$(git rev-parse --short=12 HEAD)" \
             scripts/package-ios-ipa.sh "$version" --output-dir build/ipa --overwrite
 
       - uses: actions/upload-artifact@v4
         with:
-          name: bitchord-ios-unsigned-ipa
+          name: amber-ios-unsigned-ipa
           path: build/ipa/*.ipa
           retention-days: 14

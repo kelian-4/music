@@ -5,7 +5,7 @@ import SwiftUI
 
 /// Sparkle owns the Mac download, signature check, replacement, and relaunch flow.
 /// Its settings live with the About controls so people can choose scheduled checks
-/// and whether verified updates should install in the background when BitChord quits.
+/// and whether verified updates should install in the background when Amber quits.
 @MainActor
 @Observable
 final class MacUpdateManager {
@@ -28,7 +28,7 @@ final class MacUpdateManager {
     }
 }
 
-/// BitChord ▸ Check for Updates…, under About as in other Mac apps.
+/// Amber ▸ Check for Updates…, under About as in other Mac apps.
 struct UpdateCommands: Commands {
     var body: some Commands {
         CommandGroup(after: .appInfo) {

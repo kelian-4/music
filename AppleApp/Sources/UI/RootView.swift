@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 #if os(iOS)
 import UIKit
 #elseif os(macOS)
@@ -11,7 +11,7 @@ import AppKit
 /// single declaration. Exactly four canonical tabs, upstream icons, search
 /// role pinned trailing. `@SceneStorage` keeps the last tab across launches.
 struct RootView: View {
-    @SceneStorage("bitchord.selectedTab") private var selection: Int = AppModel.Tab.home.rawValue
+    @SceneStorage("amber.selectedTab") private var selection: Int = AppModel.Tab.home.rawValue
     @Environment(PlaybackController.self) private var controller
     @Environment(AppModel.self) private var appModel
     @Environment(AuthController.self) private var auth
@@ -60,7 +60,7 @@ struct RootView: View {
     @State private var sidebarArtwork: [String: UIImage] = [:]
     /// The library section last chosen on the iPad, where a deep link to the
     /// Library lands.
-    @SceneStorage("bitchord.iPadLibrary") private var iPadLibraryTab: Int = AppModel.Tab.libraryYouTube.rawValue
+    @SceneStorage("amber.iPadLibrary") private var iPadLibraryTab: Int = AppModel.Tab.libraryYouTube.rawValue
     #endif
     @AppStorage(OnboardingView.doneKey) private var onboardingDone = false
     @State private var onboardingPresented = false
@@ -191,7 +191,7 @@ struct RootView: View {
             RenamePlaylistAlert()
         }
         #if os(iOS)
-        .alert("A Nyx Music update is available", isPresented: Binding(
+        .alert("A Amber update is available", isPresented: Binding(
             get: { updateChecker.available != nil },
             set: { if !$0 { updateChecker.dismiss() } }
         )) {
@@ -201,7 +201,7 @@ struct RootView: View {
             }
             Button("Later", role: .cancel) { updateChecker.dismiss() }
         } message: {
-            Text("Nyx Music \(updateChecker.available?.identity.label ?? "") is available. Update using the same method you used to install Nyx Music. View Update shows what changed since your version.")
+            Text("Amber \(updateChecker.available?.identity.label ?? "") is available. Update using the same method you used to install Amber. View Update shows what changed since your version.")
         }
         .sheet(item: $updateDetails) { release in UpdateSheet(release: release) }
         #endif
@@ -546,7 +546,7 @@ struct RootView: View {
             }
         }
         .listStyle(.sidebar)
-        .navigationTitle("Nyx Music")
+        .navigationTitle("Amber")
     }
 
     private func sideRow(_ side: MacSide, _ title: LocalizedStringKey, _ icon: String) -> some View {
@@ -685,11 +685,11 @@ struct RootView: View {
                                 }
                             }
                         }
-                        .customizationID("bitchord.sidebar.playlist.\(playlist.playlistId)")
+                        .customizationID("amber.sidebar.playlist.\(playlist.playlistId)")
                         .tabPlacement(.sidebarOnly)
                     }
                 }
-                .customizationID("bitchord.sidebar.playlists")
+                .customizationID("amber.sidebar.playlists")
                 .defaultVisibility(.hidden, for: .tabBar)
             } else {
                 Tab("Home", systemImage: "house.fill", value: RootPage.tab(.home)) {

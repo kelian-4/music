@@ -1,9 +1,9 @@
 import SwiftUI
 import Observation
-import BitChordShared
+import AmberShared
 
 extension Notification.Name {
-    static let partyMembershipDidChange = Notification.Name("BitChordPartyMembershipDidChange")
+    static let partyMembershipDidChange = Notification.Name("AmberPartyMembershipDidChange")
 }
 
 /// What the Listen Together screen reads, as one observable value.

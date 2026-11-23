@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 
 struct RadioView: View {
     @Environment(PlaybackController.self) private var controller

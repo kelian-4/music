@@ -1,6 +1,6 @@
 import AVFoundation
 import Observation
-import BitChordShared
+import AmberShared
 #if os(iOS)
 import UIKit
 #endif

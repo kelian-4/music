@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 import UniformTypeIdentifiers
 #if os(iOS)
 import UIKit
@@ -123,7 +123,7 @@ extension SettingsView {
             SettingsToggleLine(
                 glyph: .video,
                 title: "Stop When Backgrounded",
-                subtitle: "Pauses playback when Nyx Music is hidden or deactivated on Mac; closing a window uses its own setting",
+                subtitle: "Pauses playback when Amber is hidden or deactivated on Mac; closing a window uses its own setting",
                 isOn: $stopBackground
             )
         }
@@ -214,10 +214,10 @@ extension SettingsView {
         }
         buildUpdateRows(&rows)
         rows.row("GitHub", "github", "source", "code", "repository") {
-            Link("GitHub", destination: URL(string: "https://github.com/bagumamartin/BitChord")!)
+            Link("GitHub", destination: URL(string: "https://github.com/kelian-4/music")!)
         }
         rows.row("Developer", "developer", "author", "github") {
-            Link("Developer", destination: URL(string: "https://github.com/bagumamartin")!)
+            Link("Developer", destination: URL(string: "https://github.com/kelian-4")!)
         }
         rows.row("Open-source licenses", "open source", "licenses", "license", "acknowledgements", "third party") {
             PushLink {

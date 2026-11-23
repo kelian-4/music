@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 import os
 #if os(iOS)
 import UIKit
@@ -81,7 +81,7 @@ struct TransitionWindow: Equatable, Sendable {
 
 enum PlaybackLatencySignposts {
     private static let log = OSLog(
-        subsystem: Bundle.main.bundleIdentifier ?? "com.bitchord.app",
+        subsystem: Bundle.main.bundleIdentifier ?? "com.amber.app",
         category: "PlaybackLatency"
     )
 
@@ -608,14 +608,14 @@ final class PlaybackController {
             began: { [weak self] in
                 Task { @MainActor in
                     guard let self else { return }
-                    NSLog("[BitChord] Audio interruption began")
+                    NSLog("[Amber] Audio interruption began")
                     self.audioInterruptionBegan()
                 }
             },
             ended: { [weak self] shouldResume in
                 Task { @MainActor in
                     guard let self else { return }
-                    NSLog("[BitChord] Audio interruption ended, shouldResume=\(shouldResume)")
+                    NSLog("[Amber] Audio interruption ended, shouldResume=\(shouldResume)")
                     self.audioInterruptionEnded(shouldResume: shouldResume)
                 }
             }
@@ -623,7 +623,7 @@ final class PlaybackController {
         // Log secondary audio events and media reset notifications
         routeObservers += AudioSessionManager.observeSessionEvents { [weak self] event in
             PlaybackDebugLog.shared.record(event)
-            NSLog("[BitChord] %@", event)
+            NSLog("[Amber] %@", event)
             if event == "audio media services were reset" {
                 Task { @MainActor in
                     self?.nowPlaying.audioSessionUnavailable()
@@ -902,7 +902,7 @@ final class PlaybackController {
                     }
                     self.nowPlaying.requestPrimaryIfPossible(reason: "route activation")
                 } catch {
-                    NSLog("[BitChord] output rebuild after route change failed: \(error)")
+                    NSLog("[Amber] output rebuild after route change failed: \(error)")
                 }
             }
         }

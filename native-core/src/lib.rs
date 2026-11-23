@@ -1,4 +1,4 @@
-//! native-core — BitChord's analyzer + playback engine behind one UniFFI boundary.
+//! native-core — Amber's analyzer + playback engine behind one UniFFI boundary.
 //!
 //! The FFI surface (spec §2/§3.1): a narrow `PlayerEngine` object for playback
 //! control, one callback interface for engine events, and the analyzer's

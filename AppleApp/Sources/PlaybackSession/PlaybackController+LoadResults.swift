@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 import os
 #if os(iOS)
 import UIKit
@@ -39,7 +39,7 @@ extension PlaybackController {
             pending.firstBufferAt = firstBufferAt
             pendingPlaybackLatency = pending
         }
-        NSLog("[BitChord] loaded track at %.2fs (duration %.2fs)", startAt, info.durationSeconds)
+        NSLog("[Amber] loaded track at %.2fs (duration %.2fs)", startAt, info.durationSeconds)
         loadingGeneration = nil
         playingIndex = index
         current = entry
@@ -414,7 +414,7 @@ extension PlaybackController {
                 }
                 if automix {
                     NSLog(
-                        "[Nyx Music] automix queued %@%@ with an immediate %.1fs overlap",
+                        "[Amber] automix queued %@%@ with an immediate %.1fs overlap",
                         next.title,
                         selfMix ? " (self-mix)" : "",
                         safetyPlan?.fadeSeconds ?? 0
@@ -517,7 +517,7 @@ extension PlaybackController {
                         }
                         if outOk || inOk {
                             NSLog(
-                                "[Nyx Music] Music Understanding overlay out=%@ in=%@",
+                                "[Amber] Music Understanding overlay out=%@ in=%@",
                                 outOk ? "yes" : "no",
                                 inOk ? "yes" : "no"
                             )
@@ -575,7 +575,7 @@ extension PlaybackController {
                     if delivered {
                         let shown = Self.displayAutomixReason(plan.reason)
                         NSLog(
-                            "[Nyx Music] automix plan %d for %@%@: %@, cue %.2fs, fade %.2fs, end %.1fs — %@",
+                            "[Amber] automix plan %d for %@%@: %@, cue %.2fs, fade %.2fs, end %.1fs — %@",
                             attempt, next.title, selfMix ? " (self-mix)" : "",
                             String(describing: plan.style),
                             plan.cueSeconds, plan.fadeSeconds, plan.transitionEndSeconds,

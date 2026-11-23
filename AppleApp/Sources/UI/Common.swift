@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 import ImageIO
 #if os(iOS)
 import UIKit
@@ -238,7 +238,7 @@ final class ArtworkCache: @unchecked Sendable {
     /// Serialises cold disk reads so a fast scroll does not queue hundreds of
     /// concurrent file reads for images that have already scrolled away.
     private let readQueue = DispatchQueue(
-        label: "app.bitchord.Nyx Music.artwork-disk",
+        label: "app.amber.Amber.artwork-disk",
         qos: .userInitiated
     )
 
@@ -748,7 +748,7 @@ struct ArtistCreditText: View {
             .tint(color)
             .environment(\.openURL, OpenURLAction { url in
                 let items = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems
-                guard url.scheme == "bitchord", url.host == "artist",
+                guard url.scheme == "amber", url.host == "artist",
                       let name = items?.first(where: { $0.name == "name" })?.value else {
                     return .systemAction
                 }
@@ -764,7 +764,7 @@ struct ArtistCreditText: View {
         for (index, name) in parts.enumerated() {
             var piece = AttributedString(name)
             var components = URLComponents()
-            components.scheme = "bitchord"
+            components.scheme = "amber"
             components.host = "artist"
             components.queryItems = [
                 URLQueryItem(name: "name", value: name),

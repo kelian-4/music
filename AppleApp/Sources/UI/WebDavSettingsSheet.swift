@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 
 /// Set up a WebDAV share: where it is, who to be on it, and whether that works.
 ///

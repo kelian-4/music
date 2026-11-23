@@ -4,7 +4,7 @@ import AppKit
 #else
 import UIKit
 #endif
-import BitChordShared
+import AmberShared
 import UniformTypeIdentifiers
 
 /// The Albums row: saved albums from the signed-in library, then this

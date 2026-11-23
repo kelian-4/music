@@ -4,7 +4,7 @@ import AppKit
 #else
 import UIKit
 #endif
-import BitChordShared
+import AmberShared
 import UniformTypeIdentifiers
 
 /// Dedicated Downloads destination with Songs, Albums, and Artists tabs,
@@ -115,7 +115,7 @@ struct DownloadsView: View {
                 } else { EmptyStateView(
                     icon: Image(.bchLibrary),
                     title: "No downloads yet",
-                    subtitle: "Save a track from Now Playing — Nyx Music tags it and keeps it here.",
+                    subtitle: "Save a track from Now Playing — Amber tags it and keeps it here.",
                     buttonTitle: nil, action: nil
                 ) }
             } else {

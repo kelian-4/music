@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 
 /// The promoted result: what YouTube Music says the listener meant.
 ///

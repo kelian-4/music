@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 #if os(iOS)
 import UIKit
 #endif

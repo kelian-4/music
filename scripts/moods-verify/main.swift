@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 
 // The Explore category grid, against YouTube Music.
 //

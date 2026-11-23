@@ -15,7 +15,7 @@ struct AutomixAccelerator: Sendable {
 }
 
 private let automixModelLog = OSLog(
-    subsystem: Bundle.main.bundleIdentifier ?? "com.bitchord.app",
+    subsystem: Bundle.main.bundleIdentifier ?? "com.amber.app",
     category: "Automix"
 )
 
@@ -36,7 +36,7 @@ private let automixModelLog = OSLog(
 /// hash is recomputed on this device, so neither a moved tag nor a truncated
 /// transfer can put a bad graph in the analyzer.
 ///
-/// Deliberately free of `BitChordShared` and SwiftUI:
+/// Deliberately free of `AmberShared` and SwiftUI:
 /// `scripts/check-models.sh` compiles this file alone with the real network and
 /// real hashing, and a file that can only be exercised from inside the app is a
 /// file whose download logic is only ever tested by hand. Policy that belongs to
@@ -228,7 +228,7 @@ final class AutomixModelStore {
     static var defaultDirectory: URL {
         let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? FileManager.default.temporaryDirectory
-        return root.appendingPathComponent("BitChord/Models", isDirectory: true)
+        return root.appendingPathComponent("Amber/Models", isDirectory: true)
     }
 
     /// One session per transfer, because a `URLSessionDataTask` takes its delegate
@@ -1038,7 +1038,7 @@ final class AutomixModelStore {
     /// invalidate the compiled model, and the verified bytes are the repair.
     nonisolated static func compileCoreMLArchive(from archive: URL, to destination: URL) -> Bool {
         let work = FileManager.default.temporaryDirectory
-            .appendingPathComponent("bitchord-coreml-\(UUID().uuidString)", isDirectory: true)
+            .appendingPathComponent("amber-coreml-\(UUID().uuidString)", isDirectory: true)
         defer { try? FileManager.default.removeItem(at: work) }
         do {
             try FileManager.default.createDirectory(at: work, withIntermediateDirectories: true)

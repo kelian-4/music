@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 
 /// Apple equivalent of upstream `SongActionsSheet` / `BrowseActionsSheet`:
 /// context menu on both platforms, swipe actions on iOS.
@@ -900,7 +900,7 @@ struct SpotifyCanvasSettingsView: View {
             } header: {
                 Text("Spotify Cookie")
             } footer: {
-                Text("Paste the sp_dc cookie from an open Spotify web session. Nyx Music uses it only to look up looping motion art. Leave blank to skip.")
+                Text("Paste the sp_dc cookie from an open Spotify web session. Amber uses it only to look up looping motion art. Leave blank to skip.")
             }
             Section {
                 Toggle("Auto-hide motion art", isOn: $autoHide)

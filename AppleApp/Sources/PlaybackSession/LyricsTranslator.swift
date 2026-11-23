@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 
 /// Translation and romanisation of the lyric on screen.
 ///

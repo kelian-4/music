@@ -4,7 +4,7 @@ import AppKit
 #else
 import UIKit
 #endif
-import BitChordShared
+import AmberShared
 import UniformTypeIdentifiers
 
 /// Library tab — on iOS, renders upstream's unified LibraryScreen (Replay banner,

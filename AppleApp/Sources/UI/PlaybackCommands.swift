@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 
 /// Menu-bar and keyboard commands for macOS.
 ///

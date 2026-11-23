@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 
 /// A WebDAV share, read as a library.
 ///
@@ -48,7 +48,7 @@ struct WebDavLibraryView: View {
             EmptyStateView(
                 icon: Image(.bchLibrary),
                 title: "No remote library yet",
-                subtitle: "Point Nyx Music at a WebDAV share in Sources and it will appear here.",
+                subtitle: "Point Amber at a WebDAV share in Sources and it will appear here.",
                 buttonTitle: nil,
                 action: nil
             )

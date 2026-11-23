@@ -32,10 +32,10 @@ enum PCMTranscode {
 
     static func write(path: String, writer: Writer) -> URL? {
         let url = FileManager.default.temporaryDirectory
-            .appendingPathComponent("bitchord-analysis-\(UUID().uuidString).wav")
+            .appendingPathComponent("amber-analysis-\(UUID().uuidString).wav")
         guard writer(path, url) else {
             try? FileManager.default.removeItem(at: url)
-            NSLog("[BitChord] analysis transcode failed for %@", path)
+            NSLog("[Amber] analysis transcode failed for %@", path)
             return nil
         }
         return url

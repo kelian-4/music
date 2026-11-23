@@ -2,7 +2,7 @@ import AVFoundation
 import Foundation
 import NaturalLanguage
 import Speech
-import BitChordShared
+import AmberShared
 
 /// Incremental, on-device alignment of fetched lyric text against the playing
 /// source. Decoding and speech recognition run away from the render/UI threads;
@@ -146,7 +146,7 @@ enum LyricsAudioAligner {
               recognizer.isAvailable,
               recognizer.supportsOnDeviceRecognition
         else {
-            NSLog("[BitChord] local lyric alignment unavailable for this language/device")
+            NSLog("[Amber] local lyric alignment unavailable for this language/device")
             return false
         }
 
@@ -214,7 +214,7 @@ enum LyricsAudioAligner {
                 } catch is CancellationError {
                     return alignedAtLeastOneLine
                 } catch {
-                    NSLog("[BitChord] local lyric recognition chunk at %.1fs failed: %@",
+                    NSLog("[Amber] local lyric recognition chunk at %.1fs failed: %@",
                           startSeconds, String(describing: error))
                 }
             }

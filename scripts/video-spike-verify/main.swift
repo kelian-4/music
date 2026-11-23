@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 
 // The O9 video side, against YouTube.
 //

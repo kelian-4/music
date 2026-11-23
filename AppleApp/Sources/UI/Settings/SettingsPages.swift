@@ -1,5 +1,5 @@
 import SwiftUI
-import BitChordShared
+import AmberShared
 import UniformTypeIdentifiers
 #if os(iOS)
 import UIKit
@@ -88,7 +88,7 @@ struct SpotifyCanvasAuthView: View {
             } header: {
                 Text("Spotify Canvas Setup")
             } footer: {
-                Text("Paste the sp_dc cookie from an open Spotify web session. Nyx Music uses it only to look up looping motion art. Leave blank to skip.")
+                Text("Paste the sp_dc cookie from an open Spotify web session. Amber uses it only to look up looping motion art. Leave blank to skip.")
             }
         }
         .formStyle(.grouped)

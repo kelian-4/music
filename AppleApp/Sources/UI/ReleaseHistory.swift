@@ -14,13 +14,13 @@ struct ReleaseNotesEntry: Identifiable {
 /// are not plain app versions (the Automix model releases, for example) and
 /// drafts or pre-releases are left out.
 enum ReleaseHistory {
-    private static let listURL = URL(string: "https://api.github.com/repos/bagumamartin/BitChord/releases?per_page=50")!
+    private static let listURL = URL(string: "https://api.github.com/repos/kelian-4/music/releases?per_page=50")!
 
     /// Releases newer than `installed` up to and including `through`.
     static func entries(after installed: String, through: String) async -> [ReleaseNotesEntry]? {
         var request = URLRequest(url: listURL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
-        request.setValue("BitChord Apple updater", forHTTPHeaderField: "User-Agent")
+        request.setValue("Amber Apple updater", forHTTPHeaderField: "User-Agent")
         guard let (data, response) = try? await URLSession.shared.data(for: request),
               let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode),
               let payloads = try? JSONDecoder().decode([GitHubReleasePayload].self, from: data) else { return nil }
@@ -31,7 +31,7 @@ enum ReleaseHistory {
             guard !payload.draft, !payload.prerelease,
                   payload.tag_name.range(of: #"^[vV]?\d+\.\d+\.\d+$"#, options: .regularExpression) != nil,
                   let page = URL(string: payload.html_url), page.scheme == "https", page.host == "github.com",
-                  page.path.hasPrefix("/bagumamartin/BitChord/releases/tag/") else { return nil }
+                  page.path.hasPrefix("/kelian-4/music/releases/tag/") else { return nil }
             let version = payload.tag_name.replacingOccurrences(of: "^[vV]", with: "", options: .regularExpression)
             let identity = ReleaseIdentity(version: version, build: nil)
             guard identity.compared(to: lower) == .newer,
@@ -51,7 +51,7 @@ enum ReleaseHistory {
 @MainActor @Observable final class WhatsNewCenter {
     static let shared = WhatsNewCenter()
     var entries: [ReleaseNotesEntry] = []
-    private static let lastRunKey = "bitchord.lastRunVersion"
+    private static let lastRunKey = "amber.lastRunVersion"
 
     func checkAfterLaunch() async {
         let current = UpdateChecker.shared.currentIdentity.version
@@ -99,9 +99,9 @@ struct ReleaseNotesSections: View {
                 Link("Release page", destination: entry.url).font(.footnote)
             } header: {
                 if let date = entry.publishedAt {
-                    Text("Nyx Music \(entry.version) · \(date.formatted(date: .abbreviated, time: .omitted))")
+                    Text("Amber \(entry.version) · \(date.formatted(date: .abbreviated, time: .omitted))")
                 } else {
-                    Text("Nyx Music \(entry.version)")
+                    Text("Amber \(entry.version)")
                 }
             }
         }
@@ -110,7 +110,7 @@ struct ReleaseNotesSections: View {
 
 /// Renders the Markdown the release notes are written in: headings, bullets,
 /// paragraphs, and inline bold, italics, code and links. The leading
-/// "# BitChord x.y.z" title is dropped because the section header names the
+/// "# Amber x.y.z" title is dropped because the section header names the
 /// release, and image lines are skipped.
 struct ReleaseNotesView: View {
     let markdown: String
@@ -140,7 +140,7 @@ struct ReleaseNotesView: View {
             if let match = line.range(of: #"^#{1,6} "#, options: .regularExpression) {
                 let level = line.distance(from: line.startIndex, to: match.upperBound) - 1
                 let text = String(line[match.upperBound...])
-                if level == 1, result.isEmpty, text.lowercased().hasPrefix("bitchord") { continue }
+                if level == 1, result.isEmpty, text.lowercased().hasPrefix("amber") { continue }
                 result.append(.heading(text, level: level))
             } else if let match = line.range(of: #"^[-*+] "#, options: .regularExpression) {
                 result.append(.bullet(String(line[match.upperBound...])))

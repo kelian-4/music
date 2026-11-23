@@ -1,6 +1,6 @@
 import Foundation
 import Observation
-import BitChordShared
+import AmberShared
 
 final class ObservationFlag: @unchecked Sendable {
     private let lock = NSLock()
@@ -77,7 +77,7 @@ final class FixtureBackend: DownloadBackend, @unchecked Sendable {
 
 @main struct Verify {
     @MainActor static func main() async throws {
-        let root = FileManager.default.temporaryDirectory.appendingPathComponent("bitchord-download-tests-\(UUID())")
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("amber-download-tests-\(UUID())")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: root) }
         func assert(_ condition: @autoclosure () -> Bool, _ text: String) { if !condition() { fatalError(text) }; print("PASS \(text)"); fflush(stdout) }

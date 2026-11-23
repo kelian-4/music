@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 
 /// Mid-playback quality upgrade — Swift port of upstream `QualityUpgrade.kt`.
 ///

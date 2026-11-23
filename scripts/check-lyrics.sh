@@ -29,11 +29,11 @@ if ! grep -Fq 'private let maxSharedCharacters = 250' "$lyrics_pane" ||
 fi
 echo "  ok  lyric sharing enforces its character budget and export formats"
 
-fw="$repo/AppleApp/Frameworks/BitChordShared.xcframework/macos-arm64"
+fw="$repo/AppleApp/Frameworks/AmberShared.xcframework/macos-arm64"
 bin="$(mktemp -d)/lyrics-verify"
 xcrun swiftc -O -o "$bin" \
-  -F "$fw" -framework BitChordShared \
-  -Xlinker -rpath -Xlinker "$fw/BitChordShared.framework/Versions/A" \
+  -F "$fw" -framework AmberShared \
+  -Xlinker -rpath -Xlinker "$fw/AmberShared.framework/Versions/A" \
   "$here/lyrics-verify/main.swift"
 
 exec "$bin"

@@ -118,7 +118,7 @@ jobs:
       - name: Keep the files as a workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: BitChord-${{ env.VERSION }}
+          name: Amber-${{ env.VERSION }}
           path: build/release/
           retention-days: 14
 
@@ -130,11 +130,11 @@ jobs:
           [[ "$MODE" == draft ]] && flags+=(--draft)
           gh release create "$TAG" \
             --target "$GITHUB_SHA" \
-            --title "BitChord $VERSION" \
+            --title "Amber $VERSION" \
             --notes-file "$GITHUB_WORKSPACE/release-notes/$VERSION.md" \
             "${flags[@]}" \
-            BitChord-$VERSION-build*-ios-unsigned.ipa \
-            BitChord-$VERSION-build*-mac-arm64.dmg \
+            Amber-$VERSION-build*-ios-unsigned.ipa \
+            Amber-$VERSION-build*-mac-arm64.dmg \
             release.json SHA256.txt INSTALL.md
 
       - name: Sign the appcast and commit it to main
@@ -143,14 +143,14 @@ jobs:
           SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
         run: |
           spm="$RUNNER_TEMP/spm"
-          xcodebuild -resolvePackageDependencies -project AppleApp/BitChord.xcodeproj -clonedSourcePackagesDirPath "$spm" >/dev/null
+          xcodebuild -resolvePackageDependencies -project AppleApp/Amber.xcodeproj -clonedSourcePackagesDirPath "$spm" >/dev/null
           export SPARKLE_GENERATE_APPCAST="$(find "$spm" -path '*/artifacts/sparkle/Sparkle/bin/generate_appcast' -type f -print -quit)"
           key="$RUNNER_TEMP/sparkle-ed-key"
           ( umask 077; printf '%s' "$SPARKLE_ED_PRIVATE_KEY" > "$key" )
           export SPARKLE_ED_KEY_FILE="$key"
           git fetch origin main
           git checkout -B main origin/main
-          scripts/generate-mac-appcast.sh "$TAG" build/release/BitChord-$VERSION-build*-mac-arm64.dmg "release-notes/$VERSION.md"
+          scripts/generate-mac-appcast.sh "$TAG" build/release/Amber-$VERSION-build*-mac-arm64.dmg "release-notes/$VERSION.md"
           rm -f "$key"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

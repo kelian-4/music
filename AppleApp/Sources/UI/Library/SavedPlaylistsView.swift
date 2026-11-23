@@ -4,7 +4,7 @@ import AppKit
 #else
 import UIKit
 #endif
-import BitChordShared
+import AmberShared
 import UniformTypeIdentifiers
 
 /// A saved-collections grid straight from one signed-in library shelf
@@ -208,7 +208,7 @@ struct SavedPlaylistsView: View {
         }
         .sheet(item: $importDraft) { draft in
             PlaylistImportReviewView(draft: draft) { importError in
-                importMessage = importError ?? "Playlist saved to Nyx Music. Reimporting this file will update the same playlist."
+                importMessage = importError ?? "Playlist saved to Amber. Reimporting this file will update the same playlist."
                 showImportMessage = true
             }
         }

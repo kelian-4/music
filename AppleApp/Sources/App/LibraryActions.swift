@@ -1,5 +1,5 @@
 import Foundation
-import BitChordShared
+import AmberShared
 
 /// Swift wrappers over `LibraryActionsBridge` (likes, playlists, library save).
 @MainActor
