@@ -61,8 +61,8 @@ extension SettingsView {
         rows.row("Data Saver", "data", "saver", "low data", "cellular", "mobile data", "bandwidth", "quality") {
             SettingsToggleLine(
                 glyph: .download,
-                title: String(localized: "Data Saver"),
-                subtitle: String(localized: "Caps mobile streaming at Low, downloads on Wi-Fi only, no canvas videos on mobile data. Turning it off puts your own choices back"),
+                title: "Data Saver",
+                subtitle: "Caps mobile streaming at Low, downloads on Wi-Fi only, no canvas videos on mobile data. Turning it off puts your own choices back",
                 isOn: dataSaverBinding
             )
         }
@@ -115,7 +115,7 @@ extension SettingsView {
             #if os(macOS)
             Picker(selection: selection) {
                 ForEach(options) { option in
-                    Text(option.title).tag(option.id)
+                    Text(LocalizedStringKey(option.title)).tag(option.id)
                 }
             } label: {
                 SettingsLine(glyph: glyph, title: title, subtitle: subtitle, badge: badge) {

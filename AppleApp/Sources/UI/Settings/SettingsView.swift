@@ -285,7 +285,7 @@ struct SettingsView: View {
             let access = url.startAccessingSecurityScopedResource()
             defer { if access { url.stopAccessingSecurityScopedResource() } }
             if let data = try? Data(contentsOf: url), let text = String(data: data, encoding: .utf8) {
-                BitChordBackup.importText(text)
+                BitChordBackup.importText(LocalizedStringKey(text))
                 backupNote = "Imported — reopen Settings to see them"
             }
         }
@@ -535,7 +535,7 @@ struct SettingsView: View {
         return Form {
             Section {
                 ForEach(entries.filter { !cleanupTitles.contains($0.title) }) { row in row.content }
-            } header: { Text(section.title) } footer: { if search.isEmpty { footer(for: section) } }
+            } header: { Text(LocalizedStringKey(section.title)) } footer: { if search.isEmpty { footer(for: section) } }
             if section == .downloads {
                 Section {
                     ForEach(entries.filter { cleanupTitles.contains($0.title) }) { row in row.content }
@@ -549,7 +549,7 @@ struct SettingsView: View {
 
     @ViewBuilder private func settingsSectionPage(_ section: SettingsSection) -> some View {
         if section == .sources { SourcesView() }
-        else { settingsSectionForm(section).navigationTitle(section.title) }
+        else { settingsSectionForm(section).navigationTitle(LocalizedStringKey(section.title)) }
     }
 
     private func sectionSummary(_ section: SettingsSection) -> String {
@@ -596,7 +596,7 @@ struct SettingsView: View {
                             row.content
                         }
                     } header: {
-                        Text(built.section.title)
+                        Text(LocalizedStringKey(built.section.title))
                     } footer: {
                         // Not while searching. A footer explains the rows that sat above
                         // it, and the search has filtered those: the Audio Quality note

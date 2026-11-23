@@ -29,7 +29,7 @@ extension SettingsView {
                     range: 0...12, step: 1)
                     .disabled(automix || controller.settingsAudioReadout.processingBypass != nil)
                 if let reason = controller.settingsAudioReadout.processingBypass {
-                    Text(reason).font(.footnote).foregroundStyle(.secondary)
+                    Text(LocalizedStringKey(reason)).font(.footnote).foregroundStyle(.secondary)
                 }
             }
         }

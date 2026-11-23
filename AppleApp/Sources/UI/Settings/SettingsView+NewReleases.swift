@@ -18,8 +18,8 @@ extension SettingsView {
         rows.row("New Release Notifications", "notifications", "releases", "artists", "followed", "alerts") {
             SettingsToggleLine(
                 glyph: .update,
-                title: String(localized: "New Release Notifications"),
-                subtitle: String(localized: "Get notified when an artist you follow releases something new. Checked on Wi-Fi only"),
+                title: "New Release Notifications",
+                subtitle: "Get notified when an artist you follow releases something new. Checked on Wi-Fi only",
                 isOn: newReleasesBinding
             )
         }

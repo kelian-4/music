@@ -57,7 +57,7 @@ struct AccountIntegrationsView: View {
                     HStack(alignment: .top, spacing: 10) {
                         Image(systemName: "exclamationmark.triangle.fill")
                             .foregroundStyle(.orange)
-                        Text(reason)
+                        Text(LocalizedStringKey(reason))
                             .font(.callout)
                             .fixedSize(horizontal: false, vertical: true)
                     }

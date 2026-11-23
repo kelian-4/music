@@ -30,8 +30,8 @@ struct LyricsSourcesView: View {
                     if let source = LyricsSourceOption.all.first(where: { $0.name == id }) {
                         Toggle(isOn: enabledBinding(source.id)) {
                             VStack(alignment: .leading, spacing: 2) {
-                                Text(source.label)
-                                Text(source.detail)
+                                Text(LocalizedStringKey(source.label))
+                                Text(LocalizedStringKey(source.detail))
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
                             }

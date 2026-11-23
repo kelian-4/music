@@ -20,9 +20,9 @@ struct QualityPickerPage: View {
                 } label: {
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(option.title)
+                            Text(LocalizedStringKey(option.title))
                                 .foregroundStyle(.primary)
-                            Text(option.detail)
+                            Text(LocalizedStringKey(option.detail))
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }
@@ -36,7 +36,7 @@ struct QualityPickerPage: View {
                 }
             }
         }
-        .navigationTitle(title)
+        .navigationTitle(LocalizedStringKey(title))
     }
 }
 
