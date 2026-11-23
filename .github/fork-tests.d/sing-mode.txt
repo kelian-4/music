@@ -1,1 +1,1 @@
-com.music.bitchord.VocalReducerTest
+com.music.amber.VocalReducerTest

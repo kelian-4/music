@@ -1,1 +1,1 @@
-com.music.bitchord.PlaylistFoldersPolicyTest
+com.music.amber.PlaylistFoldersPolicyTest

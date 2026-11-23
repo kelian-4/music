@@ -1,1 +1,1 @@
-com.music.bitchord.PinnedItemsPolicyTest
+com.music.amber.PinnedItemsPolicyTest

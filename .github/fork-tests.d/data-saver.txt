@@ -1,1 +1,1 @@
-com.music.bitchord.DataSaverPolicyTest
+com.music.amber.DataSaverPolicyTest

@@ -1,1 +1,1 @@
-com.music.bitchord.CreditsParserTest
+com.music.amber.CreditsParserTest

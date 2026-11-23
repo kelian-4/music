@@ -1,1 +1,1 @@
-com.music.bitchord.NewReleasePolicyTest
+com.music.amber.NewReleasePolicyTest

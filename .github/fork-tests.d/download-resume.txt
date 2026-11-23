@@ -1,1 +1,1 @@
-com.music.bitchord.DownloadResumePolicyTest
+com.music.amber.DownloadResumePolicyTest
