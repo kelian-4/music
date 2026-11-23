@@ -38,7 +38,7 @@ jobs:
 
       - name: Install Rust target and XcodeGen
         run: |
-          rustup target add aarch64-apple-ios
+          rustup target add aarch64-apple-darwin aarch64-apple-ios
           brew install xcodegen
 
       - uses: actions/cache@v4
@@ -54,8 +54,8 @@ jobs:
       - name: Build the unsigned IPA
         run: |
           version="$(sed -n 's/^ *MARKETING_VERSION: "\(.*\)"$/\1/p' AppleApp/project.yml | head -1)"
-          # Device slice only: the IPA never runs in the Simulator.
-          NATIVE_TARGETS="aarch64-apple-ios" scripts/build-native-core.sh
+          # The host slice is needed by the UniFFI bindgen step.
+          NATIVE_TARGETS="aarch64-apple-darwin aarch64-apple-ios" scripts/build-native-core.sh
           CONFIG=release scripts/build-shared-framework.sh
           (cd AppleApp && xcodegen generate --spec project.yml)
           BITCHORD_BUILD_REVISION="$(git rev-parse --short=12 HEAD)" \
