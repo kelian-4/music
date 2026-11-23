@@ -14682,6 +14682,46 @@
           }
         }
       }
+    },
+    "New Release Notifications": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications de nouvelles sorties"
+          }
+        }
+      }
+    },
+    "Get notified when an artist you follow releases something new. Checked on Wi-Fi only": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sois prévenu quand un artiste que tu suis sort quelque chose de nouveau. Vérification en Wi-Fi uniquement"
+          }
+        }
+      }
+    },
+    "New release: %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouvelle sortie : %@"
+          }
+        }
+      }
+    },
+    "%lld new releases": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld nouvelles sorties"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

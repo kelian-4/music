@@ -58,6 +58,9 @@ struct BitChordApp: App {
                 .environment(auth)
                 .environment(toast)
                 .environment(party)
+                .onChange(of: scenePhase) { _, phase in
+                    if phase == .active { Task { await NewReleaseNotifier.shared.checkIfDue() } }
+                }
                 .task {
                     #if DEBUG
                     if ProcessInfo.processInfo.arguments.contains("--verify-queue") {
@@ -113,6 +116,7 @@ struct BitChordApp: App {
                     // alert wherever the listener starts; on Mac the About row and
                     // the update sheet remain available.
                     Task { await WhatsNewCenter.shared.checkAfterLaunch() }
+                    Task { await NewReleaseNotifier.shared.checkIfDue() }
                     #if os(iOS)
                     Task { await UpdateChecker.shared.pollOnce() }
                     #else

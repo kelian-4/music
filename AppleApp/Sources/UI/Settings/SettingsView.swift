@@ -33,6 +33,7 @@ struct SettingsView: View {
     @State var downloadQuality = PlatformSettings.shared.getString(key: "download_quality", default: "LOSSLESS")
     @State var wifiOnlyDownloads = PlatformSettings.shared.getBoolean(key: "wifi_only_downloads", default: true)
     @State var dataSaver = PlatformSettings.shared.getBoolean(key: "data_saver", default: false)
+    @State var newReleaseNotifications = UserDefaults.standard.bool(forKey: "new_release_notifications")
     @State var nerdStats = PlatformSettings.shared.getBoolean(key: "show_nerd_stats", default: false)
     @State var canvas = PlatformSettings.shared.getBoolean(key: "animated_canvas", default: true)
     @State var canvasCellular = PlatformSettings.shared.getBoolean(key: "canvas_over_cellular", default: false)
@@ -424,6 +425,7 @@ struct SettingsView: View {
             }
         case .account:
             buildAccountRows(&rows)
+            buildNewReleaseRows(&rows)
             appendMiscRows(&rows, titles: ["Listen together", "Spotify Canvas"])
         case .audioQuality: buildAudioQualityRows(&rows)
         case .downloads:
