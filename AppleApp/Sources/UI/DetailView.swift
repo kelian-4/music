@@ -342,7 +342,7 @@ struct DetailView: View {
                 }
                 if !pinned {
                     Button {
-                        if PlaylistPinning.toggle(browseId: browseId) {
+                        if PlaylistPinning.toggle(browseId: browseId, title: initialTitle) {
                             pinned = true
                         } else {
                             appModel.pinLimitAlert = true
@@ -352,7 +352,7 @@ struct DetailView: View {
                     }
                 } else {
                     Button {
-                        if PlaylistPinning.toggle(browseId: browseId) {
+                        if PlaylistPinning.toggle(browseId: browseId, title: initialTitle) {
                             pinned = false
                         }
                     } label: {
@@ -687,7 +687,7 @@ struct DetailView: View {
             }
             .disabled(page.songs.isEmpty)
             Button(pinned ? "Unpin" : "Pin") {
-                if PlaylistPinning.toggle(browseId: browseId) {
+                if PlaylistPinning.toggle(browseId: browseId, title: initialTitle) {
                     pinned.toggle()
                 } else {
                     appModel.pinLimitAlert = true

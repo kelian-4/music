@@ -678,26 +678,58 @@ object AppSettings {
         settings.putInt("scrobble_delay_seconds", _scrobbleDelaySeconds.value)
     }
 
-    private val _pinnedPlaylists = MutableStateFlow(settings.getString("pinned_playlists", ""))
+    private fun loadPinnedItems(): List<PinnedItem> =
+        PinnedItemsPolicy.decode(settings.getString("pinned_items", "").ifEmpty { null })
+            ?: PinnedItemsPolicy.migrate(
+                settings.getString("pinned_playlists", "").split(',').map { it.trim() },
+            )
+
+    private val _pinnedItems = MutableStateFlow(loadPinnedItems())
+    private val _pinnedItemsJson = MutableStateFlow(PinnedItemsPolicy.encode(_pinnedItems.value))
+    val pinnedItemsJson: StateFlow<String> = _pinnedItemsJson.asStateFlow()
+
+    private val _pinnedPlaylists = MutableStateFlow(PinnedItemsPolicy.playlistIds(_pinnedItems.value).joinToString(","))
     val pinnedPlaylists: StateFlow<String> = _pinnedPlaylists.asStateFlow()
+
+    private fun commitPinnedItems(items: List<PinnedItem>) {
+        _pinnedItems.value = items
+        _pinnedItemsJson.value = PinnedItemsPolicy.encode(items)
+        _pinnedPlaylists.value = PinnedItemsPolicy.playlistIds(items).joinToString(",")
+        settings.putString("pinned_items", _pinnedItemsJson.value)
+        settings.putString("pinned_playlists", _pinnedPlaylists.value)
+    }
+
     fun setPinnedPlaylists(value: String) {
-        _pinnedPlaylists.value = value
-        settings.putString("pinned_playlists", value)
+        val ids = value.split(',').map { it.trim() }.filter { it.isNotEmpty() }.distinct()
+        val known = _pinnedItems.value.filter { it.kind == PinKind.PLAYLIST }.associateBy { it.id }
+        val others = _pinnedItems.value.filter { it.kind != PinKind.PLAYLIST }
+        val playlists = ids.map { known[it] ?: PinnedItem(PinKind.PLAYLIST, it) }
+        commitPinnedItems((playlists + others).take(PinnedItemsPolicy.MAX_PINNED))
+    }
+
+    fun setPinnedItemsJson(value: String) {
+        PinnedItemsPolicy.decode(value)?.let { commitPinnedItems(it) }
+    }
+
+    fun togglePinnedItem(kind: String, id: String, title: String, subtitle: String, thumbnailUrl: String?): String {
+        val pinKind = PinKind.entries.firstOrNull { it.name == kind } ?: return PinChange.LIMIT.name
+        val result = PinnedItemsPolicy.toggle(
+            _pinnedItems.value,
+            PinnedItem(pinKind, id, title, subtitle, thumbnailUrl?.takeIf { it.isNotBlank() }),
+        )
+        if (result.change != PinChange.LIMIT) commitPinnedItems(result.items)
+        return result.change.name
     }
 
     /**
      * Pins or unpins [browseId], returning whether it is pinned afterwards.
-     * Pinning past [MAX_PINNED_PLAYLISTS] is refused rather than evicting.
+     * Pinning past the limit is refused rather than evicting.
      */
     fun togglePinnedPlaylist(browseId: String): Boolean {
-        val ids = _pinnedPlaylists.value.split(',').map { it.trim() }.filter { it.isNotEmpty() }
-        val updated = when {
-            browseId in ids -> ids - browseId
-            ids.size >= MAX_PINNED_PLAYLISTS -> return false
-            else -> ids + browseId
-        }
-        setPinnedPlaylists(updated.joinToString(","))
-        return browseId in updated
+        val result = PinnedItemsPolicy.toggle(_pinnedItems.value, PinnedItem(PinKind.PLAYLIST, browseId))
+        if (result.change == PinChange.LIMIT) return false
+        commitPinnedItems(result.items)
+        return result.change == PinChange.PINNED
     }
 
     private val _spotifySpdc = MutableStateFlow(settings.getSecret("spotify_spdc_token").orEmpty())
@@ -1126,7 +1158,7 @@ object AppSettings {
             KEY_UPGRADE_LENGTH_SLACK_SECONDS, "loudness_off_on_speaker", "hide_status_bar_in_player",
             "show_queue_history", "stop_music_on_close", "artist_signatures_enabled", "artist_signatures_wikimedia_url",
             "audio_cache_limit_bytes",
-            "eq_gains", "pinned_playlists", "jiosaavn_enabled", "stop_when_backgrounded",
+            "eq_gains", "pinned_playlists", "pinned_items", "jiosaavn_enabled", "stop_when_backgrounded",
             "prioritize_syllable_sync", "replay_genres", "scrobble_min_duration", "scrobble_delay_percent",
             "sound_mode", "clarity_preset", "clarity_wet", "clarity_trims", "loudness_mode",
             "scrobble_delay_seconds", "output_pcm_mode", "prefer_usb_dac", "loudness_normalization",
@@ -1223,6 +1255,7 @@ object AppSettings {
                 "audio_cache_limit_bytes" -> setAudioCacheLimitBytes(value.toLongOrNull() ?: DEFAULT_CACHE_LIMIT_BYTES)
                 "eq_gains" -> setEqGains(value)
                 "pinned_playlists" -> setPinnedPlaylists(value)
+                "pinned_items" -> setPinnedItemsJson(value)
                 "jiosaavn_enabled" -> setJiosaavnEnabled(value.toBoolean())
                 "stop_when_backgrounded" -> setStopWhenBackgrounded(value.toBoolean())
                 "prioritize_syllable_sync" -> setPrioritizeSyllableSync(value.toBoolean())
