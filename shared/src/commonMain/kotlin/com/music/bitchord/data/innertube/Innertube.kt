@@ -64,7 +64,7 @@ object Innertube {
 
     /** Fallback WEB_REMIX version — [ensureSessionScope] replaces this with
      *  the live one from the signed-in music.youtube.com shell. */
-    private const val WEB_REMIX_VERSION = "1.20250101.01.00"
+    private const val WEB_REMIX_VERSION = "1.20261109.01.00"
     private const val WEB_REMIX_CLIENT_ID = "67"
 
     private const val WEB_USER_AGENT =

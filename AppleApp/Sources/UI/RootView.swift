@@ -191,7 +191,7 @@ struct RootView: View {
             RenamePlaylistAlert()
         }
         #if os(iOS)
-        .alert("A BitChord update is available", isPresented: Binding(
+        .alert("A Nyx Music update is available", isPresented: Binding(
             get: { updateChecker.available != nil },
             set: { if !$0 { updateChecker.dismiss() } }
         )) {
@@ -201,7 +201,7 @@ struct RootView: View {
             }
             Button("Later", role: .cancel) { updateChecker.dismiss() }
         } message: {
-            Text("BitChord \(updateChecker.available?.identity.label ?? "") is available. Update using the same method you used to install BitChord. View Update shows what changed since your version.")
+            Text("Nyx Music \(updateChecker.available?.identity.label ?? "") is available. Update using the same method you used to install Nyx Music. View Update shows what changed since your version.")
         }
         .sheet(item: $updateDetails) { release in UpdateSheet(release: release) }
         #endif
@@ -546,7 +546,7 @@ struct RootView: View {
             }
         }
         .listStyle(.sidebar)
-        .navigationTitle("BitChord")
+        .navigationTitle("Nyx Music")
     }
 
     private func sideRow(_ side: MacSide, _ title: LocalizedStringKey, _ icon: String) -> some View {
@@ -1128,20 +1128,16 @@ struct NowPlayingTakeover: ViewModifier {
 
     func body(content: Content) -> some View {
         Group {
-            if sizeClass == .regular {
-                // Full screen, unconditionally: `.page` sheet sizing renders
-                // as a floating card on iPadOS 27, and only a cover is
-                // guaranteed edge to edge.
-                content.fullScreenCover(isPresented: $isPresented) {
-                    PlayerNavigationStack()
-                        .navigationTransition(.zoom(sourceID: NowPlayingZoom.sourceID, in: zoomNamespace))
-                }
-            } else {
-                content.sheet(isPresented: $isPresented) {
-                    PlayerNavigationStack()
-                        .modifier(NowPlayingSheetSizing())
-                        .navigationTransition(.zoom(sourceID: NowPlayingZoom.sourceID, in: zoomNamespace))
-                }
+            content.fullScreenCover(isPresented: $isPresented) {
+                PlayerNavigationStack()
+                    .simultaneousGesture(
+                        DragGesture(minimumDistance: 24).onEnded { value in
+                            if value.startLocation.y < 160, value.translation.height > 120 {
+                                isPresented = false
+                            }
+                        }
+                    )
+                    .navigationTransition(.zoom(sourceID: NowPlayingZoom.sourceID, in: zoomNamespace))
             }
         }
     }

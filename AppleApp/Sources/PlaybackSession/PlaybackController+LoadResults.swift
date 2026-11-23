@@ -414,7 +414,7 @@ extension PlaybackController {
                 }
                 if automix {
                     NSLog(
-                        "[BitChord] automix queued %@%@ with an immediate %.1fs overlap",
+                        "[Nyx Music] automix queued %@%@ with an immediate %.1fs overlap",
                         next.title,
                         selfMix ? " (self-mix)" : "",
                         safetyPlan?.fadeSeconds ?? 0
@@ -517,7 +517,7 @@ extension PlaybackController {
                         }
                         if outOk || inOk {
                             NSLog(
-                                "[BitChord] Music Understanding overlay out=%@ in=%@",
+                                "[Nyx Music] Music Understanding overlay out=%@ in=%@",
                                 outOk ? "yes" : "no",
                                 inOk ? "yes" : "no"
                             )
@@ -575,7 +575,7 @@ extension PlaybackController {
                     if delivered {
                         let shown = Self.displayAutomixReason(plan.reason)
                         NSLog(
-                            "[BitChord] automix plan %d for %@%@: %@, cue %.2fs, fade %.2fs, end %.1fs — %@",
+                            "[Nyx Music] automix plan %d for %@%@: %@, cue %.2fs, fade %.2fs, end %.1fs — %@",
                             attempt, next.title, selfMix ? " (self-mix)" : "",
                             String(describing: plan.style),
                             plan.cueSeconds, plan.fadeSeconds, plan.transitionEndSeconds,

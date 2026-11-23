@@ -75,7 +75,7 @@ struct MiniPlayerView: View {
             if compact {
                 Divider()
                 HStack {
-                    Button("Open BitChord") {
+                    Button("Open Nyx Music") {
                         NSApp.activate()
                         NSApp.windows.first { $0.canBecomeMain }?.makeKeyAndOrderFront(nil)
                     }
@@ -85,7 +85,7 @@ struct MiniPlayerView: View {
                 .buttonStyle(.borderless)
                 .font(.callout)
                 Menu {
-                    Toggle("Keep BitChord open when windows close", isOn: $closeToTray)
+                    Toggle("Keep Nyx Music open when windows close", isOn: $closeToTray)
                 } label: {
                     Label("Window Behavior", systemImage: "macwindow")
                 }

@@ -129,7 +129,7 @@ extension PlaybackController {
                    "pNxTO1czMkc", "QX1KRphxnQc", "Xxq1XfsQOIE", "35tNuvmBVMc",
                    "N7IxlspnaQw", "9NM0hPDWIyg"]
         let entries = ids.enumerated().map { index, id in
-            QueueEntry(id: id, title: "Navigation fixture \(index + 1)", artist: "BitChord",
+            QueueEntry(id: id, title: "Navigation fixture \(index + 1)", artist: "Nyx Music",
                        source: "yt:" + id, durationText: "", isLocal: false)
         }
         var checks: [String: Bool] = [:]
@@ -332,7 +332,7 @@ extension PlaybackController {
             volume = 0.08
             for fixture in [wav, aac] {
                 let name = fixture.pathExtension
-                let entry = QueueEntry(id: "native-resume-\(name)", title: "Resume verification", artist: "BitChord", source: fixture.path, durationText: "0:40", isLocal: true)
+                let entry = QueueEntry(id: "native-resume-\(name)", title: "Resume verification", artist: "Nyx Music", source: fixture.path, durationText: "0:40", isLocal: true)
                 play([entry])
                 await playbackStartTask?.value
                 try await Task.sleep(for: .seconds(2))

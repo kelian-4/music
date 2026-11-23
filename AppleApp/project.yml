@@ -95,7 +95,7 @@ targets:
     info:
       path: BitChord-Info.plist
       properties:
-        CFBundleDisplayName: BitChord
+        CFBundleDisplayName: Nyx Music
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         BitChordRevision: "$(BITCHORD_BUILD_REVISION)"
@@ -131,9 +131,9 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
         UILaunchScreen: {}
-        NSMotionUsageDescription: BitChord uses headphone motion to keep its spatial effect anchored when you turn your head.
-        NSPhotoLibraryAddUsageDescription: BitChord saves the lyric share cards you choose to add to Photos.
-        NSSpeechRecognitionUsageDescription: BitChord uses on-device speech recognition to align fetched lyrics with the playing audio. Audio is not sent to a server for alignment.
+        NSMotionUsageDescription: Nyx Music uses headphone motion to keep its spatial effect anchored when you turn your head.
+        NSPhotoLibraryAddUsageDescription: Nyx Music saves the lyric share cards you choose to add to Photos.
+        NSSpeechRecognitionUsageDescription: Nyx Music uses on-device speech recognition to align fetched lyrics with the playing audio. Audio is not sent to a server for alignment.
     entitlements:
       path: BitChord.entitlements
       properties:
@@ -160,7 +160,7 @@ targets:
     info:
       path: BitChordWidget-Info.plist
       properties:
-        CFBundleDisplayName: BitChord Widget
+        CFBundleDisplayName: Nyx Music Widget
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         BitChordRevision: "$(BITCHORD_BUILD_REVISION)"

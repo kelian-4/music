@@ -118,8 +118,7 @@ extension NowPlayingView {
                     Text("Looking for lyrics…")
                         .foregroundStyle(.white.opacity(0.5))
                 } else if controller.lyricsUnavailable {
-                    Text("No lyrics for this track")
-                        .foregroundStyle(.white.opacity(0.5))
+                    Text("")
                 } else {
                     // Nothing has been looked for yet — a track whose lyrics are
                     // off, or a player with nothing loaded. Saying so is better

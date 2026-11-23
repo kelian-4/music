@@ -168,102 +168,18 @@ extension NowPlayingView {
     }
 
     private var outputPartyPill: some View {
-        HStack(spacing: 0) {
-            Button {
-                Haptics.play(.tap)
-                showOutputDevice = true
-            } label: {
-                Image(systemName: "headphones")
-                    .scaledFont(size: 23, weight: .regular)
-                    .foregroundStyle(.white.opacity(0.88))
-                    .frame(width: outputPartyButtonWidth, height: 44)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Audio output")
-
-            pillDivider
-
-#if os(iOS)
-            if pane == .main {
-                Button {
-                    let enabled = !controller.mixWithOtherAudio
-                    Haptics.play(enabled ? .toggleOn : .toggleOff)
-                    controller.setMixWithOtherAudio(enabled)
-                } label: {
-                    Image(systemName: "waveform")
-                        .scaledFont(size: 23, weight: .regular)
-                        .foregroundStyle(.white.opacity(controller.mixWithOtherAudio ? 1 : 0.75))
-                        .frame(width: outputPartyButtonWidth, height: 44)
-                        .background(.white.opacity(controller.mixWithOtherAudio ? 0.14 : 0))
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("player.audioMixing")
-                .accessibilityLabel("Mix with Other Apps")
-                .accessibilityValue(controller.mixWithOtherAudio ? "On" : "Off")
-                .accessibilityHint(controller.mixWithOtherAudio
-                    ? "Turn off to give BitChord audio priority. Other apps may pause."
-                    : "Turn on to keep other apps audible.")
-                .accessibilityAddTraits(controller.mixWithOtherAudio ? .isSelected : [])
-                .help(controller.mixWithOtherAudio ? "Mixing on" : "BitChord audio priority")
-
-                pillDivider
-            }
-#endif
-
-            if pane == .main {
-                Button {
-                    let enabled = !showMusicVideos
-                    Haptics.play(enabled ? .toggleOn : .toggleOff)
-                    showMusicVideos = enabled
-                } label: {
-                    Image(systemName: showMusicVideos ? "play.rectangle.fill" : "play.rectangle")
-                        .scaledFont(size: 22, weight: .regular)
-                        .foregroundStyle(.white.opacity(showMusicVideos ? 1 : 0.75))
-                        .frame(width: outputPartyButtonWidth, height: 44)
-                        .background(.white.opacity(showMusicVideos ? 0.14 : 0))
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("player.musicVideos")
-                .accessibilityLabel("Music Videos")
-                .accessibilityValue(showMusicVideos ? "On" : "Off")
-                .accessibilityAddTraits(showMusicVideos ? .isSelected : [])
-                .help(showMusicVideos ? "Music videos on" : "Music videos off")
-
-                pillDivider
-            }
-
-            Button {
-                Haptics.play(.tap)
-                if party.inParty {
-                    appModel.partyMembersPresented = true
-                } else {
-                    appModel.listenTogetherPresented = true
-                }
-            } label: {
-                Image(systemName: "person.fill")
-                    .scaledFont(size: 22, weight: .regular)
-                    .foregroundStyle(.white.opacity(party.inParty ? 1 : 0.75))
-                    .frame(width: outputPartyButtonWidth, height: 44)
-                    .background(.white.opacity(party.inParty ? 0.14 : 0))
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(party.inParty ? "People listening" : "Listen Together")
+        Button {
+            Haptics.play(.tap)
+            showOutputDevice = true
+        } label: {
+            Image(systemName: "airplayaudio")
+                .scaledFont(size: 24, weight: .regular)
+                .foregroundStyle(.white.opacity(0.88))
+                .frame(width: 64, height: 44)
+                .contentShape(Rectangle())
         }
-        .background(.white.opacity(0.12))
-        .clipShape(Capsule())
-        .accessibilityElement(children: .contain)
-    }
-
-    private var outputPartyButtonWidth: CGFloat {
-#if os(iOS)
-        pane == .main ? 52 : 64
-#else
-        64
-#endif
+        .buttonStyle(.plain)
+        .accessibilityLabel("Audio output")
     }
 
     /// The phone queue keeps its established shuffle/repeat/AutoPlay pill.
@@ -349,25 +265,5 @@ extension NowPlayingView {
         Rectangle().fill(.white.opacity(0.20)).frame(width: 1, height: 44)
     }
 
-    var outputCaption: String {
-        // The live CoreAudio route, which is the only place the *current*
-        // output is named on iOS: cpal's default device does not follow a
-        // route change, so plugging in AirPods would have kept reporting the
-        // built-in speaker. Read it per render — the player re-renders on every
-        // position tick, so a route change lands without any observer.
-        #if os(iOS)
-        let port = AVAudioSession.sharedInstance().currentRoute.outputs.first?.portName ?? ""
-        let routeName = port.trimmingCharacters(in: .whitespacesAndNewlines)
-        #else
-        let routeName = controller.outputDevice.name
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-        #endif
-        let lowered = routeName.lowercased()
-        if controller.outputDevice.started, !routeName.isEmpty,
-           !lowered.contains("default output") {
-            return routeName
-        }
-        if party.inParty { return party.state.you?.name ?? "Playing together" }
-        return "Default Device"
-    }
+    var outputCaption: String { "" }
 }

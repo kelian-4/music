@@ -7,7 +7,7 @@ final class PlaybackDebugLog: @unchecked Sendable {
     private let lock = NSLock()
     private var lines: [String] = []
     private let capacity: Int
-    private let writer = DispatchQueue(label: "app.bitchord.BitChord.diagnostics", qos: .utility)
+    private let writer = DispatchQueue(label: "app.bitchord.Nyx Music.diagnostics", qos: .utility)
     private let directory: URL
     private let runFile: URL
     private let limit = 2 * 1024 * 1024
@@ -85,7 +85,7 @@ final class PlaybackDebugLog: @unchecked Sendable {
     }
     func saveReport(snapshot: String) throws -> URL {
         try writer.sync {
-            var report = "BitChord diagnostic report\n\(Date().ISO8601Format())\n\nENGINE SNAPSHOT\n\(Self.sanitize(snapshot))\n"
+            var report = "Nyx Music diagnostic report\n\(Date().ISO8601Format())\n\nENGINE SNAPSHOT\n\(Self.sanitize(snapshot))\n"
             for file in runFiles() {
                 let text = (try? String(contentsOf: file, encoding: .utf8)) ?? "unavailable"
                 let state = file == runFile ? "current" : (text.contains("RUN CLEAN EXIT") ? "clean exit" : "interrupted; no clean-exit marker")

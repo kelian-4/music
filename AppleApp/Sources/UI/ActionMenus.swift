@@ -17,26 +17,58 @@ struct SongActionButtons: View {
 
     var body: some View {
         let _ = LikeStore.shared.epoch
-        Button("Play") { controller.play([entry], at: 0) }
-        Button("Play Next") {
+        ControlGroup {
+            if !entry.isLocal {
+                downloadRow(entry)
+            }
+            if auth.signedIn, let vid = entry.videoId {
+                Button(SongRatingActions.likeTitle(vid), systemImage: LibraryActions.cachedLike(vid) == "LIKE" ? "star.fill" : "star") {
+                    Task { await SongRatingActions.toggleLike(videoId: vid, controller: controller, toast: toast) }
+                }
+            }
+            ShareLink(item: shareURL) {
+                Label("Share", systemImage: "square.and.arrow.up")
+            }
+        }
+        .controlGroupStyle(.compactMenu)
+        Divider()
+        if auth.signedIn, let vid = entry.videoId {
+            Button("Add to Playlist…", systemImage: "text.badge.plus") {
+                appModel.playlistPicker = PlaylistPickerRequest(videoId: vid, title: entry.title)
+            }
+        }
+        if entry.id != controller.current?.id {
+            Button("Play", systemImage: "play") { controller.play([entry], at: 0) }
+        }
+        Button("Play Next", systemImage: "text.insert") {
             controller.playNext(entry)
             toast.queueNotice("Playing next: \(entry.title)")
         }
-        Button("Add to Queue") {
+        Button("Add to Queue", systemImage: "text.append") {
             controller.addToQueue(entry)
             toast.queueNotice("Added to queue: \(entry.title)")
         }
-        Button("Start Radio") { controller.playRadio(entry) }
+        Button("Start Radio", systemImage: "badge.plus.radiowaves.right") { controller.playRadio(entry) }
+        Divider()
+        if let albumId = entry.albumId {
+            Button("Open Album", systemImage: "square.stack") {
+                appModel.pendingDetail = .detail(browseId: albumId, title: entry.albumName ?? "Album")
+            }
+        }
+        if let artistId = entry.artistId {
+            Button("Open Artist", systemImage: "music.mic") {
+                appModel.pendingDetail = .detail(browseId: artistId, title: entry.artist)
+            }
+        }
+        if entry.videoId != nil {
+            Button("Credits", systemImage: "info.circle") {
+                toast.showCredits(entry)
+            }
+        }
         if auth.signedIn, let vid = entry.videoId {
             Divider()
-            Button(SongRatingActions.likeTitle(vid)) {
-                Task { await SongRatingActions.toggleLike(videoId: vid, controller: controller, toast: toast) }
-            }
-            Button(SongRatingActions.dislikeTitle(vid)) {
+            Button(SongRatingActions.dislikeTitle(vid), systemImage: "hand.thumbsdown") {
                 Task { await SongRatingActions.toggleDislike(videoId: vid, controller: controller, toast: toast) }
-            }
-            Button("Add to Playlist…") {
-                appModel.playlistPicker = PlaylistPickerRequest(videoId: vid, title: entry.title)
             }
             if playlistOwned, let setVideoId, let playlistBrowseId {
                 Button("Remove from Playlist", role: .destructive) {
@@ -62,13 +94,6 @@ struct SongActionButtons: View {
                 }
             }
         }
-        // Revert / upgrade are two halves of one decision, so they are offered on
-        // opposite sides of it and never both. Upstream gates them on the
-        // player's copy of the track specifically — a row opened from a list has
-        // no stream to change, and a track playing off a file the listener saved
-        // has nothing a substitute could replace. The controller holds both
-        // answers so the menu cannot disagree with the resolution path about
-        // what a revert means.
         if entry.id == controller.current?.id {
             if controller.songVersions[entry.id] != nil {
                 Divider()
@@ -85,9 +110,6 @@ struct SongActionButtons: View {
                 Button("Upgrade Quality") { controller.upgradeQuality() }
             }
         }
-        if !entry.isLocal {
-            downloadRow(entry)
-        }
         if WebDavStore.shared.canUpload(path: entry.source, id: entry.id) {
             Button("Upload to WebDAV", systemImage: "arrow.up.doc") {
                 toast.show("Uploading \(entry.title)…", kind: .info)
@@ -102,24 +124,6 @@ struct SongActionButtons: View {
                     }
                 }
             }
-        }
-        if let albumId = entry.albumId {
-            Button("Open Album") {
-                appModel.pendingDetail = .detail(browseId: albumId, title: entry.albumName ?? "Album")
-            }
-        }
-        if let artistId = entry.artistId {
-            Button("Open Artist") {
-                appModel.pendingDetail = .detail(browseId: artistId, title: entry.artist)
-            }
-        }
-        if entry.videoId != nil {
-            Button("Credits", systemImage: "person.2") {
-                toast.showCredits(entry)
-            }
-        }
-        ShareLink(item: shareURL) {
-            Label("Share", systemImage: "square.and.arrow.up")
         }
         if showSleepTimer {
             SleepTimerMenu()
@@ -896,7 +900,7 @@ struct SpotifyCanvasSettingsView: View {
             } header: {
                 Text("Spotify Cookie")
             } footer: {
-                Text("Paste the sp_dc cookie from an open Spotify web session. BitChord uses it only to look up looping motion art. Leave blank to skip.")
+                Text("Paste the sp_dc cookie from an open Spotify web session. Nyx Music uses it only to look up looping motion art. Leave blank to skip.")
             }
             Section {
                 Toggle("Auto-hide motion art", isOn: $autoHide)

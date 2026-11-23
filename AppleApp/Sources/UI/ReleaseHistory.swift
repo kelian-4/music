@@ -99,9 +99,9 @@ struct ReleaseNotesSections: View {
                 Link("Release page", destination: entry.url).font(.footnote)
             } header: {
                 if let date = entry.publishedAt {
-                    Text("BitChord \(entry.version) · \(date.formatted(date: .abbreviated, time: .omitted))")
+                    Text("Nyx Music \(entry.version) · \(date.formatted(date: .abbreviated, time: .omitted))")
                 } else {
-                    Text("BitChord \(entry.version)")
+                    Text("Nyx Music \(entry.version)")
                 }
             }
         }

@@ -209,7 +209,7 @@ struct NowPlayingView: View {
     /// `playbackOriginText` ("Playing from …"), falling back to the nerd line
     /// while a lossless lookup is still racing. Nil when hidden or unknown.
     var songStatusLine: String? {
-        guard !hideSongStatus else { return nil }
+        guard false else { return nil }
         var parts: [String] = []
         if let source = controller.playbackSourceName { parts.append(source) }
         if let nerd = controller.nerd {
@@ -222,7 +222,7 @@ struct NowPlayingView: View {
     /// The compact source caption that sits over upstream's full-bleed cover.
     /// Nerd statistics stay in the deck; they are not the origin of playback.
     var playbackOriginCaption: String? {
-        guard !hideSongStatus, let current = controller.current else { return nil }
+        guard false, let current = controller.current else { return nil }
         if controller.resolvedOrigin[current.id] == .substitute,
            let source = controller.playbackSourceName {
             return "Playing from \(source)"

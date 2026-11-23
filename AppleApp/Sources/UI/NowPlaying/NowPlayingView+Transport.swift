@@ -217,11 +217,27 @@ extension NowPlayingView {
             if let current = controller.current {
                 SongActionButtons(entry: current, showSleepTimer: true, showDebugLog: true)
             }
-            // The output route and live pipeline have their own player control;
-            // this menu follows the upstream track-action list.
+            Divider()
+            #if os(iOS)
+            Toggle(isOn: Binding(
+                get: { controller.mixWithOtherAudio },
+                set: { controller.setMixWithOtherAudio($0) }
+            )) {
+                Label("Mix with Other Apps", systemImage: "waveform")
+            }
+            #endif
+            Toggle(isOn: $showMusicVideos) {
+                Label("Music Videos", systemImage: "play.rectangle")
+            }
+            Button(party.inParty ? "People Listening" : "Listen Together", systemImage: "person.2") {
+                if party.inParty {
+                    appModel.partyMembersPresented = true
+                } else {
+                    appModel.listenTogetherPresented = true
+                }
+            }
             if !controller.displayedLyrics.isEmpty {
-                Divider()
-                Button("Lyrics Offset…") { showLyricsOffset = true }
+                Button("Lyrics Offset…", systemImage: "slider.horizontal.3") { showLyricsOffset = true }
             }
         } label: {
             Image(systemName: "ellipsis")
