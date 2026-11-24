@@ -537,8 +537,9 @@ struct DetailView: View {
             .padding(.horizontal, 8)
 
             if !page.songs.isEmpty {
-                actionRow(page, tint: tint, isArtist: false)
+                releasePillsRow(page, tint: tint)
                     .padding(.top, 6)
+                actionRow(page, tint: tint, isArtist: false)
             } else if kind(of: page) == .playlist {
                 // Nothing to play, but an empty playlist is still one to
                 // rename or delete — and empty is when that is usually wanted.
@@ -602,22 +603,6 @@ struct DetailView: View {
                     }
                 }
             } else {
-                if isWide {
-                    ShufflePill {
-                        playContext(page, shuffled: true)
-                    }
-                    PlayPill(iconOnly: false, isPlaying: controller.isPlaybackContextPlaying(browseId)) {
-                        playContext(page)
-                    }
-                } else {
-                    CircleIconButton(icon: Image(.bchShuffle), label: "Shuffle") {
-                        playContext(page, shuffled: true)
-                    }
-                    PlayPill(iconOnly: true, isPlaying: controller.isPlaybackContextPlaying(browseId)) {
-                        playContext(page)
-                    }
-                }
-
                 if auth.signedIn, page.libraryPlaylistId != nil {
                     CircleIconButton(
                         icon: Image(systemName: saved ? "checkmark" : "plus"),
@@ -646,6 +631,35 @@ struct DetailView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    private func releasePillsRow(_ page: DetailPageModel, tint: ArtworkPalette.PageTint) -> some View {
+        let playing = controller.isPlaybackContextPlaying(browseId)
+        return HStack(spacing: 12) {
+            Button {
+                playContext(page)
+            } label: {
+                Label(playing ? "Pause" : "Play", systemImage: playing ? "pause.fill" : "play.fill")
+                    .font(.headline)
+                    .foregroundStyle(tint.accent)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 50)
+                    .background(Color.primary.opacity(0.08), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            }
+            .buttonStyle(.plain)
+            Button {
+                playContext(page, shuffled: true)
+            } label: {
+                Label("Shuffle", systemImage: "shuffle")
+                    .font(.headline)
+                    .foregroundStyle(tint.accent)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 50)
+                    .background(Color.primary.opacity(0.08), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            }
+            .buttonStyle(.plain)
+        }
+        .frame(maxWidth: 520)
     }
 
     /// Plays or pauses this page as a context, with the current shuffle state.
@@ -1205,7 +1219,8 @@ struct DetailView: View {
                             playNext: { controller.playNext(toEntry(song, fallbackArt: fallback)) },
                             addToQueue: { controller.addToQueue(toEntry(song, fallbackArt: fallback)) },
                             playlistBrowseId: browseId,
-                            playlistOwned: page.playlistOwned == true
+                            playlistOwned: page.playlistOwned == true,
+                            trackNumber: kind(of: page) == .album ? index + 1 : nil
                         )
                         .onAppear {
                             if song.videoId == songs.last?.videoId {

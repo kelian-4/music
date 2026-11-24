@@ -29,23 +29,18 @@ struct LibraryLandingView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 26) {
-                // 1. Replay hero: cards when there is listening data, banner before.
-                ReplayHeroSection { page in appModel.openReplay(at: page) }
+            VStack(alignment: .leading, spacing: 0) {
+                categoryList
+                    .padding(.top, 4)
 
-                // 2. On Device Shelf
-                onDeviceShelf
-
-                // 3. Signed-out prompt or Signed-in shelves
                 if !auth.signedIn {
                     signedInPrompt
-                    // Upstream keeps the Playlists row visible signed out, so the
-                    // page still says where playlists will live and how to start
-                    // one — its New Playlist tile asks for a sign-in instead of
-                    // opening a picker that could not save anything.
-                    shelfSection(FeedShelf(title: "Playlists", items: []))
+                        .padding(.horizontal, 24)
+                        .padding(.top, 28)
                 } else if loading {
                     FeedSkeleton(padded: false)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 28)
                 } else if let error, shelves.isEmpty {
                     EmptyStateView(
                         icon: Image(.bchLibrary),
@@ -54,11 +49,14 @@ struct LibraryLandingView: View {
                         buttonTitle: "Retry"
                     ) { Task { await loadShelves() } }
                 } else {
-                    signedInShelves
+                    recentlyAdded
                 }
+
+                ReplayHeroSection { page in appModel.openReplay(at: page) }
+                    .padding(.horizontal, 24)
+                    .padding(.top, 28)
             }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 16)
+            .padding(.bottom, 24)
         }
         .refreshable {
             downloadStore.refresh()
@@ -67,6 +65,63 @@ struct LibraryLandingView: View {
         .task(id: auth.sessionEpoch) {
             downloadStore.refresh()
             await loadShelves()
+        }
+    }
+
+    private var categoryList: some View {
+        VStack(spacing: 0) {
+            categoryRow("music.note.list", "Playlists", SavedPlaylistsView(hostsWindowControls: false))
+            categoryRow("music.mic", "Artists", UnifiedArtistsView(title: "Artists", onPickFolder: onPickFolder, hostsWindowControls: false))
+            categoryRow("square.stack", "Albums", UnifiedAlbumsView(title: "Albums", onPickFolder: onPickFolder, hostsWindowControls: false))
+            categoryRow("music.note", "Songs", UnifiedSongsView(title: "Songs", onPickFolder: onPickFolder, hostsWindowControls: false))
+            categoryRow("arrow.down.circle", "Downloads", DownloadsView())
+            categoryRow("folder", "Local Music", LocalMusicView(onPickFolder: onPickFolder))
+            categoryRow("clock", "History", HistoryView(), last: true)
+        }
+    }
+
+    private func categoryRow<D: View>(_ icon: String, _ title: LocalizedStringKey, _ destination: D, last: Bool = false) -> some View {
+        PushLink(destination: destination) {
+            HStack(spacing: 14) {
+                Image(systemName: icon)
+                    .font(.title3)
+                    .foregroundStyle(.tint)
+                    .frame(width: 30)
+                Text(title)
+                    .font(.title3)
+                    .foregroundStyle(.primary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.tertiary)
+            }
+            .padding(.vertical, 11)
+            .padding(.horizontal, 24)
+            .contentShape(.rect)
+            .overlay(alignment: .bottom) {
+                if !last {
+                    Divider().padding(.leading, 68)
+                }
+            }
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var recentlyAdded: some View {
+        let cards = shelves.flatMap(\.items).prefix(12)
+        return VStack(alignment: .leading, spacing: 12) {
+            if !cards.isEmpty {
+                Text("Recently Added")
+                    .font(.title3.weight(.bold))
+                    .padding(.horizontal, 24)
+                    .padding(.top, 28)
+                LazyVGrid(columns: [GridItem(.flexible(), spacing: 14, alignment: .top), GridItem(.flexible(), spacing: 14, alignment: .top)], alignment: .leading, spacing: 18) {
+                    ForEach(Array(cards)) { card in
+                        ShelfCardView(card: card)
+                    }
+                }
+                .padding(.horizontal, 24)
+            }
         }
     }
 

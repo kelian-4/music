@@ -876,6 +876,7 @@ struct SongRow: View {
     var addToQueue: (() -> Void)?
     var playlistBrowseId: String? = nil
     var playlistOwned: Bool = false
+    var trackNumber: Int? = nil
 
     @Environment(PlaybackController.self) private var controller
     @Environment(AuthController.self) private var auth
@@ -992,11 +993,24 @@ struct SongRow: View {
     /// The lane itself, shared by both platforms' interaction wrappers.
     private var rowContent: some View {
         HStack(spacing: 12) {
-            ZStack {
-                ArtworkView(entry: entry, side: 44)
-                    .clipShape(.rect(cornerRadius: 6, style: .continuous))
-                if buffering {
-                    ProgressView().controlSize(.small)
+            if let trackNumber {
+                ZStack {
+                    Text("\(trackNumber)")
+                        .font(.callout.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                        .opacity(buffering ? 0 : 1)
+                    if buffering {
+                        ProgressView().controlSize(.small)
+                    }
+                }
+                .frame(width: 28)
+            } else {
+                ZStack {
+                    ArtworkView(entry: entry, side: 44)
+                        .clipShape(.rect(cornerRadius: 6, style: .continuous))
+                    if buffering {
+                        ProgressView().controlSize(.small)
+                    }
                 }
             }
             VStack(alignment: .leading, spacing: 2) {
@@ -1007,7 +1021,7 @@ struct SongRow: View {
                         .lineLimit(titleLines)
                     if active { PlayingBars() }
                 }
-                if !entry.artist.isEmpty {
+                if !entry.artist.isEmpty && trackNumber == nil {
                     Text(entry.artist)
                         .font(.callout)
                         .foregroundStyle(.secondary)
@@ -1025,6 +1039,19 @@ struct SongRow: View {
                     .foregroundStyle(.secondary)
                     .accessibilityLabel("Downloaded")
             }
+            #if os(iOS)
+            Menu {
+                SongActionButtons(entry: entry, showSleepTimer: false, showDebugLog: false)
+            } label: {
+                Image(systemName: "ellipsis")
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                    .frame(width: 36, height: 36)
+                    .contentShape(.rect)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("More")
+            #else
             if let text = entry.durationText, !text.isEmpty {
                 Text(text)
                     .font(.callout.monospacedDigit())
@@ -1037,6 +1064,7 @@ struct SongRow: View {
                 .foregroundStyle(.tertiary)
                 .opacity(hovering ? 1 : 0)
                 .decorative()
+            #endif
         }
         .padding(.vertical, 4)
         .padding(.horizontal, 8)

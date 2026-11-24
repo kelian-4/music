@@ -43,20 +43,9 @@ struct UpNextPane: View {
             if showsCurrentTrackHeader {
                 queueHeader
             }
-            HStack(alignment: .firstTextBaseline) {
-                Text("Queue")
-                    .font(.title2.weight(.bold))
-                    .foregroundStyle(.white)
-                Spacer()
-                if !manualUpcoming.isEmpty || !autoplayUpcoming.isEmpty {
-                    Button("Clear") { controller.clearUpcoming() }
-                        .buttonStyle(.plain)
-                        .font(.callout.weight(.semibold))
-                        .foregroundStyle(Color.accentColor)
-                }
-            }
-            .padding(.horizontal, 24)
-            .id("queueTop")
+            queueModeButtons
+            queueTitleBlock
+                .id("queueTop")
 
             if controller.current == nil && manualUpcoming.isEmpty && autoplayUpcoming.isEmpty {
                 Text("Nothing playing.")
@@ -80,24 +69,7 @@ struct UpNextPane: View {
                                 historyQueueRow(item)
                             }
                         }
-                        if controller.current != nil {
-                            Text("Now playing")
-                                .font(.headline.weight(.medium))
-                                .foregroundStyle(.white.opacity(0.75))
-                                .padding(.top, 12)
-                                .listRowBackground(Color.clear)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: 12, leading: 24, bottom: 6, trailing: 24))
-                            currentQueueRow
-                        }
                         if !manualUpcoming.isEmpty {
-                            Text("Up next")
-                                .font(.headline.weight(.medium))
-                                .foregroundStyle(.white.opacity(0.75))
-                                .padding(.top, 16)
-                                .listRowBackground(Color.clear)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: 16, leading: 24, bottom: 6, trailing: 24))
                             ForEach(Array(manualUpcoming.enumerated()), id: \.element.id) { localIndex, item in
                                 queueListRow(item, section: 0, index: localIndex, rows: manualUpcoming)
                             }
@@ -134,26 +106,6 @@ struct UpNextPane: View {
                                 .onDelete { offsets in remove(offsets, rows: autoplayUpcoming) }
                             }
                         }
-                        Button {
-                            Haptics.play(.expand)
-                            onOpenLyrics()
-                        } label: {
-                            HStack(spacing: 6) {
-                                Image(systemName: "music.note")
-                                    .font(.body.weight(.medium))
-                                Text("Lyrics")
-                                    .font(.headline.weight(.medium))
-                                Image(systemName: "chevron.right")
-                                    .font(.caption.weight(.semibold))
-                            }
-                            .foregroundStyle(.white)
-                            .padding(.vertical, 10)
-                            .contentShape(.rect)
-                        }
-                        .buttonStyle(.plain)
-                        .listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                        .listRowInsets(EdgeInsets(top: 10, leading: 24, bottom: 10, trailing: 24))
                     }
                     .listStyle(.plain)
                     .scrollContentBackground(.hidden)
@@ -273,18 +225,12 @@ struct UpNextPane: View {
     }
 
     private func queueListRow(_ item: QueueRow, section: Int, index: Int, rows: [QueueRow]) -> some View {
-        HStack(spacing: 10) {
-            Image(systemName: "line.3.horizontal")
-                .font(.body.weight(.medium))
-                .foregroundStyle(.white.opacity(0.4))
-                .frame(width: 20, height: 44)
-                .contentShape(.rect)
-                .onDrag { NSItemProvider(object: "\(section):\(index)" as NSString) }
+        HStack(spacing: 12) {
             Button {
                 controller.playQueueItem(at: item.index)
             } label: {
                 HStack(spacing: 12) {
-                    ArtworkView(entry: item.entry, side: 44)
+                    ArtworkView(entry: item.entry, side: 48)
                         .clipShape(.rect(cornerRadius: 6, style: .continuous))
                     VStack(alignment: .leading, spacing: 2) {
                         Text(item.entry.title)
@@ -292,8 +238,8 @@ struct UpNextPane: View {
                             .foregroundStyle(.white)
                             .lineLimit(1)
                         Text(item.entry.artist)
-                            .font(.caption)
-                            .foregroundStyle(.white.opacity(0.65))
+                            .font(.subheadline)
+                            .foregroundStyle(.white.opacity(0.6))
                             .lineLimit(1)
                     }
                     Spacer(minLength: 0)
@@ -301,24 +247,79 @@ struct UpNextPane: View {
                 .contentShape(.rect)
             }
             .buttonStyle(.plain)
-            Button {
-                controller.removeFromQueue(at: item.index)
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.body.weight(.medium))
-                    .foregroundStyle(.white.opacity(0.55))
-                    .frame(width: 32, height: 44)
-                    .contentShape(.rect)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Remove \(item.entry.title) from queue")
+            Image(systemName: "line.3.horizontal")
+                .font(.body.weight(.medium))
+                .foregroundStyle(.white.opacity(0.5))
+                .frame(width: 36, height: 48)
+                .contentShape(.rect)
+                .onDrag { NSItemProvider(object: "\(section):\(index)" as NSString) }
         }
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
-        .listRowInsets(EdgeInsets(top: 6, leading: 24, bottom: 6, trailing: 20))
+        .listRowInsets(EdgeInsets(top: 6, leading: 24, bottom: 6, trailing: 16))
         .onDrop(of: [.text], delegate: QueueReorderDelegate(section: section, rows: rows, destIndex: index) { from, dest in
             move(IndexSet(integer: from), dest, rows: rows)
         })
+    }
+
+    private var queueModeButtons: some View {
+        HStack(spacing: 10) {
+            modeButton(.bchShuffle, on: controller.shuffleEnabled, label: controller.shuffleEnabled ? "Shuffle on" : "Shuffle off") {
+                Haptics.play(controller.shuffleEnabled ? .toggleOff : .toggleOn)
+                controller.toggleShuffle()
+            }
+            modeButton(controller.repeatMode == .one ? .bchRepeat : .bchRepeat, on: controller.repeatMode != .off, label: controller.repeatMode == .one ? "Repeat one" : controller.repeatMode == .all ? "Repeat all" : "Repeat off", badge: controller.repeatMode == .one ? "1" : nil) {
+                Haptics.play(.select)
+                controller.cycleRepeat()
+            }
+            modeButton(.bchVinylRecord, on: controller.automixEnabled, label: controller.automixEnabled ? "AutoMix on" : "AutoMix off") {
+                Haptics.play(controller.automixEnabled ? .toggleOff : .toggleOn)
+                controller.toggleAutomix()
+            }
+            modeButton(.bchInfinity, on: controller.autoplayEnabled, label: controller.autoplayEnabled ? "AutoPlay on" : "AutoPlay off") {
+                Haptics.play(controller.autoplayEnabled ? .toggleOff : .toggleOn)
+                controller.toggleAutoplay()
+            }
+        }
+        .padding(.horizontal, 24)
+    }
+
+    private func modeButton(_ icon: ImageResource, on: Bool, label: LocalizedStringKey, badge: String? = nil, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            ZStack(alignment: .topTrailing) {
+                Image(icon)
+                    .resizable().scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .frame(maxWidth: .infinity)
+                if let badge {
+                    Text(badge)
+                        .font(.system(size: 9, weight: .bold))
+                        .padding(.trailing, 14)
+                }
+            }
+            .foregroundStyle(on ? Color.black : Color.white)
+            .frame(height: 38)
+            .background(on ? Color.white : Color.white.opacity(0.16), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(label)
+    }
+
+    private var queueTitleBlock: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text("Continue Playing")
+                .font(.title3.weight(.bold))
+                .foregroundStyle(.white)
+            if let from = controller.current?.albumName ?? controller.current?.artist, !from.isEmpty {
+                Text("From \(from)")
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.6))
+                    .lineLimit(1)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 24)
+        .padding(.top, 4)
     }
 
     private var autoplayStart: Int { controller.autoplaySectionStart }
@@ -357,7 +358,7 @@ struct UpNextPane: View {
             Spacer(minLength: 0)
             if auth.signedIn, controller.current?.videoId != nil {
                 GlassCircleButton(
-                    icon: controller.isLiked ? .bchHeartFilled : .bchHeart,
+                    system: controller.isLiked ? "star.fill" : "star",
                     label: controller.isLiked ? "Remove Like" : "Like"
                 ) { controller.toggleLike() }
             }

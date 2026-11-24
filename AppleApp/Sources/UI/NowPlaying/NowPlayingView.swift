@@ -81,6 +81,8 @@ struct NowPlayingView: View {
         .sheet(isPresented: $showOutputDevice) {
             OutputDeviceSheet()
                 .environment(controller)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
         }
         .sheet(isPresented: $showLyricsOffset) {
             LyricsOffsetSheet()

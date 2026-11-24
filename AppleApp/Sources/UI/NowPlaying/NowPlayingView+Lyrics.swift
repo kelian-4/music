@@ -47,25 +47,11 @@ extension NowPlayingView {
             .frame(maxWidth: .infinity, alignment: .leading)
             if auth.signedIn, controller.current?.videoId != nil {
                 GlassCircleButton(
-                    icon: controller.isLiked ? .bchHeartFilled : .bchHeart,
+                    system: controller.isLiked ? "star.fill" : "star",
                     label: controller.isLiked ? "Remove Like" : "Like"
                 ) { controller.toggleLike() }
             }
-            if controller.displayedLyrics.isEmpty {
-                moreMenu
-            } else {
-                // Upstream 89912638/aa5ff748: with lyrics up the header's
-                // three-dot becomes the share entry, since a card quotes *this*
-                // lyric — and becomes the way out while lines are picked.
-                GlassCircleButton(
-                    system: sharePicking ? "xmark" : "square.and.arrow.up",
-                    label: sharePicking ? "Stop picking lyrics" : "Share lyrics"
-                ) {
-                    Haptics.play(.tap)
-                    sharePicking.toggle()
-                }
-                .help(sharePicking ? "Stop picking lyrics" : "Share lyrics")
-            }
+            moreMenu
         }
         .padding(.horizontal, 24)
         .padding(.top, 8)

@@ -80,11 +80,7 @@ extension NowPlayingView {
     /// iPad landscape or macOS.
     var actionRowPill: some View {
         Group {
-            if pane == .queue {
-                queueModesPill
-            } else {
-                outputPartyPill
-            }
+            outputPartyPill
         }
         .transition(.opacity.combined(with: .scale(scale: 0.94)))
     }
@@ -136,7 +132,7 @@ extension NowPlayingView {
 
     /// Where the action row's two 44pt glyph buttons start in from either edge.
     func actionRowEdgeInset(width: CGFloat) -> CGFloat {
-        max(0, (width - (44 * 2 + 158)) / 4)
+        max(0, (width - (44 * 2 + 64)) / 4)
     }
 
     /// Where the Lyrics and Up Next glyphs' ink starts in from either edge:
@@ -159,7 +155,7 @@ extension NowPlayingView {
                 .frame(width: 26, height: 26)
                 .foregroundStyle(.white.opacity(selected ? 1 : 0.75))
                 .frame(width: 44, height: 44)
-                .background(.white.opacity(selected ? 0.2 : 0), in: Circle())
+                .background(.white.opacity(selected ? 0.28 : 0), in: Circle())
                 .contentShape(Circle())
         }
         .buttonStyle(.plain)

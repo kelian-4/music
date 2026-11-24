@@ -1703,25 +1703,12 @@ struct SearchView: View {
                             .redacted(reason: .placeholder)
                     }
                 }
-            case .failed(let message):
-                HStack(spacing: 12) {
-                    Text("Categories could not load. \(message)")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                    Spacer(minLength: 8)
-                    Button("Retry") { Task { await categories.load(force: true) } }
-                        .buttonStyle(.bordered)
-                }
-                .padding(16)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            case .failed:
+                fallbackGenres
             case .loaded(let sections):
                 let items = sections.flatMap(\.items)
                 if items.isEmpty {
-                    Text("No categories are available right now.")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                        .padding(.vertical, 8)
+                    fallbackGenres
                 } else {
                     LazyVGrid(columns: categoryColumns, spacing: 12) {
                         ForEach(items) { category in
@@ -1734,6 +1721,25 @@ struct SearchView: View {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private static let fallbackGenreNames = [
+        "Pop", "Hip-Hop", "Rock", "R&B", "Afrobeats", "Dance", "Latin", "Jazz",
+        "Classical", "Reggae", "Country", "Gospel", "Alternative", "Soul", "Metal", "Electronic",
+    ]
+
+    private var fallbackGenres: some View {
+        LazyVGrid(columns: categoryColumns, spacing: 12) {
+            ForEach(Self.fallbackGenreNames, id: \.self) { name in
+                Button {
+                    query = name
+                    Task { await performSearch() }
+                } label: {
+                    SearchCategoryTile(category: MoodGenre(title: name, browseId: name, params: nil, thumbnailUrl: nil, stripeColor: nil))
+                }
+                .buttonStyle(.plain)
             }
         }
     }
@@ -2022,44 +2028,32 @@ private struct SearchCategoryTile: View {
 
     var body: some View {
         GeometryReader { geometry in
-            ZStack(alignment: .bottomLeading) {
+            ZStack(alignment: .topLeading) {
+                accent
                 if let url = category.thumbnailUrl, let imageURL = URL(string: url) {
                     AsyncImage(url: imageURL) { phase in
                         if let image = phase.image {
                             image.resizable().scaledToFill()
                         } else {
-                            Rectangle().fill(accent.gradient)
+                            Color.clear
                         }
                     }
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                    .clipped()
-                } else {
-                    Rectangle().fill(accent.gradient)
+                    .frame(width: geometry.size.height * 0.62, height: geometry.size.height * 0.62)
+                    .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                    .shadow(color: .black.opacity(0.3), radius: 4, y: 2)
+                    .rotationEffect(.degrees(22))
+                    .offset(x: geometry.size.width - geometry.size.height * 0.5, y: geometry.size.height * 0.42)
                 }
-
-                accent.opacity(0.24)
-                LinearGradient(
-                    colors: [.clear, .black.opacity(0.62)],
-                    startPoint: .center,
-                    endPoint: .bottom
-                )
-
                 Text(category.title)
-                    .font(.headline.weight(.semibold))
+                    .font(.headline.weight(.bold))
                     .foregroundStyle(.white)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
-                    .shadow(color: .black.opacity(0.28), radius: 2, y: 1)
-                    .padding(14)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                    .padding(12)
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
-            .clipShape(RoundedRectangle(cornerRadius: 13, style: .continuous))
-            .overlay {
-                RoundedRectangle(cornerRadius: 13, style: .continuous)
-                    .strokeBorder(.white.opacity(0.12), lineWidth: 0.5)
-            }
-            .contentShape(RoundedRectangle(cornerRadius: 13, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .contentShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         }
         .aspectRatio(1.75, contentMode: .fit)
         .accessibilityLabel(category.title)

@@ -237,6 +237,7 @@ extension NowPlayingView {
                 }
             }
             if !controller.displayedLyrics.isEmpty {
+                Button("Share Lyrics", systemImage: "quote.bubble") { sharePicking = true }
                 Button("Lyrics Offset…", systemImage: "slider.horizontal.3") { showLyricsOffset = true }
             }
         } label: {
