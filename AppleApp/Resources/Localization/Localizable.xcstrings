@@ -14892,66 +14892,6 @@
           }
         }
       }
-    },
-    "Radio": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Radio"
-          }
-        }
-      }
-    },
-    "No stations yet": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aucune station pour l'instant"
-          }
-        }
-      }
-    },
-    "Play some music and your stations will appear here.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Écoute de la musique et tes stations apparaîtront ici."
-          }
-        }
-      }
-    },
-    "Stations for you": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stations pour toi"
-          }
-        }
-      }
-    },
-    "%@ Radio": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Radio %@"
-          }
-        }
-      }
-    },
-    "Based on what you play": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "D'après ce que tu écoutes"
-          }
-        }
-      }
     }
   },
   "version": "1.0"

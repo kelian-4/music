@@ -698,8 +698,8 @@ struct RootView: View {
                 Tab("New", systemImage: "square.grid.2x2.fill", value: RootPage.tab(.explore)) {
                     ExploreView()
                 }
-                Tab("Radio", systemImage: "dot.radiowaves.left.and.right", value: RootPage.tab(.radio)) {
-                    RadioView()
+                Tab("Podcasts", systemImage: "mic.fill", value: RootPage.tab(.radio)) {
+                    LibraryView(lockedSection: .podcasts)
                 }
                 Tab("Library", systemImage: "square.stack.fill", value: RootPage.tab(.library)) {
                     LibraryView()
