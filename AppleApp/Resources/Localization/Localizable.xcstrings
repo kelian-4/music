@@ -3,8 +3,26 @@
   "strings": {
     "": {},
     "%@": {},
-    "%@ couldn't load": {},
-    "%@ minutes": {},
+    "%@ couldn't load": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ n’a pas pu se charger"
+          }
+        }
+      }
+    },
+    "%@ minutes": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ minutes"
+          }
+        }
+      }
+    },
     "%@ of %@": {
       "localizations": {
         "en": {
@@ -15,7 +33,16 @@
         }
       }
     },
-    "%@ · No confident match": {},
+    "%@ · No confident match": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · Aucune correspondance fiable"
+          }
+        }
+      }
+    },
     "%@ — %@": {
       "localizations": {
         "en": {
@@ -32,6 +59,12 @@
           "stringUnit": {
             "state": "new",
             "value": "%1$@ • %2$lld song%3$@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ • %lld morceau%@"
           }
         }
       }
@@ -53,6 +86,12 @@
             "state": "new",
             "value": "%1$@, %2$lld tracks"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %lld morceaux"
+          }
         }
       }
     },
@@ -69,15 +108,48 @@
       }
     },
     "%lld Hz": {},
-    "%lld albums": {},
-    "%lld artists": {},
-    "%lld in this party": {},
+    "%lld albums": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld albums"
+          }
+        }
+      }
+    },
+    "%lld artists": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld artistes"
+          }
+        }
+      }
+    },
+    "%lld in this party": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld dans cette session"
+          }
+        }
+      }
+    },
     "%lld of %lld tracks matched. Choose the matches to keep. Unmatched tracks stay in the playlist and can be matched later.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "new",
             "value": "%1$lld of %2$lld tracks matched. Choose the matches to keep. Unmatched tracks stay in the playlist and can be matched later."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld morceaux sur %lld associés. Choisissez les correspondances à conserver. Les morceaux non associés restent dans la playlist et pourront l’être plus tard."
           }
         }
       }
@@ -89,27 +161,150 @@
             "state": "new",
             "value": "%1$lld of %2$lld tracks · %3$@"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld morceaux sur %lld · %@"
+          }
         }
       }
     },
-    "%lld percent": {},
-    "%lld songs": {},
-    "%lld tracks": {},
+    "%lld percent": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld pour cent"
+          }
+        }
+      }
+    },
+    "%lld songs": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld morceaux"
+          }
+        }
+      }
+    },
+    "%lld tracks": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld morceaux"
+          }
+        }
+      }
+    },
     "%lld%%": {},
     "%lld.": {},
     "%lldm": {},
     "+%lld": {},
     "1": {},
-    "123.5 MB total · Runs 100% on-device · Private": {},
-    "46.7 MB of models · Runs 100% on-device · Private": {},
-    "A Amber update is available": {},
-    "A library you host yourself, played from the server rather than from a catalogue. It takes no part in the ranking above — it holds your own files, so it is not standing in for anything.": {},
-    "A party server is a deployment somebody has to run. This app does not ship one.": {},
-    "A version switch resumes where you left off. With this off it restarts from the top, since no alignment is attempted.": {},
-    "ALBUM": {},
-    "API key": {},
-    "ARTIST": {},
-    "About": {},
+    "123.5 MB total · Runs 100% on-device · Private": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "123,5 Mo au total · Fonctionne à 100 % sur l’appareil · Privé"
+          }
+        }
+      }
+    },
+    "46.7 MB of models · Runs 100% on-device · Private": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "46,7 Mo de modèles · Fonctionne à 100 % sur l’appareil · Privé"
+          }
+        }
+      }
+    },
+    "A Amber update is available": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une mise à jour d’Amber est disponible"
+          }
+        }
+      }
+    },
+    "A library you host yourself, played from the server rather than from a catalogue. It takes no part in the ranking above — it holds your own files, so it is not standing in for anything.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une bibliothèque que vous hébergez, lue depuis le serveur plutôt que depuis un catalogue. Elle ne compte pas dans le classement ci-dessus : elle contient vos propres fichiers."
+          }
+        }
+      }
+    },
+    "A party server is a deployment somebody has to run. This app does not ship one.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un serveur de session doit être déployé par quelqu’un. Cette app n’en fournit pas."
+          }
+        }
+      }
+    },
+    "A version switch resumes where you left off. With this off it restarts from the top, since no alignment is attempted.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un changement de version reprend là où vous en étiez. Désactivé, la lecture repart du début, car aucun alignement n’est tenté."
+          }
+        }
+      }
+    },
+    "ALBUM": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ALBUM"
+          }
+        }
+      }
+    },
+    "API key": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clé API"
+          }
+        }
+      }
+    },
+    "ARTIST": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ARTISTE"
+          }
+        }
+      }
+    },
+    "About": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À propos"
+          }
+        }
+      }
+    },
     "About the album": {
       "localizations": {
         "de": {
@@ -322,13 +517,76 @@
         }
       }
     },
-    "Accelerated Beat Detection": {},
-    "Accelerated beat detection": {},
-    "Access your playlists, library, and personalized mixes.": {},
-    "Account": {},
-    "Account & Integrations": {},
-    "Account & Settings": {},
-    "Account and Settings": {},
+    "Accelerated Beat Detection": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Détection des temps accélérée"
+          }
+        }
+      }
+    },
+    "Accelerated beat detection": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Détection des temps accélérée"
+          }
+        }
+      }
+    },
+    "Access your playlists, library, and personalized mixes.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accédez à vos playlists, votre bibliothèque et vos mix personnalisés."
+          }
+        }
+      }
+    },
+    "Account": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compte"
+          }
+        }
+      }
+    },
+    "Account & Integrations": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compte et intégrations"
+          }
+        }
+      }
+    },
+    "Account & Settings": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compte et réglages"
+          }
+        }
+      }
+    },
+    "Account and Settings": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compte et réglages"
+          }
+        }
+      }
+    },
     "Activity": {
       "localizations": {
         "de": {
@@ -435,9 +693,36 @@
         }
       }
     },
-    "Activity name": {},
-    "Add": {},
-    "Add Another Account": {},
+    "Activity name": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nom de l’activité"
+          }
+        }
+      }
+    },
+    "Add": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter"
+          }
+        }
+      }
+    },
+    "Add Another Account": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter un autre compte"
+          }
+        }
+      }
+    },
     "Add an addon": {
       "localizations": {
         "de": {
@@ -538,15 +823,87 @@
         }
       }
     },
-    "Add to %lld": {},
-    "Add to Playlist": {},
-    "Add to Playlist…": {},
-    "Add to Queue": {},
-    "Address": {},
-    "Adjust Lyrics Timing": {},
-    "Advanced Options": {},
+    "Add to %lld": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter à %lld"
+          }
+        }
+      }
+    },
+    "Add to Playlist": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter à la playlist"
+          }
+        }
+      }
+    },
+    "Add to Playlist…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter à la playlist…"
+          }
+        }
+      }
+    },
+    "Add to Queue": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter à la file d’attente"
+          }
+        }
+      }
+    },
+    "Address": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adresse"
+          }
+        }
+      }
+    },
+    "Adjust Lyrics Timing": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajuster la synchronisation des paroles"
+          }
+        }
+      }
+    },
+    "Advanced Options": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Options avancées"
+          }
+        }
+      }
+    },
     "AirPlay": {},
-    "AirPlay & Bluetooth": {},
+    "AirPlay & Bluetooth": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirPlay et Bluetooth"
+          }
+        }
+      }
+    },
     "Album": {},
     "Album artist": {},
     "Albums": {
@@ -649,11 +1006,56 @@
         }
       }
     },
-    "Albums couldn't load": {},
-    "Albums group themselves once a folder with tagged music is scanned.": {},
-    "Albums you save on YouTube Music show up here — or scan a folder on this device.": {},
-    "Already in %@": {},
-    "Already in Latin script": {},
+    "Albums couldn't load": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de charger les albums"
+          }
+        }
+      }
+    },
+    "Albums group themselves once a folder with tagged music is scanned.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les albums se regroupent dès qu’un dossier de musique avec balises est analysé."
+          }
+        }
+      }
+    },
+    "Albums you save on YouTube Music show up here — or scan a folder on this device.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les albums enregistrés sur YouTube Music apparaissent ici, ou analysez un dossier de cet appareil."
+          }
+        }
+      }
+    },
+    "Already in %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Déjà dans %@"
+          }
+        }
+      }
+    },
+    "Already in Latin script": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Déjà en alphabet latin"
+          }
+        }
+      }
+    },
     "Always on": {
       "localizations": {
         "de": {
@@ -760,7 +1162,16 @@
         }
       }
     },
-    "An API key and shared secret are required to authorise. Don’t share them.": {},
+    "An API key and shared secret are required to authorise. Don’t share them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une clé API et un secret partagé sont requis pour autoriser. Ne les partagez pas."
+          }
+        }
+      }
+    },
     "Appearance": {
       "localizations": {
         "de": {
@@ -867,8 +1278,26 @@
         }
       }
     },
-    "Apple’s Headphone Accommodations, Adaptive Audio and Conversation Awareness are managed in system Accessibility, AirPods settings and Control Center. Amber keeps your manual EQ choices.": {},
-    "Apply to all %lld conflicts": {},
+    "Apple’s Headphone Accommodations, Adaptive Audio and Conversation Awareness are managed in system Accessibility, AirPods settings and Control Center. Amber keeps your manual EQ choices.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les aménagements audio, l’audio adaptatif et la détection de conversation d’Apple se gèrent dans les réglages d’accessibilité du système."
+          }
+        }
+      }
+    },
+    "Apply to all %lld conflicts": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appliquer aux %lld conflits"
+          }
+        }
+      }
+    },
     "Artists": {
       "localizations": {
         "de": {
@@ -975,11 +1404,56 @@
         }
       }
     },
-    "Artists couldn't load": {},
-    "Artists group themselves once a folder with tagged music is scanned.": {},
-    "Artists you follow on YouTube Music show up here — or scan a folder on this device.": {},
-    "Artists, Songs, Lyrics, and More": {},
-    "Audio Output": {},
+    "Artists couldn't load": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de charger les artistes"
+          }
+        }
+      }
+    },
+    "Artists group themselves once a folder with tagged music is scanned.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les artistes se regroupent dès qu’un dossier de musique avec balises est analysé."
+          }
+        }
+      }
+    },
+    "Artists you follow on YouTube Music show up here — or scan a folder on this device.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les artistes suivis sur YouTube Music apparaissent ici, ou analysez un dossier de cet appareil."
+          }
+        }
+      }
+    },
+    "Artists, Songs, Lyrics, and More": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Artistes, morceaux, paroles, etc."
+          }
+        }
+      }
+    },
+    "Audio Output": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sortie audio"
+          }
+        }
+      }
+    },
     "Audio Pipeline": {
       "localizations": {
         "tr": {
@@ -987,28 +1461,196 @@
             "state": "translated",
             "value": "Ses Hattı"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaîne audio"
+          }
         }
       }
     },
-    "Audio Quality": {},
-    "Audio output": {},
-    "Audio quality, playback, appearance": {},
-    "Authorise Last.fm": {},
-    "Auto-hide keeps the still sleeve when no motion clip was found. Prefer Spotify asks Spotify's catalogue first when looking one up.": {},
-    "Auto-hide motion art": {},
-    "AutoMix blends the end of one track into the next": {},
-    "AutoMix off": {},
-    "AutoMix off — tracks change at the end": {},
-    "AutoMix on": {},
-    "AutoPlay": {},
-    "AutoPlay off": {},
-    "AutoPlay on": {},
-    "Automix Models": {},
-    "Automix Performance": {},
-    "Automix Transitions": {},
-    "Automix times every transition itself; the crossfade slider returns when Automix is off.": {},
+    "Audio Quality": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qualité audio"
+          }
+        }
+      }
+    },
+    "Audio output": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sortie audio"
+          }
+        }
+      }
+    },
+    "Audio quality, playback, appearance": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qualité audio, lecture, apparence"
+          }
+        }
+      }
+    },
+    "Authorise Last.fm": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autoriser Last.fm"
+          }
+        }
+      }
+    },
+    "Auto-hide keeps the still sleeve when no motion clip was found. Prefer Spotify asks Spotify's catalogue first when looking one up.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le masquage automatique conserve la pochette fixe quand aucun clip animé n’est trouvé. « Préférer Spotify » interroge d’abord le catalogue Spotify."
+          }
+        }
+      }
+    },
+    "Auto-hide motion art": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masquer automatiquement les visuels animés"
+          }
+        }
+      }
+    },
+    "AutoMix blends the end of one track into the next": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AutoMix enchaîne la fin d’un morceau avec le suivant"
+          }
+        }
+      }
+    },
+    "AutoMix off": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AutoMix désactivé"
+          }
+        }
+      }
+    },
+    "AutoMix off — tracks change at the end": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AutoMix désactivé : les morceaux changent à la fin"
+          }
+        }
+      }
+    },
+    "AutoMix on": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AutoMix activé"
+          }
+        }
+      }
+    },
+    "AutoPlay": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lecture automatique"
+          }
+        }
+      }
+    },
+    "AutoPlay off": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lecture automatique désactivée"
+          }
+        }
+      }
+    },
+    "AutoPlay on": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lecture automatique activée"
+          }
+        }
+      }
+    },
+    "Automix Models": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modèles Automix"
+          }
+        }
+      }
+    },
+    "Automix Performance": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Performances d’Automix"
+          }
+        }
+      }
+    },
+    "Automix Transitions": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transitions Automix"
+          }
+        }
+      }
+    },
+    "Automix times every transition itself; the crossfade slider returns when Automix is off.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automix calcule chaque transition lui-même ; le curseur de fondu revient quand Automix est désactivé."
+          }
+        }
+      }
+    },
     "AMBER": {},
-    "AMBER REPLAY": {},
+    "AMBER REPLAY": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REPLAY AMBER"
+          }
+        }
+      }
+    },
     "Back": {
       "localizations": {
         "de": {
@@ -1115,7 +1757,16 @@
         }
       }
     },
-    "Back to player": {},
+    "Back to player": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retour au lecteur"
+          }
+        }
+      }
+    },
     "Balance": {
       "localizations": {
         "tr": {
@@ -1123,24 +1774,165 @@
             "state": "translated",
             "value": "Denge"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balance"
+          }
         }
       }
     },
-    "Beat This! (beat and downbeat detection) and open-unmix UMX-L (vocal detection). Both are verified against a pinned checksum after download.": {},
-    "Beat This! (beat and downbeat detection) and open-unmix umxhq (vocal detection). Both are downloaded once and verified against a pinned checksum.": {},
-    "Beat This! (beat and downbeat detection, optionally accelerated by Core ML), open-unmix umxhq (vocal detection), and the Core ML compilation of the same Beat This! checkpoint. All are downloaded once and verified against a pinned checksum.": {},
-    "Beat model installed with Core ML acceleration; vocal detection can be added for vocal-clash avoidance": {},
-    "Beat model installed; vocal detection can be added for vocal-clash avoidance": {},
-    "Beat, downbeat and vocal models installed, accelerated by Core ML — %@ on disk": {},
-    "Amber %@": {},
-    "Amber %@ is available. Update using the same method you used to install Amber. The release page has the change notes.": {},
-    "Amber %@ is out": {},
-    "Amber analyzes your tracks on-device to match beats, time crossfades, and prevent vocal clashes between songs.": {},
-    "Amber audio priority": {},
-    "Amber installs from its releases page, so this opens it in your browser.": {},
-    "Amber watches the folder you choose for music files. Filtering keeps everything that is not a song out of the list.": {},
-    "Amber will still prefer its copy when the match is the same recording. It will not when it is not.": {},
-    "Bluetooth": {},
+    "Beat This! (beat and downbeat detection) and open-unmix UMX-L (vocal detection). Both are verified against a pinned checksum after download.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beat This! (détection des temps) et open-unmix UMX-L (détection de la voix). Les deux sont vérifiés avant utilisation."
+          }
+        }
+      }
+    },
+    "Beat This! (beat and downbeat detection) and open-unmix umxhq (vocal detection). Both are downloaded once and verified against a pinned checksum.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beat This! (détection des temps) et open-unmix umxhq (détection de la voix). Les deux sont téléchargés une seule fois et vérifiés."
+          }
+        }
+      }
+    },
+    "Beat This! (beat and downbeat detection, optionally accelerated by Core ML), open-unmix umxhq (vocal detection), and the Core ML compilation of the same Beat This! checkpoint. All are downloaded once and verified against a pinned checksum.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beat This! (détection des temps, accélérée par Core ML si disponible) et open-unmix umxhq (détection de la voix)."
+          }
+        }
+      }
+    },
+    "Beat model installed with Core ML acceleration; vocal detection can be added for vocal-clash avoidance": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modèle de temps installé avec accélération Core ML ; la détection de la voix peut être ajoutée pour éviter les chevauchements de voix"
+          }
+        }
+      }
+    },
+    "Beat model installed; vocal detection can be added for vocal-clash avoidance": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modèle de temps installé ; la détection de la voix peut être ajoutée pour éviter les chevauchements de voix"
+          }
+        }
+      }
+    },
+    "Beat, downbeat and vocal models installed, accelerated by Core ML — %@ on disk": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modèles de temps et de voix installés, accélérés par Core ML — %@ sur le disque"
+          }
+        }
+      }
+    },
+    "Amber %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amber %@"
+          }
+        }
+      }
+    },
+    "Amber %@ is available. Update using the same method you used to install Amber. The release page has the change notes.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amber %@ est disponible. Mettez à jour avec la méthode utilisée pour installer Amber. La page de version détaille les changements."
+          }
+        }
+      }
+    },
+    "Amber %@ is out": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amber %@ est disponible"
+          }
+        }
+      }
+    },
+    "Amber analyzes your tracks on-device to match beats, time crossfades, and prevent vocal clashes between songs.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amber analyse vos morceaux sur l’appareil pour caler les temps, calculer les fondus et éviter les chevauchements de voix entre morceaux."
+          }
+        }
+      }
+    },
+    "Amber audio priority": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Priorité audio d’Amber"
+          }
+        }
+      }
+    },
+    "Amber installs from its releases page, so this opens it in your browser.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amber s’installe depuis sa page de versions, qui s’ouvre donc dans votre navigateur."
+          }
+        }
+      }
+    },
+    "Amber watches the folder you choose for music files. Filtering keeps everything that is not a song out of the list.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amber surveille le dossier choisi pour y trouver des fichiers de musique. Le filtre écarte tout ce qui n’est pas un morceau."
+          }
+        }
+      }
+    },
+    "Amber will still prefer its copy when the match is the same recording. It will not when it is not.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amber préférera toujours sa copie quand il s’agit du même enregistrement. Ce ne sera pas le cas sinon."
+          }
+        }
+      }
+    },
+    "Bluetooth": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bluetooth"
+          }
+        }
+      }
+    },
     "Bring your library, playlists and mixes with you, and start a Listen Together party with friends.": {
       "localizations": {
         "de": {
@@ -1248,11 +2040,35 @@
             "state": "translated",
             "value": "Geniş"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Large"
+          }
         }
       }
     },
-    "Browse Categories": {},
-    "Buffering": {},
+    "Browse Categories": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parcourir les catégories"
+          }
+        }
+      }
+    },
+    "Buffering": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mise en mémoire tampon"
+          }
+        }
+      }
+    },
     "Cancel": {
       "localizations": {
         "de": {
@@ -1359,18 +2175,117 @@
         }
       }
     },
-    "Cancel All": {},
-    "Cancel download": {},
-    "Cancel timer": {},
-    "Can’t reach it right now · %@": {},
-    "Can’t read that share": {},
-    "Capture 30 seconds": {},
-    "Capturing 30 seconds…": {},
+    "Cancel All": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout annuler"
+          }
+        }
+      }
+    },
+    "Cancel download": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annuler le téléchargement"
+          }
+        }
+      }
+    },
+    "Cancel timer": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annuler le minuteur"
+          }
+        }
+      }
+    },
+    "Can’t reach it right now · %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Injoignable pour le moment · %@"
+          }
+        }
+      }
+    },
+    "Can’t read that share": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de lire ce partage"
+          }
+        }
+      }
+    },
+    "Capture 30 seconds": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capturer 30 secondes"
+          }
+        }
+      }
+    },
+    "Capturing 30 seconds…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture de 30 secondes…"
+          }
+        }
+      }
+    },
     "CarPlay": {},
-    "Categories could not load. %@": {},
-    "Category": {},
-    "Change": {},
-    "Change Lyrics Source": {},
+    "Categories could not load. %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de charger les catégories. %@"
+          }
+        }
+      }
+    },
+    "Category": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Catégorie"
+          }
+        }
+      }
+    },
+    "Change": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifier"
+          }
+        }
+      }
+    },
+    "Change Lyrics Source": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Changer la source des paroles"
+          }
+        }
+      }
+    },
     "Channels": {
       "localizations": {
         "tr": {
@@ -1378,13 +2293,55 @@
             "state": "translated",
             "value": "Kanallar"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaînes"
+          }
         }
       }
     },
-    "Channels you subscribe to show up here.": {},
-    "Check for Updates": {},
-    "Check for updates automatically": {},
-    "Checking download…": {},
+    "Channels you subscribe to show up here.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les chaînes auxquelles vous êtes abonné apparaissent ici."
+          }
+        }
+      }
+    },
+    "Check for Updates": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher des mises à jour"
+          }
+        }
+      }
+    },
+    "Check for updates automatically": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher automatiquement les mises à jour"
+          }
+        }
+      }
+    },
+    "Checking download…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérification du téléchargement…"
+          }
+        }
+      }
+    },
     "Checking…": {
       "localizations": {
         "de": {
@@ -1491,17 +2448,116 @@
         }
       }
     },
-    "Chinese": {},
-    "Choose Another Folder": {},
-    "Choose File": {},
-    "Choose Folder": {},
-    "Choose Language…": {},
-    "Choose Output": {},
-    "Choose another profile": {},
-    "Choose audio output": {},
-    "Choose which YouTube channel to listen as": {},
-    "Clarity Mix · %lld%%": {},
-    "Clarity Preset": {},
+    "Chinese": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chinois"
+          }
+        }
+      }
+    },
+    "Choose Another Folder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisir un autre dossier"
+          }
+        }
+      }
+    },
+    "Choose File": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisir un fichier"
+          }
+        }
+      }
+    },
+    "Choose Folder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisir un dossier"
+          }
+        }
+      }
+    },
+    "Choose Language…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisir la langue…"
+          }
+        }
+      }
+    },
+    "Choose Output": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisir la sortie"
+          }
+        }
+      }
+    },
+    "Choose another profile": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisir un autre profil"
+          }
+        }
+      }
+    },
+    "Choose audio output": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisir la sortie audio"
+          }
+        }
+      }
+    },
+    "Choose which YouTube channel to listen as": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez la chaîne YouTube avec laquelle écouter"
+          }
+        }
+      }
+    },
+    "Clarity Mix · %lld%%": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mix clarté · %lld %%"
+          }
+        }
+      }
+    },
+    "Clarity Preset": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préréglage clarté"
+          }
+        }
+      }
+    },
     "Clear": {
       "localizations": {
         "de": {
@@ -1608,10 +2664,46 @@
         }
       }
     },
-    "Clear Diagnostic History": {},
-    "Clear completed jobs": {},
-    "Clear downloads on this device": {},
-    "Clear the filter": {},
+    "Clear Diagnostic History": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effacer l’historique des diagnostics"
+          }
+        }
+      }
+    },
+    "Clear completed jobs": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effacer les tâches terminées"
+          }
+        }
+      }
+    },
+    "Clear downloads on this device": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effacer les téléchargements de cet appareil"
+          }
+        }
+      }
+    },
+    "Clear the filter": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effacer le filtre"
+          }
+        }
+      }
+    },
     "Close": {
       "localizations": {
         "de": {
@@ -1718,7 +2810,16 @@
         }
       }
     },
-    "Compare counter changes while a track plays. The output callback also runs with an empty queue, so idle silent callbacks are expected.": {},
+    "Compare counter changes while a track plays. The output callback also runs with an empty queue, so idle silent callbacks are expected.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comparez l’évolution des compteurs pendant la lecture d’un morceau. Le rappel de sortie tourne aussi avec une file vide : des rappels silencieux au repos sont normaux."
+          }
+        }
+      }
+    },
     "Competing": {
       "localizations": {
         "de": {
@@ -1825,14 +2926,86 @@
         }
       }
     },
-    "Confirm": {},
-    "Confirm your profile": {},
-    "Connect your YouTube Music account": {},
-    "Connect your YouTube Music profile to Amber.": {},
-    "Continue in Background": {},
-    "Contour %@": {},
-    "Controls": {},
-    "Copy": {},
+    "Confirm": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirmer"
+          }
+        }
+      }
+    },
+    "Confirm your profile": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirmer votre profil"
+          }
+        }
+      }
+    },
+    "Connect your YouTube Music account": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connecter votre compte YouTube Music"
+          }
+        }
+      }
+    },
+    "Connect your YouTube Music profile to Amber.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connectez votre profil YouTube Music à Amber."
+          }
+        }
+      }
+    },
+    "Continue in Background": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuer en arrière-plan"
+          }
+        }
+      }
+    },
+    "Contour %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contour %@"
+          }
+        }
+      }
+    },
+    "Controls": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Commandes"
+          }
+        }
+      }
+    },
+    "Copy": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier"
+          }
+        }
+      }
+    },
     "Copy code": {
       "localizations": {
         "de": {
@@ -1933,9 +3106,36 @@
         }
       }
     },
-    "Core ML · Neural Engine": {},
-    "Could not translate this lyric": {},
-    "Couldn't load": {},
+    "Core ML · Neural Engine": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core ML · Neural Engine"
+          }
+        }
+      }
+    },
+    "Could not translate this lyric": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de traduire cette parole"
+          }
+        }
+      }
+    },
+    "Couldn't load": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chargement impossible"
+          }
+        }
+      }
+    },
     "Create": {
       "localizations": {
         "fr": {
@@ -2046,7 +3246,16 @@
         }
       }
     },
-    "Creates a playlist": {},
+    "Creates a playlist": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crée une playlist"
+          }
+        }
+      }
+    },
     "Creating…": {
       "localizations": {
         "de": {
@@ -2153,8 +3362,26 @@
         }
       }
     },
-    "Current Route": {},
-    "Customise the card": {},
+    "Current Route": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sortie actuelle"
+          }
+        }
+      }
+    },
+    "Customise the card": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personnaliser la carte"
+          }
+        }
+      }
+    },
     "DAC": {},
     "Dark": {
       "localizations": {
@@ -2368,12 +3595,66 @@
         }
       }
     },
-    "Delete %@": {},
-    "Download Models": {},
-    "Finds the singing at the start and end of each track so two vocals do not overlap during a transition.": {},
-    "Developer": {},
-    "Diagnostic Reports": {},
-    "Discard": {},
+    "Delete %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer %@"
+          }
+        }
+      }
+    },
+    "Download Models": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Télécharger les modèles"
+          }
+        }
+      }
+    },
+    "Finds the singing at the start and end of each track so two vocals do not overlap during a transition.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repère le chant au début et à la fin de chaque morceau pour que deux voix ne se chevauchent pas pendant une transition."
+          }
+        }
+      }
+    },
+    "Developer": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Développeur"
+          }
+        }
+      }
+    },
+    "Diagnostic Reports": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rapports de diagnostic"
+          }
+        }
+      }
+    },
+    "Discard": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignorer"
+          }
+        }
+      }
+    },
     "Disconnect": {
       "localizations": {
         "de": {
@@ -2490,9 +3771,36 @@
         }
       }
     },
-    "Discord has no API for an app to set your presence, so this signs in as your account and speaks its protocol. Your token is stored on this device and only ever sent to Discord — but it is your whole account, and automating one is against Discord's terms of service. Bans for presence alone aren't a thing anyone reports; it's still your call.": {},
-    "Dismiss": {},
-    "Do Not Disturb": {},
+    "Discord has no API for an app to set your presence, so this signs in as your account and speaks its protocol. Your token is stored on this device and only ever sent to Discord — but it is your whole account, and automating one is against Discord's terms of service. Bans for presence alone aren't a thing anyone reports; it's still your call.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discord n’a pas d’API pour définir votre présence ; Amber se connecte donc à votre compte et parle son protocole."
+          }
+        }
+      }
+    },
+    "Dismiss": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fermer"
+          }
+        }
+      }
+    },
+    "Do Not Disturb": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ne pas déranger"
+          }
+        }
+      }
+    },
     "Done": {
       "localizations": {
         "de": {
@@ -2699,14 +4007,86 @@
         }
       }
     },
-    "Download %@": {},
-    "Download Models (~123 MB)": {},
-    "Download Models (~46.7 MB)": {},
-    "Download and install updates automatically": {},
-    "Download anyway": {},
-    "Downloaded collections": {},
-    "Downloaded once and kept in Amber's storage. Removing a model takes effect immediately: Automix falls back to tempo analysis without the beat model, and stops watching for vocal clashes without the vocal one.": {},
-    "Downloading in Background — Done": {},
+    "Download %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Télécharger %@"
+          }
+        }
+      }
+    },
+    "Download Models (~123 MB)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Télécharger les modèles (~123 Mo)"
+          }
+        }
+      }
+    },
+    "Download Models (~46.7 MB)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Télécharger les modèles (~46,7 Mo)"
+          }
+        }
+      }
+    },
+    "Download and install updates automatically": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Télécharger et installer automatiquement les mises à jour"
+          }
+        }
+      }
+    },
+    "Download anyway": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Télécharger quand même"
+          }
+        }
+      }
+    },
+    "Downloaded collections": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collections téléchargées"
+          }
+        }
+      }
+    },
+    "Downloaded once and kept in Amber's storage. Removing a model takes effect immediately: Automix falls back to tempo analysis without the beat model, and stops watching for vocal clashes without the vocal one.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Téléchargé une fois et conservé dans le stockage d’Amber. Supprimer un modèle prend effet immédiatement : Automix revient à l’analyse du tempo."
+          }
+        }
+      }
+    },
+    "Downloading in Background — Done": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Téléchargement en arrière-plan — Terminé"
+          }
+        }
+      }
+    },
     "Downloads": {
       "localizations": {
         "es": {
@@ -2801,12 +4181,66 @@
         }
       }
     },
-    "Drag the puck: sideways tilts warm ↔ bright, up and down shapes the mids.": {},
-    "Edit": {},
-    "Edit %@": {},
-    "Edit source": {},
-    "Enable JioSaavn": {},
-    "Engine": {},
+    "Drag the puck: sideways tilts warm ↔ bright, up and down shapes the mids.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faites glisser le curseur : latéralement pour chaud ↔ clair, verticalement pour les médiums."
+          }
+        }
+      }
+    },
+    "Edit": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifier"
+          }
+        }
+      }
+    },
+    "Edit %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifier %@"
+          }
+        }
+      }
+    },
+    "Edit source": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifier la source"
+          }
+        }
+      }
+    },
+    "Enable JioSaavn": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activer JioSaavn"
+          }
+        }
+      }
+    },
+    "Engine": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moteur"
+          }
+        }
+      }
+    },
     "English": {
       "localizations": {
         "de": {
@@ -2913,7 +4347,16 @@
         }
       }
     },
-    "Enhanced": {},
+    "Enhanced": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amélioré"
+          }
+        }
+      }
+    },
     "Equalizer": {
       "localizations": {
         "es": {
@@ -3002,7 +4445,16 @@
         }
       }
     },
-    "Everyone in a party has to be pointed at the same server, and it has to be one somebody is running.": {},
+    "Everyone in a party has to be pointed at the same server, and it has to be one somebody is running.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tous les participants doivent utiliser le même serveur, et celui-ci doit être en service."
+          }
+        }
+      }
+    },
     "Explore": {
       "localizations": {
         "de": {
@@ -3109,13 +4561,76 @@
         }
       }
     },
-    "Exported downloads live in the shared Music folder. Private ones stay inside Amber's own storage.": {},
-    "Fill search with %@": {},
-    "Filter %@": {},
-    "Filter downloads": {},
-    "Filter this library": {},
-    "Finish signing in": {},
-    "Finishing sign-in to Amber.": {},
+    "Exported downloads live in the shared Music folder. Private ones stay inside Amber's own storage.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les téléchargements exportés se trouvent dans le dossier Musique partagé. Les privés restent dans le stockage propre d’Amber."
+          }
+        }
+      }
+    },
+    "Fill search with %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher %@"
+          }
+        }
+      }
+    },
+    "Filter %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filtrer %@"
+          }
+        }
+      }
+    },
+    "Filter downloads": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filtrer les téléchargements"
+          }
+        }
+      }
+    },
+    "Filter this library": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filtrer cette bibliothèque"
+          }
+        }
+      }
+    },
+    "Finish signing in": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terminer la connexion"
+          }
+        }
+      }
+    },
+    "Finishing sign-in to Amber.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finalisation de la connexion à Amber."
+          }
+        }
+      }
+    },
     "First button": {
       "localizations": {
         "de": {
@@ -3222,8 +4737,26 @@
         }
       }
     },
-    "First button text": {},
-    "Float 32": {},
+    "First button text": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Texte du premier bouton"
+          }
+        }
+      }
+    },
+    "Float 32": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Float 32"
+          }
+        }
+      }
+    },
     "Focused": {
       "localizations": {
         "tr": {
@@ -3231,12 +4764,45 @@
             "state": "translated",
             "value": "Odaklı"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ciblé"
+          }
         }
       }
     },
-    "Follow artists on YouTube Music — or scan a folder on this device.": {},
-    "Follow the App Language": {},
-    "Forgets the address, the account and the password. Nothing on the server is touched.": {},
+    "Follow artists on YouTube Music — or scan a folder on this device.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suivez des artistes sur YouTube Music, ou analysez un dossier de cet appareil."
+          }
+        }
+      }
+    },
+    "Follow the App Language": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suivre la langue de l’app"
+          }
+        }
+      }
+    },
+    "Forgets the address, the account and the password. Nothing on the server is touched.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oublie l’adresse, le compte et le mot de passe. Rien n’est modifié sur le serveur."
+          }
+        }
+      }
+    },
     "French": {
       "localizations": {
         "de": {
@@ -3443,7 +5009,16 @@
         }
       }
     },
-    "Gapless stays on at 0s. Automix picks timing per track; crossfade sets the manual blend length.": {},
+    "Gapless stays on at 0s. Automix picks timing per track; crossfade sets the manual blend length.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La lecture sans blanc reste active à 0 s. Automix choisit la durée par morceau ; le fondu règle la durée du mélange manuel."
+          }
+        }
+      }
+    },
     "German": {
       "localizations": {
         "de": {
@@ -3551,13 +5126,67 @@
       }
     },
     "GitHub": {},
-    "Go Home": {},
-    "Go to Library": {},
+    "Go Home": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aller à l’accueil"
+          }
+        }
+      }
+    },
+    "Go to Library": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aller à la bibliothèque"
+          }
+        }
+      }
+    },
     "HDMI": {},
-    "Headphone": {},
-    "Headphones": {},
-    "High Performance Mode holds the display at the chosen refresh rate instead of letting the system vary it. Expect noticeably shorter battery life while it is on.": {},
-    "Higher refresh rate?": {},
+    "Headphone": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Casque"
+          }
+        }
+      }
+    },
+    "Headphones": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Casque"
+          }
+        }
+      }
+    },
+    "High Performance Mode holds the display at the chosen refresh rate instead of letting the system vary it. Expect noticeably shorter battery life while it is on.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le mode haute performance maintient l’écran à la fréquence choisie au lieu de laisser le système la faire varier."
+          }
+        }
+      }
+    },
+    "Higher refresh rate?": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fréquence d’image plus élevée ?"
+          }
+        }
+      }
+    },
     "Hindi": {
       "localizations": {
         "he": {
@@ -3624,6 +5253,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "印地語"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hindi"
           }
         }
       }
@@ -3734,8 +5369,26 @@
         }
       }
     },
-    "History couldn't load": {},
-    "Holding a high refresh rate keeps the display working harder the whole time Amber is open, and the battery drains faster for it. Turn it on anyway?": {},
+    "History couldn't load": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de charger l’historique"
+          }
+        }
+      }
+    },
+    "Holding a high refresh rate keeps the display working harder the whole time Amber is open, and the battery drains faster for it. Turn it on anyway?": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maintenir une fréquence d’image élevée fait travailler davantage l’écran tant qu’Amber est ouvert et vide la batterie plus vite. L’activer quand même ?"
+          }
+        }
+      }
+    },
     "Home": {
       "localizations": {
         "de": {
@@ -4048,14 +5701,86 @@
         }
       }
     },
-    "Import Playlist File": {},
-    "Import a CSV or TSV playlist export from Spotify or Apple Music, or drop an .m3u file in your music folder.": {},
-    "Import a CSV or TSV playlist export from Spotify or Apple Music, save a playlist on YouTube Music, or drop an .m3u file in your music folder.": {},
-    "Imported to Amber": {},
-    "Importing a backup replaces the settings and listening history on this device. This cannot be undone.": {},
-    "In progress": {},
-    "Installed": {},
-    "Invisible": {},
+    "Import Playlist File": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importer un fichier de playlist"
+          }
+        }
+      }
+    },
+    "Import a CSV or TSV playlist export from Spotify or Apple Music, or drop an .m3u file in your music folder.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importez un export CSV ou TSV de playlist depuis Spotify ou Apple Music, ou déposez un fichier .m3u dans votre dossier de musique."
+          }
+        }
+      }
+    },
+    "Import a CSV or TSV playlist export from Spotify or Apple Music, save a playlist on YouTube Music, or drop an .m3u file in your music folder.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importez un export CSV ou TSV de playlist depuis Spotify ou Apple Music, enregistrez une playlist sur YouTube Music, ou déposez un fichier .m3u dans votre dossier de musique."
+          }
+        }
+      }
+    },
+    "Imported to Amber": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importé dans Amber"
+          }
+        }
+      }
+    },
+    "Importing a backup replaces the settings and listening history on this device. This cannot be undone.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importer une sauvegarde remplace les réglages et l’historique d’écoute de cet appareil. Cette action est irréversible."
+          }
+        }
+      }
+    },
+    "In progress": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En cours"
+          }
+        }
+      }
+    },
+    "Installed": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installé"
+          }
+        }
+      }
+    },
+    "Invisible": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invisible"
+          }
+        }
+      }
+    },
     "Invite": {
       "localizations": {
         "de": {
@@ -4680,9 +6405,36 @@
         }
       }
     },
-    "Keep Both": {},
-    "Keep Remote — Delete Local Copy": {},
-    "Korean": {},
+    "Keep Both": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Garder les deux"
+          }
+        }
+      }
+    },
+    "Keep Remote — Delete Local Copy": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Garder la version distante — supprimer la copie locale"
+          }
+        }
+      }
+    },
+    "Korean": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coréen"
+          }
+        }
+      }
+    },
     "L": {},
     "Later": {
       "localizations": {
@@ -4896,7 +6648,16 @@
         }
       }
     },
-    "Leave": {},
+    "Leave": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quitter"
+          }
+        }
+      }
+    },
     "Leave the party": {
       "localizations": {
         "de": {
@@ -4997,7 +6758,16 @@
         }
       }
     },
-    "Leave this empty to use the default server.": {},
+    "Leave this empty to use the default server.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laissez vide pour utiliser le serveur par défaut."
+          }
+        }
+      }
+    },
     "Library": {
       "localizations": {
         "de": {
@@ -5104,8 +6874,26 @@
         }
       }
     },
-    "Library couldn't load": {},
-    "Licence": {},
+    "Library couldn't load": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de charger la bibliothèque"
+          }
+        }
+      }
+    },
+    "Licence": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Licence"
+          }
+        }
+      }
+    },
     "Light": {
       "localizations": {
         "de": {
@@ -5318,9 +7106,36 @@
         }
       }
     },
-    "Liked playlists, albums and artists live here.": {},
-    "Liked playlists, albums and artists you save show up here.": {},
-    "List or grid": {},
+    "Liked playlists, albums and artists live here.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les playlists, albums et artistes que vous aimez se trouvent ici."
+          }
+        }
+      }
+    },
+    "Liked playlists, albums and artists you save show up here.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les playlists, albums et artistes que vous enregistrez apparaissent ici."
+          }
+        }
+      }
+    },
+    "List or grid": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Liste ou grille"
+          }
+        }
+      }
+    },
     "Listen Now": {
       "localizations": {
         "de": {
@@ -5427,7 +7242,16 @@
         }
       }
     },
-    "Listen Together": {},
+    "Listen Together": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écouter ensemble"
+          }
+        }
+      }
+    },
     "Listen together": {
       "localizations": {
         "de": {
@@ -5528,7 +7352,16 @@
         }
       }
     },
-    "Listen with me on Amber — party code %@": {},
+    "Listen with me on Amber — party code %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écoute avec moi sur Amber — code de session %@"
+          }
+        }
+      }
+    },
     "Listening": {
       "localizations": {
         "de": {
@@ -5635,15 +7468,48 @@
         }
       }
     },
-    "Listening History": {},
-    "Listening as %@": {},
-    "Listening as this channel": {},
+    "Listening History": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historique d’écoute"
+          }
+        }
+      }
+    },
+    "Listening as %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écoute en tant que %@"
+          }
+        }
+      }
+    },
+    "Listening as this channel": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écoute en tant que cette chaîne"
+          }
+        }
+      }
+    },
     "Listening · %d of %d": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "new",
             "value": "Listening · %1$d of %2$d"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écoute · %d sur %d"
           }
         }
       }
@@ -5748,8 +7614,26 @@
         }
       }
     },
-    "Loading": {},
-    "Loading your profile…": {},
+    "Loading": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chargement"
+          }
+        }
+      }
+    },
+    "Loading your profile…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chargement de votre profil…"
+          }
+        }
+      }
+    },
     "Local Music": {
       "localizations": {
         "de": {
@@ -5856,17 +7740,116 @@
         }
       }
     },
-    "Logic Core": {},
-    "Looking for lyrics": {},
-    "Looking for lyrics…": {},
-    "Looking up…": {},
-    "Lossless includes Hi-Res when an enabled source supplies it. Audio Pipeline shows the format actually decoded.": {},
-    "Loudest around %@": {},
-    "Lyrics": {},
-    "Lyrics Offset": {},
-    "Lyrics Offset…": {},
-    "Lyrics Sources": {},
-    "Lyrics off": {},
+    "Logic Core": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logic Core"
+          }
+        }
+      }
+    },
+    "Looking for lyrics": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recherche des paroles"
+          }
+        }
+      }
+    },
+    "Looking for lyrics…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recherche des paroles…"
+          }
+        }
+      }
+    },
+    "Looking up…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recherche…"
+          }
+        }
+      }
+    },
+    "Lossless includes Hi-Res when an enabled source supplies it. Audio Pipeline shows the format actually decoded.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lossless inclut la Hi-Res quand une source activée la fournit. La chaîne audio indique le format réellement décodé."
+          }
+        }
+      }
+    },
+    "Loudest around %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plus fort vers %@"
+          }
+        }
+      }
+    },
+    "Lyrics": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paroles"
+          }
+        }
+      }
+    },
+    "Lyrics Offset": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Décalage des paroles"
+          }
+        }
+      }
+    },
+    "Lyrics Offset…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Décalage des paroles…"
+          }
+        }
+      }
+    },
+    "Lyrics Sources": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sources des paroles"
+          }
+        }
+      }
+    },
+    "Lyrics off": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paroles désactivées"
+          }
+        }
+      }
+    },
     "Lyrics offset": {
       "localizations": {
         "tr": {
@@ -5874,15 +7857,75 @@
             "state": "translated",
             "value": "Söz zamanlama ayarı"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Décalage des paroles"
+          }
         }
       }
     },
-    "Lyrics options": {},
-    "Manage party": {},
-    "Match Source Sample Rate asks the route to switch clock families between tracks. Bit-perfect output is available on macOS when the DAC grants exclusive access and the lossless source format is supported. The Audio Pipeline readout shows what is actually in effect.": {},
-    "Match Unmatched": {},
-    "Matched": {},
-    "Matching playlist tracks…": {},
+    "Lyrics options": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Options des paroles"
+          }
+        }
+      }
+    },
+    "Manage party": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gérer la session"
+          }
+        }
+      }
+    },
+    "Match Source Sample Rate asks the route to switch clock families between tracks. Bit-perfect output is available on macOS when the DAC grants exclusive access and the lossless source format is supported. The Audio Pipeline readout shows what is actually in effect.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "« Adapter à la fréquence source » demande à la sortie de changer de famille d’horloge entre les morceaux. Le bit-perfect est disponible sur macOS quand le DAC accorde l’accès exclusif."
+          }
+        }
+      }
+    },
+    "Match Unmatched": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Associer les non associés"
+          }
+        }
+      }
+    },
+    "Matched": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Associé"
+          }
+        }
+      }
+    },
+    "Matching playlist tracks…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Association des morceaux de la playlist…"
+          }
+        }
+      }
+    },
     "May match the wrong version of a song. Enable at your own risk.": {
       "localizations": {
         "de": {
@@ -5989,8 +8032,26 @@
         }
       }
     },
-    "Millions of songs, played properly": {},
-    "Mini Player": {},
+    "Millions of songs, played properly": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Des millions de morceaux, bien lus"
+          }
+        }
+      }
+    },
+    "Mini Player": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mini-lecteur"
+          }
+        }
+      }
+    },
     "Miscellaneous": {
       "localizations": {
         "de": {
@@ -6097,12 +8158,66 @@
         }
       }
     },
-    "Mix with Other Apps": {},
-    "Mixing on": {},
-    "Mode": {},
-    "Models": {},
-    "Models are downloaded once and verified via SHA-256. Manage anytime in Settings.": {},
-    "Models download once · Runs 100% on-device · Private": {},
+    "Mix with Other Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mixer avec d’autres apps"
+          }
+        }
+      }
+    },
+    "Mixing on": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mixage activé"
+          }
+        }
+      }
+    },
+    "Mode": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mode"
+          }
+        }
+      }
+    },
+    "Models": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modèles"
+          }
+        }
+      }
+    },
+    "Models are downloaded once and verified via SHA-256. Manage anytime in Settings.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les modèles sont téléchargés une fois et vérifiés par SHA-256. À gérer à tout moment dans les réglages."
+          }
+        }
+      }
+    },
+    "Models download once · Runs 100% on-device · Private": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les modèles se téléchargent une fois · Fonctionne à 100 % sur l’appareil · Privé"
+          }
+        }
+      }
+    },
     "More": {
       "localizations": {
         "de": {
@@ -6209,15 +8324,96 @@
         }
       }
     },
-    "More Options": {},
-    "More actions for %@": {},
-    "Move Down": {},
-    "Move Up": {},
-    "Name (optional)": {},
-    "Narrower shapes around 250 Hz, 1 kHz and 4 kHz.": {},
-    "Needed for the PaxSeniX sources. Stored in the Keychain, not in preferences.": {},
-    "New Playlist": {},
-    "New YouTube Music Playlist": {},
+    "More Options": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plus d’options"
+          }
+        }
+      }
+    },
+    "More actions for %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plus d’actions pour %@"
+          }
+        }
+      }
+    },
+    "Move Down": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Descendre"
+          }
+        }
+      }
+    },
+    "Move Up": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monter"
+          }
+        }
+      }
+    },
+    "Name (optional)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nom (facultatif)"
+          }
+        }
+      }
+    },
+    "Narrower shapes around 250 Hz, 1 kHz and 4 kHz.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resserre autour de 250 Hz, 1 kHz et 4 kHz."
+          }
+        }
+      }
+    },
+    "Needed for the PaxSeniX sources. Stored in the Keychain, not in preferences.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nécessaire pour les sources PaxSeniX. Stocké dans le Trousseau, pas dans les préférences."
+          }
+        }
+      }
+    },
+    "New Playlist": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouvelle playlist"
+          }
+        }
+      }
+    },
+    "New YouTube Music Playlist": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouvelle playlist YouTube Music"
+          }
+        }
+      }
+    },
     "New playlist": {
       "localizations": {
         "de": {
@@ -6430,17 +8626,116 @@
         }
       }
     },
-    "Next Track": {},
-    "Next track": {},
-    "No albums in the scanned folder.": {},
-    "No albums yet": {},
-    "No artists in the scanned folder.": {},
-    "No artists yet": {},
-    "No audio files here": {},
-    "No audio files in the scanned folder.": {},
-    "No categories are available right now.": {},
-    "No downloads yet": {},
-    "No downloads yet. Save a track from Now Playing or a collection menu.": {},
+    "Next Track": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morceau suivant"
+          }
+        }
+      }
+    },
+    "Next track": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morceau suivant"
+          }
+        }
+      }
+    },
+    "No albums in the scanned folder.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun album dans le dossier analysé."
+          }
+        }
+      }
+    },
+    "No albums yet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun album pour l’instant"
+          }
+        }
+      }
+    },
+    "No artists in the scanned folder.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun artiste dans le dossier analysé."
+          }
+        }
+      }
+    },
+    "No artists yet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun artiste pour l’instant"
+          }
+        }
+      }
+    },
+    "No audio files here": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun fichier audio ici"
+          }
+        }
+      }
+    },
+    "No audio files in the scanned folder.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun fichier audio dans le dossier analysé."
+          }
+        }
+      }
+    },
+    "No categories are available right now.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune catégorie disponible pour le moment."
+          }
+        }
+      }
+    },
+    "No downloads yet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun téléchargement"
+          }
+        }
+      }
+    },
+    "No downloads yet. Save a track from Now Playing or a collection menu.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun téléchargement. Enregistrez un morceau depuis le lecteur ou le menu d’une collection."
+          }
+        }
+      }
+    },
     "No enabled source can provide lossless audio. Add an addon to play lossless files without transcoding.": {
       "localizations": {
         "de": {
@@ -6547,13 +8842,76 @@
         }
       }
     },
-    "No listening history yet": {},
-    "No log lines for this track": {},
-    "No lyrics": {},
-    "No lyrics for this track": {},
-    "No lyrics for this track.": {},
-    "No playlists yet": {},
-    "No remote library yet": {},
+    "No listening history yet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun historique d’écoute"
+          }
+        }
+      }
+    },
+    "No log lines for this track": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune ligne de journal pour ce morceau"
+          }
+        }
+      }
+    },
+    "No lyrics": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune parole"
+          }
+        }
+      }
+    },
+    "No lyrics for this track": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune parole pour ce morceau"
+          }
+        }
+      }
+    },
+    "No lyrics for this track.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune parole pour ce morceau."
+          }
+        }
+      }
+    },
+    "No playlists yet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune playlist pour l’instant"
+          }
+        }
+      }
+    },
+    "No remote library yet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune bibliothèque distante"
+          }
+        }
+      }
+    },
     "No results": {
       "localizations": {
         "de": {
@@ -6660,16 +9018,106 @@
         }
       }
     },
-    "No saved albums yet": {},
-    "No saved artists yet": {},
-    "No track in this library matches “%@”.": {},
-    "No tracks": {},
-    "Nobody else is here yet.": {},
-    "Non-music segments and audible boundaries are always used by Automix.": {},
-    "Normalization": {},
-    "Not Matched · %lld": {},
-    "Not Now": {},
-    "Not installed — Automix falls back to tempo analysis": {},
+    "No saved albums yet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun album enregistré"
+          }
+        }
+      }
+    },
+    "No saved artists yet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun artiste enregistré"
+          }
+        }
+      }
+    },
+    "No track in this library matches “%@”.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun morceau de cette bibliothèque ne correspond à « %@ »."
+          }
+        }
+      }
+    },
+    "No tracks": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun morceau"
+          }
+        }
+      }
+    },
+    "Nobody else is here yet.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personne d’autre n’est ici pour l’instant."
+          }
+        }
+      }
+    },
+    "Non-music segments and audible boundaries are always used by Automix.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les segments non musicaux et les limites audibles sont toujours utilisés par Automix."
+          }
+        }
+      }
+    },
+    "Normalization": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Normalisation"
+          }
+        }
+      }
+    },
+    "Not Matched · %lld": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non associés · %lld"
+          }
+        }
+      }
+    },
+    "Not Now": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plus tard"
+          }
+        }
+      }
+    },
+    "Not installed — Automix falls back to tempo analysis": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non installé — Automix revient à l’analyse du tempo"
+          }
+        }
+      }
+    },
     "Not now": {
       "localizations": {
         "de": {
@@ -6889,17 +9337,95 @@
             "state": "new",
             "value": "Not used on %1$@ · quality is set to %2$@"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non utilisé sur %@ · la qualité est réglée sur %@"
+          }
         }
       }
     },
-    "Nothing found for “%@”.": {},
-    "Nothing here right now": {},
-    "Nothing here yet": {},
-    "Nothing matches": {},
-    "Nothing matches the current filter.": {},
-    "Nothing on that share": {},
-    "Nothing playing.": {},
-    "Nothing saved yet": {},
+    "Nothing found for “%@”.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun résultat pour « %@ »."
+          }
+        }
+      }
+    },
+    "Nothing here right now": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rien ici pour le moment"
+          }
+        }
+      }
+    },
+    "Nothing here yet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rien ici pour l’instant"
+          }
+        }
+      }
+    },
+    "Nothing matches": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune correspondance"
+          }
+        }
+      }
+    },
+    "Nothing matches the current filter.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rien ne correspond au filtre actuel."
+          }
+        }
+      }
+    },
+    "Nothing on that share": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rien sur ce partage"
+          }
+        }
+      }
+    },
+    "Nothing playing.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune lecture en cours."
+          }
+        }
+      }
+    },
+    "Nothing saved yet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rien d’enregistré"
+          }
+        }
+      }
+    },
     "Nothing to explore right now": {
       "localizations": {
         "de": {
@@ -7006,7 +9532,16 @@
         }
       }
     },
-    "Now Playing": {},
+    "Now Playing": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lecture en cours"
+          }
+        }
+      }
+    },
     "Now playing": {
       "localizations": {
         "de": {
@@ -7113,7 +9648,16 @@
         }
       }
     },
-    "Now singing: %@": {},
+    "Now singing: %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chante actuellement : %@"
+          }
+        }
+      }
+    },
     "OK": {},
     "Off": {
       "localizations": {
@@ -7328,12 +9872,66 @@
         }
       }
     },
-    "On This Device": {},
-    "On device": {},
-    "On disk": {},
-    "On the share": {},
-    "On this device": {},
-    "One **album** you kept coming back to.": {},
+    "On This Device": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sur cet appareil"
+          }
+        }
+      }
+    },
+    "On device": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sur l’appareil"
+          }
+        }
+      }
+    },
+    "On disk": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sur le disque"
+          }
+        }
+      }
+    },
+    "On the share": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sur le partage"
+          }
+        }
+      }
+    },
+    "On this device": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sur cet appareil"
+          }
+        }
+      }
+    },
+    "One **album** you kept coming back to.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un **album** que vous avez écouté sans cesse."
+          }
+        }
+      }
+    },
     "Online": {
       "localizations": {
         "es": {
@@ -7416,7 +10014,16 @@
         }
       }
     },
-    "Only 5 playlists can be pinned": {},
+    "Only 5 playlists can be pinned": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seules 5 playlists peuvent être épinglées"
+          }
+        }
+      }
+    },
     "Open": {
       "localizations": {
         "de": {
@@ -7523,8 +10130,26 @@
         }
       }
     },
-    "Open Album": {},
-    "Open Artist": {},
+    "Open Album": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voir l’album"
+          }
+        }
+      }
+    },
+    "Open Artist": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voir l’artiste"
+          }
+        }
+      }
+    },
     "Open Amber": {
       "localizations": {
         "de": {
@@ -7625,15 +10250,96 @@
         }
       }
     },
-    "Open system output switcher": {},
-    "Open the release": {},
-    "Opens Now Playing": {},
-    "Opens the lyrics": {},
-    "Output": {},
-    "Output Precision": {},
-    "Output Switcher": {},
-    "PCM 16": {},
-    "PLAYLIST": {},
+    "Open system output switcher": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrir le sélecteur de sortie du système"
+          }
+        }
+      }
+    },
+    "Open the release": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrir la version"
+          }
+        }
+      }
+    },
+    "Opens Now Playing": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvre le lecteur"
+          }
+        }
+      }
+    },
+    "Opens the lyrics": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvre les paroles"
+          }
+        }
+      }
+    },
+    "Output": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sortie"
+          }
+        }
+      }
+    },
+    "Output Precision": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Précision de sortie"
+          }
+        }
+      }
+    },
+    "Output Switcher": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sélecteur de sortie"
+          }
+        }
+      }
+    },
+    "PCM 16": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PCM 16"
+          }
+        }
+      }
+    },
+    "PLAYLIST": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PLAYLIST"
+          }
+        }
+      }
+    },
     "Party code": {
       "localizations": {
         "de": {
@@ -7934,7 +10640,16 @@
         }
       }
     },
-    "Paste the sp_dc cookie from an open Spotify web session. Amber uses it only to look up looping motion art. Leave blank to skip.": {},
+    "Paste the sp_dc cookie from an open Spotify web session. Amber uses it only to look up looping motion art. Leave blank to skip.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collez le cookie sp_dc d’une session web Spotify ouverte. Amber ne l’utilise que pour trouver des visuels animés. Laissez vide pour ignorer."
+          }
+        }
+      }
+    },
     "Pause": {
       "localizations": {
         "es": {
@@ -8026,14 +10741,65 @@
             "state": "translated",
             "value": "暫停"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
         }
       }
     },
-    "Pause Imported Playlist": {},
-    "Paused at %@": {},
-    "PaxSeniX Key": {},
-    "PaxSeniX Spotify and PaxSeniX Musixmatch reach two catalogues Apple Music does not carry, and both need a key from paxsenix.org. Everything else on this list works without one. Stored in the Keychain, not in preferences.": {},
-    "People listening": {},
+    "Pause Imported Playlist": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mettre en pause la playlist importée"
+          }
+        }
+      }
+    },
+    "Paused at %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En pause à %@"
+          }
+        }
+      }
+    },
+    "PaxSeniX Key": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clé PaxSeniX"
+          }
+        }
+      }
+    },
+    "PaxSeniX Spotify and PaxSeniX Musixmatch reach two catalogues Apple Music does not carry, and both need a key from paxsenix.org. Everything else on this list works without one. Stored in the Keychain, not in preferences.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PaxSeniX Spotify et PaxSeniX Musixmatch donnent accès à deux catalogues qu’Apple Music n’a pas, et nécessitent une clé de paxsenix.org. Tout le reste de cette liste fonctionne sans."
+          }
+        }
+      }
+    },
+    "People listening": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personnes à l’écoute"
+          }
+        }
+      }
+    },
     "Performance": {
       "localizations": {
         "de": {
@@ -8131,11 +10897,35 @@
             "state": "translated",
             "value": "高效能"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Performances"
+          }
         }
       }
     },
-    "Personalized recommendations and your library, on every device.": {},
-    "Pick a folder — Amber reads its tags, artwork and plays it with gapless and crossfade.": {},
+    "Personalized recommendations and your library, on every device.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommandations personnalisées et votre bibliothèque, sur tous vos appareils."
+          }
+        }
+      }
+    },
+    "Pick a folder — Amber reads its tags, artwork and plays it with gapless and crossfade.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez un dossier — Amber lit ses balises et pochettes et le lit sans blanc, avec fondu."
+          }
+        }
+      }
+    },
     "Pin": {
       "localizations": {
         "de": {
@@ -8242,7 +11032,16 @@
         }
       }
     },
-    "Pin to Library": {},
+    "Pin to Library": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Épingler à la bibliothèque"
+          }
+        }
+      }
+    },
     "Pinned": {
       "localizations": {
         "de": {
@@ -8455,11 +11254,56 @@
         }
       }
     },
-    "Play Imported Playlist": {},
-    "Play Next": {},
-    "Play a few songs and this page will fill in with minutes, top tracks and artists.": {},
-    "Play a few songs this year and this page will fill in with minutes, top tracks and artists.": {},
-    "Play a song to see lyrics here.": {},
+    "Play Imported Playlist": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lire la playlist importée"
+          }
+        }
+      }
+    },
+    "Play Next": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lire ensuite"
+          }
+        }
+      }
+    },
+    "Play a few songs and this page will fill in with minutes, top tracks and artists.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écoutez quelques morceaux et cette page se remplira de minutes, de morceaux et d’artistes favoris."
+          }
+        }
+      }
+    },
+    "Play a few songs this year and this page will fill in with minutes, top tracks and artists.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écoutez quelques morceaux cette année et cette page se remplira de minutes, de morceaux et d’artistes favoris."
+          }
+        }
+      }
+    },
+    "Play a song to see lyrics here.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lisez un morceau pour voir les paroles ici."
+          }
+        }
+      }
+    },
     "Playback": {
       "localizations": {
         "de": {
@@ -8566,7 +11410,16 @@
         }
       }
     },
-    "Playback Diagnostics": {},
+    "Playback Diagnostics": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostics de lecture"
+          }
+        }
+      }
+    },
     "Playing": {
       "localizations": {
         "de": {
@@ -8673,10 +11526,46 @@
         }
       }
     },
-    "Playlist Import": {},
-    "Playlist Privacy…": {},
-    "Playlist Update": {},
-    "Playlist privacy": {},
+    "Playlist Import": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import de playlist"
+          }
+        }
+      }
+    },
+    "Playlist Privacy…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confidentialité de la playlist…"
+          }
+        }
+      }
+    },
+    "Playlist Update": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mise à jour de la playlist"
+          }
+        }
+      }
+    },
+    "Playlist privacy": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confidentialité de la playlist"
+          }
+        }
+      }
+    },
     "Playlists": {
       "localizations": {
         "es": {
@@ -8762,18 +11651,105 @@
             "state": "translated",
             "value": "播放列表"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Playlists"
+          }
         }
       }
     },
-    "Playlists couldn't load": {},
-    "Playlists you save show up here.": {},
-    "Playlists, albums and artists you save show up here.": {},
-    "Plays on this account show up here, newest first.": {},
-    "Plays the top result": {},
-    "Plays this track": {},
-    "Podcasts": {},
-    "Podcasts you follow show up here.": {},
-    "Point Amber at a WebDAV share in Sources and it will appear here.": {},
+    "Playlists couldn't load": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de charger les playlists"
+          }
+        }
+      }
+    },
+    "Playlists you save show up here.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les playlists enregistrées apparaissent ici."
+          }
+        }
+      }
+    },
+    "Playlists, albums and artists you save show up here.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les playlists, albums et artistes enregistrés apparaissent ici."
+          }
+        }
+      }
+    },
+    "Plays on this account show up here, newest first.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les lectures de ce compte apparaissent ici, les plus récentes d’abord."
+          }
+        }
+      }
+    },
+    "Plays the top result": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lit le premier résultat"
+          }
+        }
+      }
+    },
+    "Plays this track": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lit ce morceau"
+          }
+        }
+      }
+    },
+    "Podcasts": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podcasts"
+          }
+        }
+      }
+    },
+    "Podcasts you follow show up here.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les podcasts que vous suivez apparaissent ici."
+          }
+        }
+      }
+    },
+    "Point Amber at a WebDAV share in Sources and it will appear here.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indiquez un partage WebDAV dans Sources et il apparaîtra ici."
+          }
+        }
+      }
+    },
     "Portuguese": {
       "localizations": {
         "de": {
@@ -8880,16 +11856,58 @@
         }
       }
     },
-    "Positive values show lyrics later": {},
-    "Prefer Spotify catalogue": {},
-    "Prefer Word-Synced Lyrics": {},
-    "Preserves the recording. Playback speed, Automix and crossfade keep their own settings.": {},
+    "Positive values show lyrics later": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les valeurs positives affichent les paroles plus tard"
+          }
+        }
+      }
+    },
+    "Prefer Spotify catalogue": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préférer le catalogue Spotify"
+          }
+        }
+      }
+    },
+    "Prefer Word-Synced Lyrics": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préférer les paroles synchronisées mot à mot"
+          }
+        }
+      }
+    },
+    "Preserves the recording. Playback speed, Automix and crossfade keep their own settings.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préserve l’enregistrement. La vitesse de lecture, Automix et le fondu gardent leurs propres réglages."
+          }
+        }
+      }
+    },
     "Preset": {
       "localizations": {
         "tr": {
           "stringUnit": {
             "state": "translated",
             "value": "Ön ayar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préréglage"
           }
         }
       }
@@ -9000,13 +12018,76 @@
         }
       }
     },
-    "Previous Track": {},
-    "Previous track": {},
-    "Privacy": {},
-    "Privacy: %@": {},
-    "Private": {},
-    "Public": {},
-    "QR code for the party invite": {},
+    "Previous Track": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morceau précédent"
+          }
+        }
+      }
+    },
+    "Previous track": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morceau précédent"
+          }
+        }
+      }
+    },
+    "Privacy": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confidentialité"
+          }
+        }
+      }
+    },
+    "Privacy: %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confidentialité : %@"
+          }
+        }
+      }
+    },
+    "Private": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privée"
+          }
+        }
+      }
+    },
+    "Public": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Publique"
+          }
+        }
+      }
+    },
+    "QR code for the party invite": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "QR code d’invitation à la session"
+          }
+        }
+      }
+    },
     "Queue": {
       "localizations": {
         "de": {
@@ -9114,8 +12195,26 @@
       }
     },
     "R": {},
-    "Read from the engine as it runs. “—” is a figure the system does not report.": {},
-    "Receiver": {},
+    "Read from the engine as it runs. “—” is a figure the system does not report.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lu depuis le moteur en fonctionnement. « — » indique une valeur que le système ne fournit pas."
+          }
+        }
+      }
+    },
+    "Receiver": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Récepteur"
+          }
+        }
+      }
+    },
     "Recent": {
       "localizations": {
         "it": {
@@ -9128,6 +12227,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Son dinlenenler"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Récent"
           }
         }
       }
@@ -9232,8 +12337,26 @@
         }
       }
     },
-    "Recent technical events stay on this device. Reports exclude credentials and private paths. Audio capture is available separately in Audio Pipeline.": {},
-    "Recently Searched": {},
+    "Recent technical events stay on this device. Reports exclude credentials and private paths. Audio capture is available separately in Audio Pipeline.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les événements techniques récents restent sur cet appareil. Les rapports excluent identifiants et chemins privés. La capture audio est disponible séparément dans la chaîne audio."
+          }
+        }
+      }
+    },
+    "Recently Searched": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recherches récentes"
+          }
+        }
+      }
+    },
     "Recents": {
       "localizations": {
         "de": {
@@ -9334,10 +12457,46 @@
         }
       }
     },
-    "Reference": {},
-    "Reference clarity adds tonal contour, centered bass and gentle width. Manual EQ and spatial remain optional.": {},
-    "Refresh": {},
-    "Refresh Rate": {},
+    "Reference": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Référence"
+          }
+        }
+      }
+    },
+    "Reference clarity adds tonal contour, centered bass and gentle width. Manual EQ and spatial remain optional.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La clarté de référence ajoute du contour tonal, des basses centrées et une légère largeur. L’égaliseur manuel et le spatial restent facultatifs."
+          }
+        }
+      }
+    },
+    "Refresh": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actualiser"
+          }
+        }
+      }
+    },
+    "Refresh Rate": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fréquence d’image"
+          }
+        }
+      }
+    },
     "Remove": {
       "localizations": {
         "de": {
@@ -9444,12 +12603,66 @@
         }
       }
     },
-    "Remove %@ from queue": {},
-    "Remove %@ from recent searches": {},
-    "Remove %@ from the queue": {},
-    "Remove Duplicates": {},
-    "Remove Key": {},
-    "Remove from Liked": {},
+    "Remove %@ from queue": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retirer %@ de la file d’attente"
+          }
+        }
+      }
+    },
+    "Remove %@ from recent searches": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retirer %@ des recherches récentes"
+          }
+        }
+      }
+    },
+    "Remove %@ from the queue": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retirer %@ de la file d’attente"
+          }
+        }
+      }
+    },
+    "Remove Duplicates": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer les doublons"
+          }
+        }
+      }
+    },
+    "Remove Key": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer la clé"
+          }
+        }
+      }
+    },
+    "Remove from Liked": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retirer des morceaux aimés"
+          }
+        }
+      }
+    },
     "Remove from Liked Music": {
       "localizations": {
         "de": {
@@ -9556,14 +12769,86 @@
         }
       }
     },
-    "Remove from Playlist": {},
-    "Rename Playlist": {},
-    "Rename Playlist…": {},
-    "Reorder": {},
-    "Repeat all": {},
-    "Repeat off": {},
-    "Repeat one": {},
-    "Replace this device's data?": {},
+    "Remove from Playlist": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retirer de la playlist"
+          }
+        }
+      }
+    },
+    "Rename Playlist": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renommer la playlist"
+          }
+        }
+      }
+    },
+    "Rename Playlist…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renommer la playlist…"
+          }
+        }
+      }
+    },
+    "Reorder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réorganiser"
+          }
+        }
+      }
+    },
+    "Repeat all": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout répéter"
+          }
+        }
+      }
+    },
+    "Repeat off": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Répétition désactivée"
+          }
+        }
+      }
+    },
+    "Repeat one": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Répéter le morceau"
+          }
+        }
+      }
+    },
+    "Replace this device's data?": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remplacer les données de cet appareil ?"
+          }
+        }
+      }
+    },
     "Replay": {
       "localizations": {
         "es": {
@@ -9571,11 +12856,35 @@
             "state": "translated",
             "value": "Resumen anual"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Replay"
+          }
         }
       }
     },
-    "Reset": {},
-    "Reset to Default": {},
+    "Reset": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réinitialiser"
+          }
+        }
+      }
+    },
+    "Reset to Default": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rétablir par défaut"
+          }
+        }
+      }
+    },
     "Retry": {
       "localizations": {
         "de": {
@@ -9682,13 +12991,76 @@
         }
       }
     },
-    "Revert to Original": {},
-    "Review Import": {},
-    "Review Profile on Google": {},
-    "Review your profile on Google": {},
-    "Rich Presence": {},
-    "Runs the same Beat This! model on the Neural Engine, several times faster than the CPU path. Requires the beat model.": {},
-    "Same song in Downloads and on this share. Choose which copy wins.": {},
+    "Revert to Original": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revenir à l’original"
+          }
+        }
+      }
+    },
+    "Review Import": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifier l’import"
+          }
+        }
+      }
+    },
+    "Review Profile on Google": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifier le profil sur Google"
+          }
+        }
+      }
+    },
+    "Review your profile on Google": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifier votre profil sur Google"
+          }
+        }
+      }
+    },
+    "Rich Presence": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rich Presence"
+          }
+        }
+      }
+    },
+    "Runs the same Beat This! model on the Neural Engine, several times faster than the CPU path. Requires the beat model.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exécute le même modèle Beat This! sur le Neural Engine, plusieurs fois plus vite que sur le processeur. Nécessite le modèle de temps."
+          }
+        }
+      }
+    },
+    "Same song in Downloads and on this share. Choose which copy wins.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Même morceau dans les téléchargements et sur ce partage. Choisissez la copie à conserver."
+          }
+        }
+      }
+    },
     "Save": {
       "localizations": {
         "de": {
@@ -9795,12 +13167,66 @@
         }
       }
     },
-    "Save %lld": {},
-    "Save Diagnostic Report": {},
-    "Save a track from Now Playing — Amber tags it and keeps it here.": {},
-    "Save albums on YouTube Music — or scan a folder on this device.": {},
-    "Save to Library": {},
-    "Saved Artists": {},
+    "Save %lld": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrer %lld"
+          }
+        }
+      }
+    },
+    "Save Diagnostic Report": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrer le rapport de diagnostic"
+          }
+        }
+      }
+    },
+    "Save a track from Now Playing — Amber tags it and keeps it here.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrez un morceau depuis le lecteur — Amber le balise et le garde ici."
+          }
+        }
+      }
+    },
+    "Save albums on YouTube Music — or scan a folder on this device.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrez des albums sur YouTube Music, ou analysez un dossier de cet appareil."
+          }
+        }
+      }
+    },
+    "Save to Library": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter à la bibliothèque"
+          }
+        }
+      }
+    },
+    "Saved Artists": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Artistes enregistrés"
+          }
+        }
+      }
+    },
     "Saved to YouTube Music": {
       "localizations": {
         "de": {
@@ -9907,11 +13333,56 @@
         }
       }
     },
-    "Scan a folder": {},
-    "Scan a folder to see its %@ here too.": {},
-    "Scan a folder to see its songs here too.": {},
-    "Scan your music": {},
-    "Scrobble Tracks": {},
+    "Scan a folder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analyser un dossier"
+          }
+        }
+      }
+    },
+    "Scan a folder to see its %@ here too.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analysez un dossier pour voir ses %@ ici aussi."
+          }
+        }
+      }
+    },
+    "Scan a folder to see its songs here too.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analysez un dossier pour voir aussi ses morceaux ici."
+          }
+        }
+      }
+    },
+    "Scan your music": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analyser votre musique"
+          }
+        }
+      }
+    },
+    "Scrobble Tracks": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scrobbler les morceaux"
+          }
+        }
+      }
+    },
     "Scrobble your listens to Last.fm and ListenBrainz.": {
       "localizations": {
         "de": {
@@ -10055,11 +13526,35 @@
             "state": "translated",
             "value": "การสโครบเบิล"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scrobbling"
+          }
         }
       }
     },
-    "Scroll shelf back": {},
-    "Scroll shelf forward": {},
+    "Scroll shelf back": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faire défiler en arrière"
+          }
+        }
+      }
+    },
+    "Scroll shelf forward": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faire défiler en avant"
+          }
+        }
+      }
+    },
     "Search": {
       "localizations": {
         "de": {
@@ -10166,13 +13661,28 @@
         }
       }
     },
-    "Search again for this track": {},
+    "Search again for this track": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chercher à nouveau ce morceau"
+          }
+        }
+      }
+    },
     "Search settings": {
       "localizations": {
         "tr": {
           "stringUnit": {
             "state": "translated",
             "value": "Ayarlarda ara"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher dans les réglages"
           }
         }
       }
@@ -10283,7 +13793,16 @@
         }
       }
     },
-    "Search unavailable": {},
+    "Search unavailable": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recherche indisponible"
+          }
+        }
+      }
+    },
     "Second button": {
       "localizations": {
         "de": {
@@ -10390,9 +13909,36 @@
         }
       }
     },
-    "Second button text": {},
-    "Server": {},
-    "Set Up": {},
+    "Second button text": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Texte du deuxième bouton"
+          }
+        }
+      }
+    },
+    "Server": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serveur"
+          }
+        }
+      }
+    },
+    "Set Up": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configurer"
+          }
+        }
+      }
+    },
     "Settings": {
       "localizations": {
         "de": {
@@ -10499,7 +14045,16 @@
         }
       }
     },
-    "Seven-band parametric EQ with shelves at both ends. Flat is sample-identical passthrough.": {},
+    "Seven-band parametric EQ with shelves at both ends. Flat is sample-identical passthrough.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Égaliseur paramétrique à sept bandes avec plateaux aux deux extrémités. À plat, le signal est strictement identique."
+          }
+        }
+      }
+    },
     "Share": {
       "localizations": {
         "de": {
@@ -10606,14 +14161,86 @@
         }
       }
     },
-    "Share Diagnostic Report": {},
-    "Share invite": {},
-    "Share poster": {},
-    "Shared secret": {},
-    "Show Lyrics": {},
-    "Show Original": {},
-    "Show Player in Menu Bar": {},
-    "Show Queue": {},
+    "Share Diagnostic Report": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager le rapport de diagnostic"
+          }
+        }
+      }
+    },
+    "Share invite": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager l’invitation"
+          }
+        }
+      }
+    },
+    "Share poster": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager l’affiche"
+          }
+        }
+      }
+    },
+    "Shared secret": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Secret partagé"
+          }
+        }
+      }
+    },
+    "Show Lyrics": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher les paroles"
+          }
+        }
+      }
+    },
+    "Show Original": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher l’original"
+          }
+        }
+      }
+    },
+    "Show Player in Menu Bar": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher le lecteur dans la barre des menus"
+          }
+        }
+      }
+    },
+    "Show Queue": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher la file d’attente"
+          }
+        }
+      }
+    },
     "Show all": {
       "localizations": {
         "de": {
@@ -10720,8 +14347,26 @@
         }
       }
     },
-    "Show all %@": {},
-    "Show what you’re playing on your Discord profile, updating as the track does.": {},
+    "Show all %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout afficher (%@)"
+          }
+        }
+      }
+    },
+    "Show what you’re playing on your Discord profile, updating as the track does.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Affichez ce que vous écoutez sur votre profil Discord, mis à jour au fil des morceaux."
+          }
+        }
+      }
+    },
     "Shuffle": {
       "localizations": {
         "de": {
@@ -11040,13 +14685,76 @@
         }
       }
     },
-    "Sign In": {},
-    "Sign In and Settings": {},
-    "Sign In to YouTube Music": {},
-    "Sign Out": {},
-    "Sign Out of Last.fm": {},
-    "Sign in for your library": {},
-    "Sign in for your playlists": {},
+    "Sign In": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se connecter"
+          }
+        }
+      }
+    },
+    "Sign In and Settings": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connexion et réglages"
+          }
+        }
+      }
+    },
+    "Sign In to YouTube Music": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se connecter à YouTube Music"
+          }
+        }
+      }
+    },
+    "Sign Out": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se déconnecter"
+          }
+        }
+      }
+    },
+    "Sign Out of Last.fm": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se déconnecter de Last.fm"
+          }
+        }
+      }
+    },
+    "Sign in for your library": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connectez-vous pour accéder à votre bibliothèque"
+          }
+        }
+      }
+    },
+    "Sign in for your playlists": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connectez-vous pour accéder à vos playlists"
+          }
+        }
+      }
+    },
     "Sign in to YouTube Music": {
       "localizations": {
         "de": {
@@ -11153,11 +14861,56 @@
         }
       }
     },
-    "Sign in to see history": {},
-    "Signing out removes your saved YouTube Music session from this device.": {},
-    "Signing you in": {},
-    "Similar music will keep playing": {},
-    "Similar music, selected to play next": {},
+    "Sign in to see history": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connectez-vous pour voir l’historique"
+          }
+        }
+      }
+    },
+    "Signing out removes your saved YouTube Music session from this device.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La déconnexion supprime votre session YouTube Music enregistrée sur cet appareil."
+          }
+        }
+      }
+    },
+    "Signing you in": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connexion en cours"
+          }
+        }
+      }
+    },
+    "Similar music will keep playing": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Des morceaux similaires continueront à être lus"
+          }
+        }
+      }
+    },
+    "Similar music, selected to play next": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Des morceaux similaires, choisis pour la suite"
+          }
+        }
+      }
+    },
     "Skip": {
       "localizations": {
         "de": {
@@ -11264,12 +15017,66 @@
         }
       }
     },
-    "Skip Non-Music Segments": {},
-    "Skipped": {},
-    "Sleep 15 min": {},
-    "Sleep 30 min": {},
-    "Sleep 45 min": {},
-    "Sleep 60 min": {},
+    "Skip Non-Music Segments": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignorer les segments non musicaux"
+          }
+        }
+      }
+    },
+    "Skipped": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignoré"
+          }
+        }
+      }
+    },
+    "Sleep 15 min": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veille 15 min"
+          }
+        }
+      }
+    },
+    "Sleep 30 min": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veille 30 min"
+          }
+        }
+      }
+    },
+    "Sleep 45 min": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veille 45 min"
+          }
+        }
+      }
+    },
+    "Sleep 60 min": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veille 60 min"
+          }
+        }
+      }
+    },
     "Sleep timer": {
       "localizations": {
         "de": {
@@ -11376,7 +15183,16 @@
         }
       }
     },
-    "Sleep timer · %@": {},
+    "Sleep timer · %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minuteur de veille · %@"
+          }
+        }
+      }
+    },
     "Songs": {
       "localizations": {
         "es": {
@@ -11477,8 +15293,26 @@
         }
       }
     },
-    "Songs you add to your YouTube Music library — or a folder you scan on this device.": {},
-    "Songs you add to your library show up here.": {},
+    "Songs you add to your YouTube Music library — or a folder you scan on this device.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les morceaux ajoutés à votre bibliothèque YouTube Music, ou d’un dossier analysé sur cet appareil."
+          }
+        }
+      }
+    },
+    "Songs you add to your library show up here.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les morceaux ajoutés à votre bibliothèque apparaissent ici."
+          }
+        }
+      }
+    },
     "Sort": {
       "localizations": {
         "de": {
@@ -11579,17 +15413,68 @@
         }
       }
     },
-    "Sort %@": {},
-    "Sort By": {},
-    "Sort by": {},
-    "Sort this library": {},
-    "Sound Mode": {},
+    "Sort %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trier %@"
+          }
+        }
+      }
+    },
+    "Sort By": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trier par"
+          }
+        }
+      }
+    },
+    "Sort by": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trier par"
+          }
+        }
+      }
+    },
+    "Sort this library": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trier cette bibliothèque"
+          }
+        }
+      }
+    },
+    "Sound Mode": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mode sonore"
+          }
+        }
+      }
+    },
     "Source": {
       "localizations": {
         "tr": {
           "stringUnit": {
             "state": "translated",
             "value": "Kaynak"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source"
           }
         }
       }
@@ -11690,6 +15575,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "來源"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sources"
           }
         }
       }
@@ -11906,12 +15797,66 @@
         }
       }
     },
-    "Speaker": {},
-    "Spotify Canvas": {},
-    "Spotify Canvas Setup": {},
-    "Spotify Cookie": {},
-    "Spotify sp_dc cookie (optional canvas)": {},
-    "Start Radio": {},
+    "Speaker": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haut-parleur"
+          }
+        }
+      }
+    },
+    "Spotify Canvas": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify Canvas"
+          }
+        }
+      }
+    },
+    "Spotify Canvas Setup": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configuration de Spotify Canvas"
+          }
+        }
+      }
+    },
+    "Spotify Cookie": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cookie Spotify"
+          }
+        }
+      }
+    },
+    "Spotify sp_dc cookie (optional canvas)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cookie Spotify sp_dc (canvas facultatif)"
+          }
+        }
+      }
+    },
+    "Start Radio": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Créer une station"
+          }
+        }
+      }
+    },
     "Status": {
       "localizations": {
         "es": {
@@ -11994,8 +15939,26 @@
         }
       }
     },
-    "Step %lld of 3": {},
-    "Stop after this track": {},
+    "Step %lld of 3": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Étape %lld sur 3"
+          }
+        }
+      }
+    },
+    "Stop after this track": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrêter après ce morceau"
+          }
+        }
+      }
+    },
     "Storage": {
       "localizations": {
         "de": {
@@ -12308,11 +16271,56 @@
         }
       }
     },
-    "Suggestions": {},
-    "Swap title and artist": {},
-    "Swipe up for Up Next, swipe down to return to the player.": {},
-    "Swipe up or down to adjust when the lyrics appear": {},
-    "Switch Channel": {},
+    "Suggestions": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggestions"
+          }
+        }
+      }
+    },
+    "Swap title and artist": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inverser titre et artiste"
+          }
+        }
+      }
+    },
+    "Swipe up for Up Next, swipe down to return to the player.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balayez vers le haut pour la suite, vers le bas pour revenir au lecteur."
+          }
+        }
+      }
+    },
+    "Swipe up or down to adjust when the lyrics appear": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balayez vers le haut ou le bas pour régler l’apparition des paroles"
+          }
+        }
+      }
+    },
+    "Switch Channel": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Changer de chaîne"
+          }
+        }
+      }
+    },
     "Switch to grid view": {
       "localizations": {
         "de": {
@@ -12525,8 +16533,26 @@
         }
       }
     },
-    "Sync Conflict": {},
-    "Sync Conflicts": {},
+    "Sync Conflict": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conflit de synchronisation"
+          }
+        }
+      }
+    },
+    "Sync Conflicts": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conflits de synchronisation"
+          }
+        }
+      }
+    },
     "System": {
       "localizations": {
         "es": {
@@ -12827,8 +16853,26 @@
         }
       }
     },
-    "Test Connection": {},
-    "Test connection": {},
+    "Test Connection": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tester la connexion"
+          }
+        }
+      }
+    },
+    "Test connection": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tester la connexion"
+          }
+        }
+      }
+    },
     "Testing…": {
       "localizations": {
         "de": {
@@ -12935,20 +16979,146 @@
         }
       }
     },
-    "That was **%@**.": {},
-    "That works.": {},
-    "The Core ML archive could not be opened.": {},
-    "The Core ML archive did not contain a model.": {},
-    "The beat model could not be prepared for Core ML.": {},
-    "The beat model downloaded but could not be prepared for Core ML.": {},
-    "The engine has not logged anything about “%@” yet.": {},
-    "The folder you selected didn't contain any supported audio files.": {},
-    "The same Beat This! model, compiled for the Neural Engine. It falls back to the standard beat model on short tracks or if inference fails.": {},
-    "The server answered and there is no audio in it. If you expected a folder here, it may be somewhere else on the share.": {},
-    "The system picker routes this app's audio — AirPlay, Bluetooth and the device speaker.": {},
-    "There isn't much from this month yet. Play a few songs and it will fill in.": {},
-    "There was one **artist** you never got tired of.": {},
-    "There was one **genre** you came back to again and again.": {},
+    "That was **%@**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "C’était **%@**."
+          }
+        }
+      }
+    },
+    "That works.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ça marche."
+          }
+        }
+      }
+    },
+    "The Core ML archive could not be opened.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible d’ouvrir l’archive Core ML."
+          }
+        }
+      }
+    },
+    "The Core ML archive did not contain a model.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’archive Core ML ne contenait aucun modèle."
+          }
+        }
+      }
+    },
+    "The beat model could not be prepared for Core ML.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le modèle de temps n’a pas pu être préparé pour Core ML."
+          }
+        }
+      }
+    },
+    "The beat model downloaded but could not be prepared for Core ML.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le modèle de temps a été téléchargé mais n’a pas pu être préparé pour Core ML."
+          }
+        }
+      }
+    },
+    "The engine has not logged anything about “%@” yet.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le moteur n’a encore rien enregistré à propos de « %@ »."
+          }
+        }
+      }
+    },
+    "The folder you selected didn't contain any supported audio files.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le dossier choisi ne contient aucun fichier audio pris en charge."
+          }
+        }
+      }
+    },
+    "The same Beat This! model, compiled for the Neural Engine. It falls back to the standard beat model on short tracks or if inference fails.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le même modèle Beat This!, compilé pour le Neural Engine. Il revient au modèle standard sur les morceaux courts ou si l’inférence échoue."
+          }
+        }
+      }
+    },
+    "The server answered and there is no audio in it. If you expected a folder here, it may be somewhere else on the share.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le serveur a répondu mais ne contient aucun audio. Si vous attendiez un dossier ici, il est peut-être ailleurs sur le partage."
+          }
+        }
+      }
+    },
+    "The system picker routes this app's audio — AirPlay, Bluetooth and the device speaker.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le sélecteur système dirige l’audio de l’app — AirPlay, Bluetooth et haut-parleur de l’appareil."
+          }
+        }
+      }
+    },
+    "There isn't much from this month yet. Play a few songs and it will fill in.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il n’y a pas encore grand-chose ce mois-ci. Écoutez quelques morceaux et cela se remplira."
+          }
+        }
+      }
+    },
+    "There was one **artist** you never got tired of.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il y a eu un **artiste** dont vous ne vous êtes jamais lassé."
+          }
+        }
+      }
+    },
+    "There was one **genre** you came back to again and again.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il y a eu un **genre** que vous avez écouté encore et encore."
+          }
+        }
+      }
+    },
     "This connection is set below High quality, so streams are transcoded to fit that limit. Downloads are unaffected.": {
       "localizations": {
         "de": {
@@ -13055,11 +17225,56 @@
         }
       }
     },
-    "This download and a track on your WebDAV share name the same song.": {},
-    "This invite points at somebody else’s party server, so joining switches this device to it.": {},
-    "This is a preference, not a per-track setting — the same lag applies to every track, so it is set once.": {},
-    "This is your **Replay** — the year in music you actually played.": {},
-    "This page has no playable tracks.": {},
+    "This download and a track on your WebDAV share name the same song.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce téléchargement et un morceau de votre partage WebDAV portent le même nom."
+          }
+        }
+      }
+    },
+    "This invite points at somebody else’s party server, so joining switches this device to it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cette invitation pointe vers le serveur de session de quelqu’un d’autre ; la rejoindre y connecte cet appareil."
+          }
+        }
+      }
+    },
+    "This is a preference, not a per-track setting — the same lag applies to every track, so it is set once.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "C’est une préférence, pas un réglage par morceau — le même décalage s’applique à tous les morceaux, il se règle donc une seule fois."
+          }
+        }
+      }
+    },
+    "This is your **Replay** — the year in music you actually played.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voici votre **Replay** — l’année en musique que vous avez vraiment écoutée."
+          }
+        }
+      }
+    },
+    "This page has no playable tracks.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cette page ne contient aucun morceau lisible."
+          }
+        }
+      }
+    },
     "This party is full": {
       "localizations": {
         "de": {
@@ -13166,20 +17381,146 @@
         }
       }
     },
-    "Tilt %@": {},
-    "Title": {},
-    "Top result": {},
-    "Track": {},
-    "Track Log": {},
-    "Track Log…": {},
-    "Track artist": {},
-    "Tracks you play will show up here.": {},
-    "Translate to %@": {},
-    "Translation Language": {},
-    "Transparent": {},
-    "Tried in this order — drag to reorder. The highest-priority source to answer at all wins, unless Prefer Word-Synced Lyrics says to keep looking for a word-synced one.": {},
-    "Tried top to bottom. Reorder in Settings → Lyrics → Lyrics Sources.": {},
-    "Trim Leading and Trailing Silence": {},
+    "Tilt %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inclinaison %@"
+          }
+        }
+      }
+    },
+    "Title": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Titre"
+          }
+        }
+      }
+    },
+    "Top result": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meilleur résultat"
+          }
+        }
+      }
+    },
+    "Track": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morceau"
+          }
+        }
+      }
+    },
+    "Track Log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Journal du morceau"
+          }
+        }
+      }
+    },
+    "Track Log…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Journal du morceau…"
+          }
+        }
+      }
+    },
+    "Track artist": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Artiste du morceau"
+          }
+        }
+      }
+    },
+    "Tracks you play will show up here.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les morceaux que vous écoutez apparaîtront ici."
+          }
+        }
+      }
+    },
+    "Translate to %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Traduire en %@"
+          }
+        }
+      }
+    },
+    "Translation Language": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Langue de traduction"
+          }
+        }
+      }
+    },
+    "Transparent": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transparent"
+          }
+        }
+      }
+    },
+    "Tried in this order — drag to reorder. The highest-priority source to answer at all wins, unless Prefer Word-Synced Lyrics says to keep looking for a word-synced one.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Essayées dans cet ordre — faites glisser pour réorganiser. La source prioritaire qui répond l’emporte, sauf si « Préférer les paroles synchronisées mot à mot » demande de continuer."
+          }
+        }
+      }
+    },
+    "Tried top to bottom. Reorder in Settings → Lyrics → Lyrics Sources.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Essayées de haut en bas. Réorganisez dans Réglages → Paroles → Sources des paroles."
+          }
+        }
+      }
+    },
+    "Trim Leading and Trailing Silence": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer le silence au début et à la fin"
+          }
+        }
+      }
+    },
     "Try Again": {
       "localizations": {
         "de": {
@@ -13286,13 +17627,76 @@
         }
       }
     },
-    "Try again": {},
-    "Turn On": {},
-    "Turn off to give Amber audio priority. Other apps may pause.": {},
-    "Turn on to keep other apps audible.": {},
-    "USB Audio": {},
-    "Unlike": {},
-    "Unlisted": {},
+    "Try again": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réessayer"
+          }
+        }
+      }
+    },
+    "Turn On": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activer"
+          }
+        }
+      }
+    },
+    "Turn off to give Amber audio priority. Other apps may pause.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Désactivez pour donner la priorité audio à Amber. Les autres apps peuvent se mettre en pause."
+          }
+        }
+      }
+    },
+    "Turn on to keep other apps audible.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activez pour que les autres apps restent audibles."
+          }
+        }
+      }
+    },
+    "USB Audio": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio USB"
+          }
+        }
+      }
+    },
+    "Unlike": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ne plus aimer"
+          }
+        }
+      }
+    },
+    "Unlisted": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non répertoriée"
+          }
+        }
+      }
+    },
     "Unpin": {
       "localizations": {
         "de": {
@@ -13399,10 +17803,46 @@
         }
       }
     },
-    "Unpin from Library": {},
-    "Up next": {},
-    "Upgrade Quality": {},
-    "Use This Profile": {},
+    "Unpin from Library": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Désépingler de la bibliothèque"
+          }
+        }
+      }
+    },
+    "Up next": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À suivre"
+          }
+        }
+      }
+    },
+    "Upgrade Quality": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Améliorer la qualité"
+          }
+        }
+      }
+    },
+    "Use This Profile": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utiliser ce profil"
+          }
+        }
+      }
+    },
     "Use your own server": {
       "localizations": {
         "de": {
@@ -13503,7 +17943,16 @@
         }
       }
     },
-    "User token": {},
+    "User token": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeton utilisateur"
+          }
+        }
+      }
+    },
     "Username": {
       "localizations": {
         "de": {
@@ -13610,20 +18059,146 @@
         }
       }
     },
-    "Verify": {},
-    "Verifying checksum…": {},
-    "Verifying your profile…": {},
-    "Version": {},
-    "View": {},
-    "View Release Notes": {},
-    "Vocal + clash detection": {},
-    "Vocal Detection": {},
-    "Vocal model installed — without the beat model Automix falls back to tempo analysis": {},
-    "Volume": {},
-    "Volume Down": {},
-    "Volume Up": {},
-    "Waiting for Wi-Fi": {},
-    "Waiting for Wi‑Fi": {},
+    "Verify": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifier"
+          }
+        }
+      }
+    },
+    "Verifying checksum…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérification de la somme de contrôle…"
+          }
+        }
+      }
+    },
+    "Verifying your profile…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérification de votre profil…"
+          }
+        }
+      }
+    },
+    "Version": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version"
+          }
+        }
+      }
+    },
+    "View": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher"
+          }
+        }
+      }
+    },
+    "View Release Notes": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voir les notes de version"
+          }
+        }
+      }
+    },
+    "Vocal + clash detection": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Détection de la voix et des chevauchements"
+          }
+        }
+      }
+    },
+    "Vocal Detection": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Détection de la voix"
+          }
+        }
+      }
+    },
+    "Vocal model installed — without the beat model Automix falls back to tempo analysis": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modèle de voix installé — sans le modèle de temps, Automix revient à l’analyse du tempo"
+          }
+        }
+      }
+    },
+    "Volume": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volume"
+          }
+        }
+      }
+    },
+    "Volume Down": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volume −"
+          }
+        }
+      }
+    },
+    "Volume Up": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volume +"
+          }
+        }
+      }
+    },
+    "Waiting for Wi-Fi": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En attente du Wi-Fi"
+          }
+        }
+      }
+    },
+    "Waiting for Wi‑Fi": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En attente du Wi-Fi"
+          }
+        }
+      }
+    },
     "Watching": {
       "localizations": {
         "de": {
@@ -13730,7 +18305,16 @@
         }
       }
     },
-    "WebDAV": {},
+    "WebDAV": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WebDAV"
+          }
+        }
+      }
+    },
     "What should we call you?": {
       "localizations": {
         "de": {
@@ -13931,12 +18515,66 @@
         }
       }
     },
-    "When on, a merely line-synced answer waits for a word-synced one further down the list.": {},
-    "Wi-Fi or Ethernet": {},
-    "Wi-Fi recommended": {},
-    "Wider shapes with a richer sound.": {},
-    "Width": {},
-    "Working…": {},
+    "When on, a merely line-synced answer waits for a word-synced one further down the list.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activé, une réponse synchronisée seulement par ligne attend une réponse synchronisée mot à mot plus bas dans la liste."
+          }
+        }
+      }
+    },
+    "Wi-Fi or Ethernet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wi-Fi ou Ethernet"
+          }
+        }
+      }
+    },
+    "Wi-Fi recommended": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wi-Fi recommandé"
+          }
+        }
+      }
+    },
+    "Wider shapes with a richer sound.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Élargit pour un son plus riche."
+          }
+        }
+      }
+    },
+    "Width": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Largeur"
+          }
+        }
+      }
+    },
+    "Working…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En cours…"
+          }
+        }
+      }
+    },
     "You got through **%lld songs** by **%lld artists**.": {
       "localizations": {
         "en": {
@@ -13944,15 +18582,66 @@
             "state": "new",
             "value": "You got through **%1$lld songs** by **%2$lld artists**."
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous avez écouté **%lld morceaux** de **%lld artistes**."
+          }
         }
       }
     },
-    "You have %@": {},
-    "You listened to **%@ minutes** of music.": {},
-    "You played **%lld songs**, one was your anthem.": {},
-    "You will show up as %@.": {},
+    "You have %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous avez %@"
+          }
+        }
+      }
+    },
+    "You listened to **%@ minutes** of music.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous avez écouté **%@ minutes** de musique."
+          }
+        }
+      }
+    },
+    "You played **%lld songs**, one was your anthem.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous avez lu **%lld morceaux**, dont un était votre hymne."
+          }
+        }
+      }
+    },
+    "You will show up as %@.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous apparaîtrez en tant que %@."
+          }
+        }
+      }
+    },
     "YouTube Music": {},
-    "Your Data": {},
+    "Your Data": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos données"
+          }
+        }
+      }
+    },
     "Your Replay": {
       "localizations": {
         "de": {
@@ -14059,13 +18748,76 @@
         }
       }
     },
-    "Your Replay is growing": {},
-    "Your Songs": {},
-    "Your albums live here": {},
-    "Your artists live here": {},
-    "Your feed couldn't load": {},
-    "Your libraries": {},
-    "Your library and recommendations will use this profile.": {},
+    "Your Replay is growing": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre Replay se construit"
+          }
+        }
+      }
+    },
+    "Your Songs": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos morceaux"
+          }
+        }
+      }
+    },
+    "Your albums live here": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos albums se trouvent ici"
+          }
+        }
+      }
+    },
+    "Your artists live here": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos artistes se trouvent ici"
+          }
+        }
+      }
+    },
+    "Your feed couldn't load": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de charger votre flux"
+          }
+        }
+      }
+    },
+    "Your libraries": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos bibliothèques"
+          }
+        }
+      }
+    },
+    "Your library and recommendations will use this profile.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre bibliothèque et vos recommandations utiliseront ce profil."
+          }
+        }
+      }
+    },
     "Your listening pattern": {
       "localizations": {
         "de": {
@@ -14378,8 +19130,26 @@
         }
       }
     },
-    "Your profile details couldn’t be loaded. You can still review and confirm them on the Google page.": {},
-    "Your songs live here": {},
+    "Your profile details couldn’t be loaded. You can still review and confirm them on the Google page.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de charger les détails de votre profil. Vous pouvez toujours les vérifier et les confirmer sur la page Google."
+          }
+        }
+      }
+    },
+    "Your songs live here": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos morceaux se trouvent ici"
+          }
+        }
+      }
+    },
     "album": {
       "extractionState": "stale",
       "localizations": {
@@ -14453,6 +19223,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "專輯"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "album"
           }
         }
       }
@@ -14567,11 +19343,38 @@
     "https://cloud.example.com/dav": {},
     "https://your-server.com": {},
     "https://…": {},
-    "open-unmix reads how much singing is in each moment, so Automix can keep two vocals from overlapping.": {},
+    "open-unmix reads how much singing is in each moment, so Automix can keep two vocals from overlapping.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "open-unmix mesure la part de chant à chaque instant, pour qu’Automix évite le chevauchement de deux voix."
+          }
+        }
+      }
+    },
     "open-unmix umxhq": {},
     "sp_dc cookie": {},
-    "{song_name}, {artist_name} and {album_name} are replaced with the track. The first button opens the song on YouTube Music, the second this project.": {},
-    "“%@” is in two places": {},
+    "{song_name}, {artist_name} and {album_name} are replaced with the track. The first button opens the song on YouTube Music, the second this project.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "{song_name}, {artist_name} et {album_name} sont remplacés par le morceau. Le premier bouton ouvre le morceau sur YouTube Music, le second ce projet."
+          }
+        }
+      }
+    },
+    "“%@” is in two places": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "« %@ » se trouve à deux endroits"
+          }
+        }
+      }
+    },
     "•": {},
     "Data Saver": {
       "localizations": {
