@@ -268,7 +268,7 @@ struct UpNextPane: View {
                 Haptics.play(controller.shuffleEnabled ? .toggleOff : .toggleOn)
                 controller.toggleShuffle()
             }
-            modeButton(controller.repeatMode == .one ? .bchRepeat : .bchRepeat, on: controller.repeatMode != .off, label: controller.repeatMode == .one ? "Repeat one" : controller.repeatMode == .all ? "Repeat all" : "Repeat off", badge: controller.repeatMode == .one ? "1" : nil) {
+            modeButton(.bchRepeat, on: controller.repeatMode != .off, label: controller.repeatMode == .one ? "Repeat one" : controller.repeatMode == .all ? "Repeat all" : "Repeat off", badge: controller.repeatMode == .one ? "1" : nil) {
                 Haptics.play(.select)
                 controller.cycleRepeat()
             }
