@@ -326,7 +326,6 @@ struct DetailView: View {
     }
 
     @ViewBuilder
-    @ViewBuilder
     private func detailTopControls(page: DetailPageModel?) -> some View {
         if let page {
             HStack(spacing: 18) {
