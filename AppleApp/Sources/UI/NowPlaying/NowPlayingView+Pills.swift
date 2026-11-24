@@ -42,6 +42,7 @@ extension NowPlayingView {
                     }
                     .accessibilityAddTraits(current?.albumId != nil ? .isButton : [])
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 ArtistCreditText(
                     credit: current?.artist ?? "",
                     artistId: current?.artistId,
@@ -49,11 +50,12 @@ extension NowPlayingView {
                     color: artistColor,
                     marquee: (scrolls, titleCrawls ? 3 : 0)
                 )
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .id(current?.id)
             .transition(.opacity)
             .animation(.easeInOut(duration: 0.3), value: current?.id)
-            Spacer(minLength: 10)
             if auth.signedIn, current?.videoId != nil {
                 GlassCircleButton(
                     system: controller.isLiked ? "star.fill" : "star",

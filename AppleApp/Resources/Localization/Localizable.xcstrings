@@ -19741,6 +19741,36 @@
           }
         }
       }
+    },
+    "Retry Download": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réessayer le téléchargement"
+          }
+        }
+      }
+    },
+    "Cancel Download": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annuler le téléchargement"
+          }
+        }
+      }
+    },
+    "Delete Download": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer le téléchargement"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

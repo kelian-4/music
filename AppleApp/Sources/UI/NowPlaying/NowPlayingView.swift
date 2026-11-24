@@ -46,7 +46,7 @@ struct NowPlayingView: View {
     @AppStorage("show_music_videos") var showMusicVideos = false
     /// The one sung line under the title. Off leaves the player to the
     /// artwork, credits and controls; the lyrics pane is untouched.
-    @AppStorage("player_lyric_line") var showsLyricLine = true
+    @AppStorage("player_lyric_line") var showsLyricLine = false
     @AppStorage("hide_status_bar_in_player") private var hideStatusBarInPlayer = false
     @State var showPipeline = false
     @State var showLyricsOffset = false

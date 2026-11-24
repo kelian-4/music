@@ -160,24 +160,7 @@ struct RootView: View {
         )) {
             AutomixModelsSheet(onDecline: { appModel.declineAutomixModels() })
         }
-        .sheet(item: Binding(
-            get: { appModel.pendingDetail },
-            set: { appModel.pendingDetail = $0 }
-        )) { dest in
-            NavigationStack {
-                if case .detail(let id, let title) = dest {
-                    DetailView(browseId: id, initialTitle: title)
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("Close") { appModel.pendingDetail = nil }
-                            }
-                        }
-                }
-            }
-            #if os(macOS)
-            .frame(minWidth: 720, minHeight: 640)
-            #endif
-        }
+        .modifier(PendingDetailPresenter())
         .alert("Only 5 playlists can be pinned", isPresented: Binding(
             get: { appModel.pinLimitAlert },
             set: { appModel.pinLimitAlert = $0 }
@@ -351,7 +334,7 @@ struct RootView: View {
 
     /// The tabs that are pages of the Library rather than tabs of their own.
     private static func isLibrarySection(_ tab: AppModel.Tab) -> Bool {
-        tab.rawValue >= AppModel.Tab.libraryYouTube.rawValue
+        tab != .radio && tab.rawValue >= AppModel.Tab.libraryYouTube.rawValue
     }
 
     /// One of the library's sections, as the iPad's sidebar opens it.
@@ -1200,3 +1183,50 @@ extension EnvironmentValues {
     }
 }
 #endif
+
+
+private struct PendingDetailPresenter: ViewModifier {
+    @Environment(AppModel.self) private var appModel
+
+    private var binding: Binding<BrowseDestination?> {
+        Binding(get: { appModel.pendingDetail }, set: { appModel.pendingDetail = $0 })
+    }
+
+    func body(content: Content) -> some View {
+        #if os(iOS)
+        content.fullScreenCover(item: binding) { dest in
+            NavigationStack {
+                if case .detail(let id, let title) = dest {
+                    DetailView(browseId: id, initialTitle: title)
+                        .navigationBarBackButtonHidden(true)
+                        .toolbar {
+                            ToolbarItem(placement: .topBarLeading) {
+                                Button {
+                                    appModel.pendingDetail = nil
+                                } label: {
+                                    Image(systemName: "chevron.backward")
+                                }
+                                .accessibilityLabel("Back")
+                            }
+                        }
+                }
+            }
+            .environment(appModel)
+        }
+        #else
+        content.sheet(item: binding) { dest in
+            NavigationStack {
+                if case .detail(let id, let title) = dest {
+                    DetailView(browseId: id, initialTitle: title)
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Close") { appModel.pendingDetail = nil }
+                            }
+                        }
+                }
+            }
+            .frame(minWidth: 720, minHeight: 640)
+        }
+        #endif
+    }
+}

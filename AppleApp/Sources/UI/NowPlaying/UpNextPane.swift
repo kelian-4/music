@@ -42,6 +42,7 @@ struct UpNextPane: View {
             // song, the like and the menu.
             if showsCurrentTrackHeader {
                 queueHeader
+                    .padding(.top, StatusBar.inset)
             }
             queueModeButtons
             queueTitleBlock

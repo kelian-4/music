@@ -54,7 +54,7 @@ extension NowPlayingView {
             moreMenu
         }
         .padding(.horizontal, 24)
-        .padding(.top, 8)
+        .padding(.top, 8 + StatusBar.inset)
         .padding(.bottom, 14)
         .foregroundStyle(.white)
     }
@@ -165,5 +165,17 @@ extension NowPlayingView {
 
     func hideLyricsControls() {
         lyricsControlsOpen = false
+    }
+}
+
+enum StatusBar {
+    static var inset: CGFloat {
+        #if os(iOS)
+        if UIDevice.current.userInterfaceIdiom == .pad { return 0 }
+        let scene = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first
+        return scene?.keyWindow?.safeAreaInsets.top ?? 0
+        #else
+        return 0
+        #endif
     }
 }

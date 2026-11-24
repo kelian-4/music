@@ -25,6 +25,7 @@ final class NowPlayingController {
     private var artworkURL: String?
     private var lastRequestedURL: String?
     private var handlers: [Any] = []
+    private static let usesMediaSession = false
 #if os(iOS)
     private var modern: AnyObject?
 #endif
@@ -32,7 +33,7 @@ final class NowPlayingController {
     init() {
 #if os(iOS)
         NowPlayingActivityController.endLegacyActivities()
-        if #available(iOS 27, *) {
+        if Self.usesMediaSession, #available(iOS 27, *) {
             resetModernModel()
             // iOS 27+: metadata and commands live EXCLUSIVELY on the
             // MediaSession. Publishing this playback through

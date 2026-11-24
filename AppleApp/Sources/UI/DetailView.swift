@@ -107,9 +107,8 @@ struct DetailView: View {
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                detailActionsMenu(page: page)
-                TopBarAccountButton()
+            ToolbarItem(placement: .topBarTrailing) {
+                detailTopControls(page: page)
             }
         }
         #endif
@@ -327,61 +326,45 @@ struct DetailView: View {
     }
 
     @ViewBuilder
-    private func detailActionsMenu(page: DetailPageModel?) -> some View {
+    @ViewBuilder
+    private func detailTopControls(page: DetailPageModel?) -> some View {
         if let page {
-            Menu {
+            HStack(spacing: 18) {
                 if let urlString = page.url, let url = URL(string: urlString) {
                     ShareLink(item: url) {
-                        Label("Share", systemImage: "square.and.arrow.up")
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.body.weight(.semibold))
+                            .foregroundStyle(.primary)
                     }
-                    if kind(of: page) == .artist {
+                    .accessibilityLabel("Share")
+                }
+                Menu {
+                    releaseMenuItems(page)
+                    if let urlString = page.url, let url = URL(string: urlString), kind(of: page) == .artist {
                         Link(destination: url) {
                             Label("Open in YouTube Music", systemImage: "arrow.up.right.square")
                         }
                     }
-                }
-                if !pinned {
-                    Button {
-                        if PlaylistPinning.toggle(browseId: browseId, title: initialTitle) {
-                            pinned = true
-                        } else {
-                            appModel.pinLimitAlert = true
+                    if kind(of: page) != .artist {
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                if searching { filter = "" }
+                                searching.toggle()
+                            }
+                        } label: {
+                            Label(searching ? "Close search" : "Search this list", systemImage: "magnifyingglass")
                         }
-                    } label: {
-                        Label("Pin to Library", systemImage: "pin")
                     }
-                } else {
-                    Button {
-                        if PlaylistPinning.toggle(browseId: browseId, title: initialTitle) {
-                            pinned = false
-                        }
-                    } label: {
-                        Label("Unpin from Library", systemImage: "pin.slash")
-                    }
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .font(.body.weight(.semibold))
+                        .foregroundStyle(.primary)
+                        .frame(width: 30, height: 30)
+                        .contentShape(.rect)
                 }
-                if kind(of: page) == .playlist, page.playlistOwned == true {
-                    Button {
-                        renameTitle = page.title
-                        renamePresented = true
-                    } label: {
-                        Label("Rename Playlist", systemImage: "pencil")
-                    }
-                    Button {
-                        privacyPresented = true
-                    } label: {
-                        Label("Playlist Privacy…", systemImage: "lock")
-                    }
-                }
-            } label: {
-                Image(systemName: "ellipsis")
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(.primary)
-                    .frame(width: 34, height: 34)
-                    .chromeGlass(in: Circle())
-                    .overlay(Circle().strokeBorder(Color.white.opacity(0.22), lineWidth: 0.6))
+                .accessibilityLabel("More Options")
             }
-            .buttonStyle(ProfileCircleButtonStyle())
-            .accessibilityLabel("More Options")
+            .padding(.horizontal, 6)
         }
     }
 
@@ -537,13 +520,7 @@ struct DetailView: View {
             .padding(.horizontal, 8)
 
             if !page.songs.isEmpty {
-                releasePillsRow(page, tint: tint)
-                    .padding(.top, 6)
-                actionRow(page, tint: tint, isArtist: false)
-            } else if kind(of: page) == .playlist {
-                // Nothing to play, but an empty playlist is still one to
-                // rename or delete — and empty is when that is usually wanted.
-                releaseMoreMenu(page)
+                releaseControlRow(page, tint: tint)
                     .padding(.top, 6)
             }
         }
@@ -633,31 +610,45 @@ struct DetailView: View {
         .frame(maxWidth: .infinity, alignment: .center)
     }
 
-    private func releasePillsRow(_ page: DetailPageModel, tint: ArtworkPalette.PageTint) -> some View {
+    private func releaseControlRow(_ page: DetailPageModel, tint: ArtworkPalette.PageTint) -> some View {
         let playing = controller.isPlaybackContextPlaying(browseId)
-        return HStack(spacing: 12) {
+        let canSave = auth.signedIn && page.libraryPlaylistId != nil
+        return HStack(spacing: 14) {
+            Button {
+                playContext(page, shuffled: true)
+            } label: {
+                Image(systemName: "shuffle")
+                    .font(.title3.weight(.semibold))
+                    .foregroundStyle(.primary)
+                    .frame(width: 52, height: 52)
+                    .background(Color.primary.opacity(0.14), in: Circle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Shuffle")
             Button {
                 playContext(page)
             } label: {
                 Label(playing ? "Pause" : "Play", systemImage: playing ? "pause.fill" : "play.fill")
-                    .font(.headline)
-                    .foregroundStyle(tint.accent)
+                    .font(.title3.weight(.semibold))
+                    .foregroundStyle(.background)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 50)
-                    .background(Color.primary.opacity(0.08), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .frame(height: 52)
+                    .background(Color.primary, in: Capsule())
             }
             .buttonStyle(.plain)
             Button {
-                playContext(page, shuffled: true)
+                if canSave { Task { await toggleSave(page) } }
             } label: {
-                Label("Shuffle", systemImage: "shuffle")
-                    .font(.headline)
-                    .foregroundStyle(tint.accent)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 50)
-                    .background(Color.primary.opacity(0.08), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                Image(systemName: saved ? "checkmark" : "plus")
+                    .font(.title3.weight(.semibold))
+                    .foregroundStyle(.primary)
+                    .frame(width: 52, height: 52)
+                    .background(Color.primary.opacity(0.14), in: Circle())
+                    .opacity(canSave ? 1 : 0.35)
             }
             .buttonStyle(.plain)
+            .disabled(!canSave || saving)
+            .accessibilityLabel(saved ? "Remove from Library" : "Add to Library")
         }
         .frame(maxWidth: 520)
     }
@@ -688,6 +679,13 @@ struct DetailView: View {
     /// for a playlist of one's own the management rows.
     private func releaseMoreMenu(_ page: DetailPageModel) -> some View {
         CircleMenuButton(label: "More actions") {
+            releaseMenuItems(page)
+        }
+    }
+
+    @ViewBuilder
+    private func releaseMenuItems(_ page: DetailPageModel) -> some View {
+        Group {
             Button("Play Next") {
                 controller.playNext(page.songs.map { toEntry($0, fallbackArt: fallbackArt(page)) })
                 toast.queueNotice("Playing next: \(page.title)")
@@ -1222,6 +1220,9 @@ struct DetailView: View {
                             playlistOwned: page.playlistOwned == true,
                             trackNumber: kind(of: page) == .album ? index + 1 : nil
                         )
+                        .overlay(alignment: .bottom) {
+                            if kind(of: page) == .album { Divider().padding(.leading, 52) }
+                        }
                         .onAppear {
                             if song.videoId == songs.last?.videoId {
                                 requestMoreIfNeeded()

@@ -13,6 +13,12 @@ struct DownloadsView: View {
     @Environment(PlaybackController.self) private var controller
     @State private var store = DownloadStore.shared
     @State private var selectedTab: Tab = .songs
+    let forcedTab: Tab?
+
+    init(forcedTab: Tab? = nil) {
+        self.forcedTab = forcedTab
+        _selectedTab = State(initialValue: forcedTab ?? .songs)
+    }
     @State private var searchQuery: String = ""
     @State private var sort: SortOption = .titleAsc
     /// Hold-to-select multi-delete (upstream's selection mode): a tap on a row
@@ -122,7 +128,7 @@ struct DownloadsView: View {
                 content
             }
         }
-        .navigationTitle("Downloads")
+        .navigationTitle(LocalizedStringKey(forcedTab?.rawValue ?? "Downloads"))
         #if os(iOS)
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
@@ -139,8 +145,49 @@ struct DownloadsView: View {
 
     @ViewBuilder
     private var content: some View {
+        if forcedTab == nil {
+            categoryList
+        } else {
+            tabbedContent
+        }
+    }
+
+    private var categoryList: some View {
+        ScrollView {
+            VStack(spacing: 0) {
+                ForEach(Array(Tab.allCases.enumerated()), id: \.element.id) { index, tab in
+                    PushLink(destination: DownloadsView(forcedTab: tab)) {
+                        HStack(spacing: 14) {
+                            Image(systemName: tab == .songs ? "music.note" : tab == .albums ? "square.stack" : "music.mic")
+                                .font(.title3)
+                                .foregroundStyle(.tint)
+                                .frame(width: 30)
+                            Text(LocalizedStringKey(tab.rawValue))
+                                .font(.title3)
+                                .foregroundStyle(.primary)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.footnote.weight(.semibold))
+                                .foregroundStyle(.tertiary)
+                        }
+                        .padding(.vertical, 11)
+                        .padding(.horizontal, 24)
+                        .contentShape(.rect)
+                        .overlay(alignment: .bottom) {
+                            if index < Tab.allCases.count - 1 {
+                                Divider().padding(.leading, 68)
+                            }
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(.top, 4)
+        }
+    }
+
+    private var tabbedContent: some View {
         VStack(spacing: 0) {
-            tabPicker
             toolbar
             switch selectedTab {
             case .songs:

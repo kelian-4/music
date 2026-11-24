@@ -18,9 +18,6 @@ struct SongActionButtons: View {
     var body: some View {
         let _ = LikeStore.shared.epoch
         ControlGroup {
-            if !entry.isLocal {
-                downloadRow(entry)
-            }
             if auth.signedIn, let vid = entry.videoId {
                 Button(SongRatingActions.likeTitle(vid), systemImage: LibraryActions.cachedLike(vid) == "LIKE" ? "star.fill" : "star") {
                     Task { await SongRatingActions.toggleLike(videoId: vid, controller: controller, toast: toast) }
@@ -32,6 +29,9 @@ struct SongActionButtons: View {
         }
         .controlGroupStyle(.compactMenu)
         Divider()
+        if !entry.isLocal {
+            downloadRow(entry)
+        }
         if auth.signedIn, let vid = entry.videoId {
             Button("Add to Playlist…", systemImage: "text.badge.plus") {
                 appModel.playlistPicker = PlaylistPickerRequest(videoId: vid, title: entry.title)
@@ -159,12 +159,12 @@ struct SongActionButtons: View {
             job.entry.source == entry.source && job.entry.id == entry.id && job.status == .failed
         }
         if let activeJob {
-            Button("Cancel Download") {
+            Button("Cancel Download", systemImage: "xmark.circle") {
                 store.cancel(activeJob.id)
                 toast.show("Cancelled \(entry.title)")
             }
         } else if let failedJob {
-            Button("Retry Download") {
+            Button("Retry Download", systemImage: "arrow.clockwise") {
                 // The same switch the fresh download shows: a retry can be
                 // refused on metered data like anything else.
                 switch store.download(entry) {
@@ -179,7 +179,7 @@ struct SongActionButtons: View {
                 }
             }
         } else if let asset {
-            Button("Delete Download", role: .destructive) {
+            Button("Delete Download", systemImage: "trash", role: .destructive) {
                 let title = entry.title
                 toast.requestConfirmation(ConfirmationRequest(
                     title: "Delete the download?",
@@ -191,7 +191,7 @@ struct SongActionButtons: View {
                 })
             }
         } else {
-            Button("Download") {
+            Button("Download", systemImage: "arrow.down.circle") {
                 SongRatingActions.startDownload(entry, toast: toast)
             }
         }
@@ -546,7 +546,7 @@ struct CollectionDownloadActions: View {
         if let owner, !downloading, owner.requests.allSatisfy({ request in
             store.jobs.first { $0.id == request }?.status != .failed
         }) {
-            Button("Delete Download", role: .destructive) {
+            Button("Delete Download", systemImage: "trash", role: .destructive) {
                 toast.requestConfirmation(ConfirmationRequest(
                     title: "Delete the download?",
                     message: "The downloaded songs from “\(title)” will be removed from this device and will stream again when played.",
