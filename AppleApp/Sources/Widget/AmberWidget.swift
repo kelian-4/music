@@ -9,7 +9,7 @@ import AppIntents
 // WidgetStatePublisher. The extension never links native-core and never
 // touches the network. Tapping opens the player (deep link §9).
 
-private let groupDefaults = UserDefaults(suiteName: "group.app.amber.Amber")
+private let groupDefaults = UserDefaults(suiteName: AppGroup.id)
 
 struct MediaWidgetEntry: TimelineEntry {
     let date: Date
@@ -188,7 +188,7 @@ struct WidgetTransportIntent: AppIntent {
     init(command: String) { self.command = command }
 
     func perform() async throws -> some IntentResult {
-        UserDefaults(suiteName: "group.app.amber.Amber")?.set(command, forKey: "widget.command")
+        UserDefaults(suiteName: AppGroup.id)?.set(command, forKey: "widget.command")
         return .result()
     }
 }

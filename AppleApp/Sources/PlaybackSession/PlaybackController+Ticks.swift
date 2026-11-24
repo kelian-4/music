@@ -60,7 +60,7 @@ extension PlaybackController {
     }
 
     func pollWidgetCommands() {
-        guard let defaults = UserDefaults(suiteName: "group.app.amber.Amber"),
+        guard let defaults = UserDefaults(suiteName: AppGroup.id),
               let cmd = defaults.string(forKey: "widget.command") else { return }
         defaults.removeObject(forKey: "widget.command")
         switch cmd {

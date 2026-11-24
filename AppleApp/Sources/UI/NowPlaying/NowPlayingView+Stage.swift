@@ -79,12 +79,15 @@ extension NowPlayingView {
                     if isIPad {
                         artworkStage(side: full, collapsed: false)
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                    } else {
+                    } else if hero {
                         artworkStage(
-                            side: hero ? geo.size.width : full,
+                            side: geo.size.width,
                             collapsed: false,
-                            hero: hero
+                            hero: true
                         )
+                    } else {
+                        artworkStage(side: full, collapsed: false, hero: false)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     }
                 }
                 if collapsed {

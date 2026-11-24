@@ -394,8 +394,11 @@ struct DetailView: View {
                 // wash colour the page is painted in.
                 LinearGradient(
                     stops: [
-                        .init(color: .clear, location: 0.35),
-                        .init(color: tint.wash.opacity(0.92), location: 1.0)
+                        .init(color: .clear, location: 0.3),
+                        .init(color: tint.wash.opacity(0.25), location: 0.52),
+                        .init(color: tint.wash.opacity(0.6), location: 0.74),
+                        .init(color: tint.wash.opacity(0.9), location: 0.9),
+                        .init(color: tint.wash, location: 1.0)
                     ],
                     startPoint: .top,
                     endPoint: .bottom
@@ -407,8 +410,8 @@ struct DetailView: View {
             .frame(maxHeight: .infinity, alignment: .top)
             .overlay(alignment: .bottom) {
                 mergeBand(tint: tint)
-                    .frame(height: 80)
-                    .offset(y: 20)
+                    .frame(height: 220)
+                    .offset(y: 40)
                     .allowsHitTesting(false)
             }
 
@@ -923,7 +926,8 @@ struct DetailView: View {
                         LinearGradient(
                             stops: [
                                 .init(color: .clear, location: 0),
-                                .init(color: .black, location: 0.5),
+                                .init(color: .black.opacity(0.5), location: 0.3),
+                                .init(color: .black, location: 0.6),
                                 .init(color: .clear, location: 1),
                             ],
                             startPoint: .top,
@@ -1670,16 +1674,11 @@ private struct DetailSkeleton: View {
                 SkeletonBlock(height: 11, cornerRadius: 4).frame(width: min(width * 0.45, 200))
             }
             HStack(spacing: 12) {
-                if wide {
-                    SkeletonBlock(height: 46, cornerRadius: 23).frame(width: 111)
-                    SkeletonBlock(height: 46, cornerRadius: 23).frame(width: 95)
-                } else {
-                    Circle().fill(.quaternary).frame(width: 46, height: 46)
-                    Circle().fill(.quaternary).frame(width: 46, height: 46)
-                }
-                Circle().fill(.quaternary).frame(width: 46, height: 46)
-                Circle().fill(.quaternary).frame(width: 46, height: 46)
+                Circle().fill(.quaternary).frame(width: 52, height: 52)
+                SkeletonBlock(height: 52, cornerRadius: 26)
+                Circle().fill(.quaternary).frame(width: 52, height: 52)
             }
+            .frame(maxWidth: 520)
             .padding(.top, 6)
             VStack(spacing: 0) {
                 ForEach(0..<8, id: \.self) { _ in SkeletonSongRow() }
