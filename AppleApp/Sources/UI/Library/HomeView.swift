@@ -24,7 +24,7 @@ struct HomeView: View {
     var body: some View {
         PageStack {
             content
-                .navigationTitle("Listen Now")
+                .navigationTitle("Home")
                 .toolbar {
                     #if os(iOS)
                     // Upstream FrostedTopBar's root-page leading Amber logo.
