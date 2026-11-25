@@ -1,4 +1,5 @@
 import Foundation
+import WidgetKit
 import Observation
 #if os(macOS)
 import AppKit
@@ -654,6 +655,8 @@ final class WidgetStatePublisher {
             } else {
                 defaults.removeObject(forKey: "widget.artworkPath")
             }
+            defaults.synchronize()
+            WidgetCenter.shared.reloadAllTimelines()
         }
     }
 

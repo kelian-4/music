@@ -5,15 +5,15 @@ import SwiftUI
 struct LicenseAcknowledgementsView: View {
     private let acknowledgements: [Acknowledgement] = [
         .init(
-            name: "BitChord and InnerTubeX",
-            detail: "The Apple port is derived from BitChord by Kushagra Singh. YouTube Music extraction uses the vendored InnerTubeX client and its QuackJS interpreter.",
+            name: "InnerTubeX",
+            detail: "YouTube Music extraction uses the vendored InnerTubeX client and its QuackJS interpreter.",
             license: "GPL-3.0",
             file: "GPL-3.0.txt",
             url: "https://github.com/bagumamartin/BitChord/blob/main/LICENSE"
         ),
         .init(
             name: "Orchard analyzer code",
-            detail: "Selected tempo and audio-analysis files are ported from Orchard by SFG545 through BitChord's Android implementation.",
+            detail: "Selected tempo and audio-analysis files are ported from Orchard by SFG545.",
             license: "AGPL-3.0-or-later",
             file: "AGPL-3.0.txt",
             url: "https://github.com/bagumamartin/BitChord/blob/main/LICENSES/AGPL-3.0.txt"
@@ -127,13 +127,6 @@ struct LicenseAcknowledgementsView: View {
 
     var body: some View {
         List {
-            Section {
-                Text("BitChord is derived from the Android project by Kushagra Singh. The Apple-platform port and original additions are Copyright © 2026 Martin BAGUMA.")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                Link("Full third-party notices", destination: URL(string: "https://github.com/bagumamartin/BitChord/blob/main/THIRD_PARTY_NOTICES.md")!)
-            }
-
             Section("Acknowledgements and licenses") {
                 ForEach(acknowledgements) { acknowledgement in
                     DisclosureGroup {
