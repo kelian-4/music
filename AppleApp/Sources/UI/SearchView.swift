@@ -1534,6 +1534,8 @@ struct SearchView: View {
             Spacer()
         }
         .padding(.vertical, 4)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
     }
 
     #if os(iOS)

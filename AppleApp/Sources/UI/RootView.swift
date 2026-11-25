@@ -129,12 +129,7 @@ struct RootView: View {
             DownloadManagerView()
         }
         #endif
-        .sheet(isPresented: Binding(
-            get: { appModel.replayPresented },
-            set: { appModel.replayPresented = $0 }
-        )) {
-            ReplayView()
-        }
+        .modifier(ReplayPresenter())
         // Listen Together, presented over whatever the listener was doing. A party
         // invite is a request to look at a party, and the screen that answers it has
         // to be the one that arrives.
@@ -1226,6 +1221,27 @@ private struct PendingDetailPresenter: ViewModifier {
                 }
             }
             .frame(minWidth: 720, minHeight: 640)
+        }
+        #endif
+    }
+}
+
+
+private struct ReplayPresenter: ViewModifier {
+    @Environment(AppModel.self) private var appModel
+
+    private var binding: Binding<Bool> {
+        Binding(get: { appModel.replayPresented }, set: { appModel.replayPresented = $0 })
+    }
+
+    func body(content: Content) -> some View {
+        #if os(iOS)
+        content.fullScreenCover(isPresented: binding) {
+            ReplayView()
+        }
+        #else
+        content.sheet(isPresented: binding) {
+            ReplayView()
         }
         #endif
     }

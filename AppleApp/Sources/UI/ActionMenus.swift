@@ -18,11 +18,13 @@ struct SongActionButtons: View {
     var body: some View {
         let _ = LikeStore.shared.epoch
         ControlGroup {
-            if auth.signedIn, let vid = entry.videoId {
-                Button(SongRatingActions.likeTitle(vid), systemImage: LibraryActions.cachedLike(vid) == "LIKE" ? "star.fill" : "star") {
+            let vid = entry.videoId
+            Button(vid.map(SongRatingActions.likeTitle) ?? "Like", systemImage: vid.map { LibraryActions.cachedLike($0) == "LIKE" } == true ? "star.fill" : "star") {
+                if let vid {
                     Task { await SongRatingActions.toggleLike(videoId: vid, controller: controller, toast: toast) }
                 }
             }
+            .disabled(!auth.signedIn || vid == nil)
             ShareLink(item: shareURL) {
                 Label("Share", systemImage: "square.and.arrow.up")
             }
@@ -32,14 +34,12 @@ struct SongActionButtons: View {
         if !entry.isLocal {
             downloadRow(entry)
         }
-        if auth.signedIn, let vid = entry.videoId {
-            Button("Add to Playlist…", systemImage: "text.badge.plus") {
+        Button("Add to Playlist…", systemImage: "text.badge.plus") {
+            if let vid = entry.videoId {
                 appModel.playlistPicker = PlaylistPickerRequest(videoId: vid, title: entry.title)
             }
         }
-        if entry.id != controller.current?.id {
-            Button("Play", systemImage: "play") { controller.play([entry], at: 0) }
-        }
+        .disabled(!auth.signedIn || entry.videoId == nil)
         Button("Play Next", systemImage: "text.insert") {
             controller.playNext(entry)
             toast.queueNotice("Playing next: \(entry.title)")
@@ -50,6 +50,10 @@ struct SongActionButtons: View {
         }
         Button("Start Radio", systemImage: "badge.plus.radiowaves.right") { controller.playRadio(entry) }
         Divider()
+        Button("Credits", systemImage: "info.circle") {
+            toast.showCredits(entry)
+        }
+        .disabled(entry.videoId == nil)
         if let albumId = entry.albumId {
             Button("Open Album", systemImage: "square.stack") {
                 appModel.pendingDetail = .detail(browseId: albumId, title: entry.albumName ?? "Album")
@@ -60,16 +64,15 @@ struct SongActionButtons: View {
                 appModel.pendingDetail = .detail(browseId: artistId, title: entry.artist)
             }
         }
-        if entry.videoId != nil {
-            Button("Credits", systemImage: "info.circle") {
-                toast.showCredits(entry)
+        Divider()
+        let dislikeId = entry.videoId
+        Button(dislikeId.map(SongRatingActions.dislikeTitle) ?? "Dislike", systemImage: "hand.thumbsdown") {
+            if let dislikeId {
+                Task { await SongRatingActions.toggleDislike(videoId: dislikeId, controller: controller, toast: toast) }
             }
         }
+        .disabled(!auth.signedIn || dislikeId == nil)
         if auth.signedIn, let vid = entry.videoId {
-            Divider()
-            Button(SongRatingActions.dislikeTitle(vid), systemImage: "hand.thumbsdown") {
-                Task { await SongRatingActions.toggleDislike(videoId: vid, controller: controller, toast: toast) }
-            }
             if playlistOwned, let setVideoId, let playlistBrowseId {
                 Button("Remove from Playlist", role: .destructive) {
                     let title = entry.title
@@ -96,17 +99,14 @@ struct SongActionButtons: View {
         }
         if entry.id == controller.current?.id {
             if controller.songVersions[entry.id] != nil {
-                Divider()
                 Button("Convert to Audio", systemImage: "music.note") {
                     controller.playSongVersion()
                 }
             }
             if controller.canRevertToOriginal {
-                Divider()
                 Button("Revert to Original") { controller.revertToOriginal() }
             }
             if controller.canUpgradeQuality {
-                Divider()
                 Button("Upgrade Quality") { controller.upgradeQuality() }
             }
         }

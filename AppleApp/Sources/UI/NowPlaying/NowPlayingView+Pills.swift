@@ -20,7 +20,6 @@ extension NowPlayingView {
         // when it overflows (the artist a beat behind a crawling title), and
         // the star and the menu beside them as two 34pt glyph discs.
         let current = controller.current
-        let scrolls = pane == .main
         let artistColor = Color.white.opacity(0.55)
         return HStack(alignment: .center, spacing: 0) {
             VStack(alignment: .leading, spacing: 2) {
@@ -28,12 +27,12 @@ extension NowPlayingView {
                     if current?.isExplicit == true {
                         ExplicitMark(color: artistColor)
                     }
-                    Marquee(enabled: scrolls, onOverflowChange: { titleCrawls = $0 }) {
-                        Text(current?.title ?? "Nothing playing")
-                            .font(.system(size: 20, weight: .bold))
-                            .tracking(-0.2)
-                            .foregroundStyle(.white)
-                    }
+                    Text(current?.title ?? "Nothing playing")
+                        .font(.system(size: 20, weight: .bold))
+                        .tracking(-0.2)
+                        .foregroundStyle(.white)
+                        .lineLimit(1)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     // Only a track YouTube gave an album id for leads anywhere.
                     .contentShape(Rectangle())
                     .onTapGesture {
@@ -47,8 +46,7 @@ extension NowPlayingView {
                     credit: current?.artist ?? "",
                     artistId: current?.artistId,
                     font: .system(size: 20, weight: .medium),
-                    color: artistColor,
-                    marquee: (scrolls, titleCrawls ? 3 : 0)
+                    color: artistColor
                 )
                 .frame(maxWidth: .infinity, alignment: .leading)
             }

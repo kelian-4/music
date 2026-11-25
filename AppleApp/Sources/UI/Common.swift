@@ -507,7 +507,13 @@ struct EmptyStateView: View {
     /// The subtitle resolved to the text the view draws: catalog copy, or the
     /// runtime text as-is.
     private var subtitleLabel: Text {
-        verbatimSubtitle.map { Text(verbatim: $0) } ?? Text(subtitle)
+        guard let raw = verbatimSubtitle else { return Text(subtitle) }
+        switch FriendlyError.classify(raw) {
+        case .timeout: return Text("Loading took too long. Check your connection and try again.")
+        case .offline: return Text("You appear to be offline. Check your connection and try again.")
+        case .generic: return Text("Something went wrong. Please try again in a moment.")
+        case .plain: return Text(verbatim: raw)
+        }
     }
 
     var body: some View {
@@ -732,11 +738,7 @@ struct ArtistCreditText: View {
     }
 
     var body: some View {
-        if let marquee {
-            Marquee(enabled: marquee.enabled, startDelay: marquee.startDelay) { line }
-        } else {
-            line.lineLimit(1)
-        }
+        line.lineLimit(1)
     }
 
     private var line: some View {
@@ -1494,5 +1496,19 @@ private struct FocusedRowModifier: ViewModifier {
 extension View {
     fileprivate func focusedRow(_ id: String) -> some View {
         modifier(FocusedRowModifier(id: id))
+    }
+}
+
+
+enum FriendlyError {
+    enum Kind { case timeout, offline, generic, plain }
+
+    static func classify(_ message: String) -> Kind {
+        let lower = message.lowercased()
+        if lower.contains("timeout") || lower.contains("timed out") { return .timeout }
+        if lower.contains("offline") || lower.contains("not connected") || lower.contains("connection was lost") || lower.contains("internet connection") || lower.contains("unable to resolve") { return .offline }
+        let markers = ["[url=", "http", "exception", "error domain", "kotlin", "ktor", "code=", "nsurl", "unexpected", "decod", "parse", "no results from", "json", "status "]
+        if markers.contains(where: { lower.contains($0) }) { return .generic }
+        return .plain
     }
 }

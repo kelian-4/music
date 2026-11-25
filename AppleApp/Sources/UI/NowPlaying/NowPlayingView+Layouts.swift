@@ -280,7 +280,8 @@ extension NowPlayingView {
                     if pane == .queue {
                         UpNextPane(
                             showsCurrentTrackHeader: false,
-                            onOpenLyrics: { pane = .lyrics }
+                            onOpenLyrics: { pane = .lyrics },
+                            onOpenMain: { pane = .main }
                         )
                             .transition(.opacity)
                     } else {

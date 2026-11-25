@@ -242,7 +242,8 @@ extension NowPlayingView {
         case .queue:
             UpNextPane(
                 showsCurrentTrackHeader: showsQueueCurrentTrackHeader,
-                onOpenLyrics: { pane = .lyrics }
+                onOpenLyrics: { pane = .lyrics },
+                onOpenMain: { pane = .main }
             )
         }
     }

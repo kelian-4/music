@@ -37,6 +37,11 @@ extension NowPlayingView {
                 Text(controller.current?.title ?? "Nothing playing")
                     .font(.headline.weight(.semibold))
                     .lineLimit(1)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        Haptics.play(.tap)
+                        pane = .main
+                    }
                 ArtistCreditText(
                     credit: controller.current?.artist ?? "",
                     artistId: controller.current?.artistId,

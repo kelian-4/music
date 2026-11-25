@@ -20,6 +20,7 @@ struct UpNextPane: View {
 
     var showsCurrentTrackHeader = true
     var onOpenLyrics: () -> Void = {}
+    var onOpenMain: () -> Void = {}
     @State private var hasScrolledOnce = false
     @AppStorage("show_queue_history") private var showQueueHistory = false
 
@@ -344,19 +345,29 @@ struct UpNextPane: View {
 
     private var queueHeader: some View {
         HStack(spacing: 12) {
-            ArtworkView(entry: controller.current, side: 56)
-                .clipShape(.rect(cornerRadius: 8, style: .continuous))
-            VStack(alignment: .leading, spacing: 3) {
-                Text(controller.current?.title ?? "Nothing playing")
-                    .font(.title3.weight(.semibold))
-                    .foregroundStyle(.white)
-                    .lineLimit(1)
-                Text(controller.current?.artist ?? "")
-                    .font(.subheadline)
-                    .foregroundStyle(.white.opacity(0.68))
-                    .lineLimit(1)
+            Button {
+                Haptics.play(.tap)
+                onOpenMain()
+            } label: {
+                HStack(spacing: 12) {
+                    ArtworkView(entry: controller.current, side: 56)
+                        .clipShape(.rect(cornerRadius: 8, style: .continuous))
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(controller.current?.title ?? "Nothing playing")
+                            .font(.title3.weight(.semibold))
+                            .foregroundStyle(.white)
+                            .lineLimit(1)
+                        Text(controller.current?.artist ?? "")
+                            .font(.subheadline)
+                            .foregroundStyle(.white.opacity(0.68))
+                            .lineLimit(1)
+                    }
+                    Spacer(minLength: 0)
+                }
+                .contentShape(Rectangle())
             }
-            Spacer(minLength: 0)
+            .buttonStyle(.plain)
+            .accessibilityLabel("Back to player")
             if auth.signedIn, controller.current?.videoId != nil {
                 GlassCircleButton(
                     system: controller.isLiked ? "star.fill" : "star",
