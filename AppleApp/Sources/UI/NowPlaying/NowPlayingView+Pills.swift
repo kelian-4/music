@@ -13,15 +13,29 @@ import AppKit
 
 // Credits, the action row, and the output/party and queue-mode pills.
 extension NowPlayingView {
-    /// Title and artist, with the like and the overflow menu beside them.
-    var creditsRow: some View {
-        // Upstream's portrait credits: title and artist at the same 20pt, the
-        // title bold and white, the artist medium at 55% white, each crawling
-        // when it overflows (the artist a beat behind a crawling title), and
-        // the star and the menu beside them as two 34pt glyph discs.
-        let current = controller.current
-        let artistColor = Color.white.opacity(0.55)
-        return HStack(alignment: .center, spacing: 0) {
+    @ViewBuilder
+    func titleCreditBlock(current: QueueEntry?, artistColor: Color) -> some View {
+        #if os(iOS)
+        Menu {
+            if let albumId = current?.albumId {
+                Button {
+                    appModel.openPage(browseId: albumId, title: current?.albumName ?? "Album")
+                } label: {
+                    Text("Go to Album")
+                    Text(current?.albumName ?? "")
+                }
+            }
+            Button {
+                if let artistId = current?.artistId {
+                    appModel.openPage(browseId: artistId, title: current?.artist ?? "")
+                } else {
+                    appModel.openArtist(named: current?.artist ?? "", knownId: nil)
+                }
+            } label: {
+                Text("Go to Artist")
+                Text(current?.artist ?? "")
+            }
+        } label: {
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 6) {
                     if current?.isExplicit == true {
@@ -33,23 +47,61 @@ extension NowPlayingView {
                         .foregroundStyle(.white)
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    // Only a track YouTube gave an album id for leads anywhere.
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        guard let albumId = current?.albumId else { return }
-                        appModel.openPage(browseId: albumId, title: current?.albumName ?? "Album")
-                    }
-                    .accessibilityAddTraits(current?.albumId != nil ? .isButton : [])
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                ArtistCreditText(
-                    credit: current?.artist ?? "",
-                    artistId: current?.artistId,
-                    font: .system(size: 20, weight: .medium),
-                    color: artistColor
-                )
-                .frame(maxWidth: .infinity, alignment: .leading)
+                Text(current?.artist ?? "")
+                    .font(.system(size: 20, weight: .medium))
+                    .foregroundStyle(artistColor)
+                    .lineLimit(1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(current == nil)
+        #else
+            VStack(alignment: .leading, spacing: 2) {
+    HStack(spacing: 6) {
+        if current?.isExplicit == true {
+            ExplicitMark(color: artistColor)
+        }
+        Text(current?.title ?? "Nothing playing")
+            .font(.system(size: 20, weight: .bold))
+            .tracking(-0.2)
+            .foregroundStyle(.white)
+            .lineLimit(1)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        // Only a track YouTube gave an album id for leads anywhere.
+        .contentShape(Rectangle())
+        .onTapGesture {
+            guard let albumId = current?.albumId else { return }
+            appModel.openPage(browseId: albumId, title: current?.albumName ?? "Album")
+        }
+        .accessibilityAddTraits(current?.albumId != nil ? .isButton : [])
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    ArtistCreditText(
+        credit: current?.artist ?? "",
+        artistId: current?.artistId,
+        font: .system(size: 20, weight: .medium),
+        color: artistColor
+    )
+    .frame(maxWidth: .infinity, alignment: .leading)
+}
+
+        #endif
+    }
+
+    /// Title and artist, with the like and the overflow menu beside them.
+    var creditsRow: some View {
+        // Upstream's portrait credits: title and artist at the same 20pt, the
+        // title bold and white, the artist medium at 55% white, each crawling
+        // when it overflows (the artist a beat behind a crawling title), and
+        // the star and the menu beside them as two 34pt glyph discs.
+        let current = controller.current
+        let artistColor = Color.white.opacity(0.55)
+        return HStack(alignment: .center, spacing: 0) {
+            titleCreditBlock(current: current, artistColor: artistColor)
             .frame(maxWidth: .infinity, alignment: .leading)
             .id(current?.id)
             .transition(.opacity)

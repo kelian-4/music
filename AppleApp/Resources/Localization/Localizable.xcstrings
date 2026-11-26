@@ -22659,6 +22659,26 @@
           }
         }
       }
+    },
+    "Sign in to YouTube Music to use this.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connecte-toi à YouTube Music pour utiliser ceci."
+          }
+        }
+      }
+    },
+    "This is only available for YouTube Music songs.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disponible uniquement pour les morceaux YouTube Music."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

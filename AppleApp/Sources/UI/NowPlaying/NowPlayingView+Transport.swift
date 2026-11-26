@@ -19,9 +19,10 @@ extension NowPlayingView {
     /// caption ("YouTube · Opus") in the timestamp row, centred between the two
     /// times, instead of on a line of its own above the deck.
     func positionControls(showsStatus: Bool) -> some View {
+        PositionReadout { position in
         VStack(spacing: 6) {
             ThinSlider(
-                value: controller.position,
+                value: position,
                 maximum: controller.duration,
                 mixing: controller.smartMixInProgress,
                 transitionWindow: controller.smartTransitionWindow.flatMap { w in
@@ -37,7 +38,7 @@ extension NowPlayingView {
 
             HStack(spacing: 8) {
                 // Equal-width time columns keep the caption on the true centre.
-                Text(Self.timestamp(controller.position))
+                Text(Self.timestamp(position))
                     .frame(minWidth: 48, alignment: .leading)
                 Spacer(minLength: 0)
                 if showsStatus, showsPlaybackStatusLine, let status = songStatusLine {
@@ -50,18 +51,19 @@ extension NowPlayingView {
                         .accessibilityLabel(status)
                     Spacer(minLength: 0)
                 }
-                Text(remainingLabel)
+                Text(remainingLabel(at: position))
                     .frame(minWidth: 48, alignment: .trailing)
             }
             .font(.caption.monospacedDigit().weight(.medium))
             .foregroundStyle(.white.opacity(0.7))
             .shadow(color: .black.opacity(0.4), radius: 3, y: 1)
         }
+        }
     }
 
-    private var remainingLabel: String {
+    private func remainingLabel(at position: Double) -> String {
         guard controller.duration > 0 else { return "-0:00" }
-        return "-\(Self.timestamp(max(0, controller.duration - controller.position)))"
+        return "-\(Self.timestamp(max(0, controller.duration - position)))"
     }
 
     /// The iOS volume row: upstream `VolumeRow` in the hairline capsule style
@@ -298,5 +300,18 @@ extension NowPlayingView {
             parts.append(String(format: "in at %@", QueueEntry.formatDuration(cue)))
         }
         return parts.joined(separator: " · ")
+    }
+}
+
+struct PositionReadout<Content: View>: View {
+    @Environment(PlaybackController.self) private var controller
+    private let content: (Double) -> Content
+
+    init(@ViewBuilder content: @escaping (Double) -> Content) {
+        self.content = content
+    }
+
+    var body: some View {
+        content(controller.position)
     }
 }

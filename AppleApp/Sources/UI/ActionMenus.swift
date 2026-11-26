@@ -20,11 +20,16 @@ struct SongActionButtons: View {
         ControlGroup {
             let vid = entry.videoId
             Button(vid.map(SongRatingActions.likeTitle) ?? "Like", systemImage: vid.map { LibraryActions.cachedLike($0) == "LIKE" } == true ? "star.fill" : "star") {
-                if let vid {
-                    Task { await SongRatingActions.toggleLike(videoId: vid, controller: controller, toast: toast) }
+                guard auth.signedIn else {
+                    toast.show("Sign in to YouTube Music to use this.", kind: .info)
+                    return
                 }
+                guard let vid else {
+                    toast.show("This is only available for YouTube Music songs.", kind: .info)
+                    return
+                }
+                Task { await SongRatingActions.toggleLike(videoId: vid, controller: controller, toast: toast) }
             }
-            .disabled(!auth.signedIn || vid == nil)
             ShareLink(item: shareURL) {
                 Label("Share", systemImage: "square.and.arrow.up")
             }
@@ -35,11 +40,16 @@ struct SongActionButtons: View {
             downloadRow(entry)
         }
         Button("Add to Playlist…", systemImage: "text.badge.plus") {
-            if let vid = entry.videoId {
-                appModel.playlistPicker = PlaylistPickerRequest(videoId: vid, title: entry.title)
+            guard auth.signedIn else {
+                toast.show("Sign in to YouTube Music to use this.", kind: .info)
+                return
             }
+            guard let vid = entry.videoId else {
+                toast.show("This is only available for YouTube Music songs.", kind: .info)
+                return
+            }
+            appModel.playlistPicker = PlaylistPickerRequest(videoId: vid, title: entry.title)
         }
-        .disabled(!auth.signedIn || entry.videoId == nil)
         Button("Play Next", systemImage: "text.insert") {
             controller.playNext(entry)
             toast.queueNotice("Playing next: \(entry.title)")
@@ -67,11 +77,16 @@ struct SongActionButtons: View {
         Divider()
         let dislikeId = entry.videoId
         Button(dislikeId.map(SongRatingActions.dislikeTitle) ?? "Dislike", systemImage: "hand.thumbsdown") {
-            if let dislikeId {
-                Task { await SongRatingActions.toggleDislike(videoId: dislikeId, controller: controller, toast: toast) }
+            guard auth.signedIn else {
+                toast.show("Sign in to YouTube Music to use this.", kind: .info)
+                return
             }
+            guard let dislikeId else {
+                toast.show("This is only available for YouTube Music songs.", kind: .info)
+                return
+            }
+            Task { await SongRatingActions.toggleDislike(videoId: dislikeId, controller: controller, toast: toast) }
         }
-        .disabled(!auth.signedIn || dislikeId == nil)
         if auth.signedIn, let vid = entry.videoId {
             if playlistOwned, let setVideoId, let playlistBrowseId {
                 Button("Remove from Playlist", role: .destructive) {

@@ -187,15 +187,20 @@ struct LyricsPane: View {
                 }
             )
             .equatable()
+            #if os(iOS)
+            .simultaneousGesture(
+                LongPressGesture(minimumDuration: 0.45).onEnded { _ in
+                    Haptics.play(.select)
+                    onShareLine?(row.id)
+                }
+            )
+            #else
             .contextMenu {
-                if let onShareLine {
-                    Button("Share Lyrics", systemImage: "quote.bubble") { onShareLine(row.id) }
-                } else {
-                    Button(selection.contains(row.id) ? "Remove from Share" : "Add to Share") {
-                        toggleShareSelection(row.id)
-                    }
+                Button(selection.contains(row.id) ? "Remove from Share" : "Add to Share") {
+                    toggleShareSelection(row.id)
                 }
             }
+            #endif
             // While picking, the line is its own toggle: a tap adds or removes
             // it rather than seeking, which is what the bar's hint promises
             // (upstream L14). With the controls hidden and nothing being
