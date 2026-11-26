@@ -101,6 +101,7 @@ struct WebDavLibraryView: View {
                                 .foregroundStyle(.tertiary)
                         }
                     }
+                    .contentShape(Rectangle())
                     .buttonStyle(.plain)
                 } header: {
                     Text("Sync Conflicts")

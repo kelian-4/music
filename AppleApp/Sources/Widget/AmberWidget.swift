@@ -44,6 +44,13 @@ struct MediaWidgetProvider: TimelineProvider {
     }
 
     private func snapshot() -> MediaWidgetEntry {
+        guard AppGroup.available else {
+            return MediaWidgetEntry(
+                date: .now, title: "Amber", artist: "Groupe d'app indisponible",
+                playing: false, canNext: false, canPrevious: false,
+                artwork: nil, hasSession: false
+            )
+        }
         guard let defaults = groupDefaults, let title = defaults.string(forKey: "widget.title") else {
             return .empty
         }
@@ -122,6 +129,10 @@ struct MediaWidgetView: View {
                     .foregroundStyle(.secondary)
                 Text("Amber")
                     .font(.callout.weight(.semibold))
+                Text(entry.artist)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
             }
         }
     }

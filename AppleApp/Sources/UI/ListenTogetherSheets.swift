@@ -155,7 +155,7 @@ struct JoinPartySheet: View {
 
                 if let message = party.failure {
                     Section {
-                        Text(message)
+                        Text(FriendlyError.display(message))
                             .font(.callout)
                             .foregroundStyle(.red)
                     }
@@ -265,7 +265,7 @@ struct JoinConfirmSheet: View {
 
                 if let message = party.failure {
                     Section {
-                        Text(message)
+                        Text(FriendlyError.display(message))
                             .font(.callout)
                             .foregroundStyle(.red)
                     }

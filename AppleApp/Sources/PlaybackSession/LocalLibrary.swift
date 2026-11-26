@@ -47,6 +47,10 @@ final class LocalLibrary {
     private var scanTask: Task<Void, Never>?
     private var scanID = UUID()
     private var securityURL: URL?
+    private var linkedFolder: URL?
+    private var fingerprint: Int?
+    private var watcher: Task<Void, Never>?
+    private(set) var lyricSidecars: [String: String] = [:]
 
     /// Restores the persisted bookmark and rescans. AMBER_LIBRARY_PATH is
     /// a dev-only override so automated UI tests can seed the library without
@@ -104,13 +108,95 @@ final class LocalLibrary {
 
     private func scan(folder: URL) {
         scanTask?.cancel()
+        linkedFolder = folder
+        startWatching()
         let id = UUID(); scanID = id
-        let work = Task.detached(priority: .utility) { Self.readTracks(folder: folder) }
+        let work = Task.detached(priority: .utility) { () -> ([LocalTrack], [String: String], Int) in
+            let stamp = Self.folderFingerprint(folder: folder)
+            let result = Self.readTracks(folder: folder)
+            return (result, Self.readSidecars(folder: folder), stamp)
+        }
         scanTask = Task {
             let result = await withTaskCancellationHandler { await work.value } onCancel: { work.cancel() }
             guard scanID == id, !Task.isCancelled else { return }
-            tracks = result; scanned = true; onChange?()
+            tracks = result.0; lyricSidecars = result.1; fingerprint = result.2
+            scanned = true; onChange?()
         }
+    }
+
+    func refreshIfChanged() {
+        guard let folder = linkedFolder else { return }
+        let known = fingerprint
+        Task { [weak self] in
+            let current = await Task.detached(priority: .utility) { Self.folderFingerprint(folder: folder) }.value
+            guard let self, current != known else { return }
+            self.scan(folder: folder)
+        }
+    }
+
+    private func startWatching() {
+        guard watcher == nil else { return }
+        watcher = Task { [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(8))
+                self?.refreshIfChanged()
+            }
+        }
+    }
+
+    nonisolated private static func folderFingerprint(folder: URL) -> Int {
+        let keys: [URLResourceKey] = [.contentModificationDateKey, .fileSizeKey]
+        guard let enumerator = FileManager.default.enumerator(
+            at: folder, includingPropertiesForKeys: keys,
+            options: [.skipsHiddenFiles, .skipsPackageDescendants]
+        ) else { return 0 }
+        var hasher = Hasher()
+        var entries: [String] = []
+        for case let url as URL in enumerator {
+            let ext = url.pathExtension.lowercased()
+            guard audioExtensions.contains(ext) || ext == "lrc" else { continue }
+            let values = try? url.resourceValues(forKeys: Set(keys))
+            let stamp = values?.contentModificationDate?.timeIntervalSince1970 ?? 0
+            entries.append("\(url.path)|\(stamp)|\(values?.fileSize ?? 0)")
+        }
+        entries.sort()
+        for entry in entries { hasher.combine(entry) }
+        return hasher.finalize()
+    }
+
+    nonisolated private static let audioExtensions: Set<String> = [
+        "mp3", "flac", "m4a", "mp4", "aac", "ogg", "opus", "wav", "aiff", "aif", "webm"
+    ]
+
+    nonisolated private static func readSidecars(folder: URL) -> [String: String] {
+        guard let enumerator = FileManager.default.enumerator(
+            at: folder, includingPropertiesForKeys: nil,
+            options: [.skipsHiddenFiles, .skipsPackageDescendants]
+        ) else { return [:] }
+        var found: [String: String] = [:]
+        for case let url as URL in enumerator where url.pathExtension.lowercased() == "lrc" {
+            let stem = url.deletingPathExtension().lastPathComponent.lowercased()
+            if found[stem] == nil { found[stem] = url.path }
+        }
+        return found
+    }
+
+    func lyricsPath(for audioPath: String, title: String, artist: String) -> String? {
+        let url = URL(fileURLWithPath: audioPath)
+        let beside = url.deletingPathExtension().appendingPathExtension("lrc").path
+        if FileManager.default.fileExists(atPath: beside) { return nil }
+        let candidates = [
+            url.deletingPathExtension().lastPathComponent,
+            "\(artist) - \(title)",
+            title
+        ].map { $0.lowercased() }
+        for name in candidates {
+            if let lrc = lyricSidecars[name] {
+                let stem = URL(fileURLWithPath: lrc).deletingPathExtension().path
+                return stem + "." + (url.pathExtension.isEmpty ? "mp3" : url.pathExtension)
+            }
+        }
+        return nil
     }
 
     func waitForScan() async { await scanTask?.value }
@@ -127,8 +213,7 @@ final class LocalLibrary {
             .compactMap { $0 as? URL }
             .filter { url in
                 let ext = url.pathExtension.lowercased()
-                return ["mp3", "flac", "m4a", "mp4", "aac", "ogg", "opus", "wav", "aiff", "aif", "webm"]
-                    .contains(ext)
+                return audioExtensions.contains(ext)
             }
             .map(\.path)
 

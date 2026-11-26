@@ -72,16 +72,32 @@ extension NowPlayingView {
 
     /// `hugsGlyphs` pins the speakers to the row's outer edges, so its ends are
     /// the speakers' own rather than their 16pt frames'.
+    var volumeLevel: Double {
+        #if os(iOS)
+        SystemVolume.shared.level
+        #else
+        controller.volume
+        #endif
+    }
+
+    func setVolumeLevel(_ value: Double) {
+        #if os(iOS)
+        SystemVolume.shared.set(value)
+        #else
+        controller.volume = value
+        #endif
+    }
+
     func volumeRow(hugsGlyphs: Bool) -> some View {
         HStack(spacing: 10) {
-            Image(systemName: controller.volume == 0 ? "speaker.slash.fill" : "speaker.fill")
+            Image(systemName: volumeLevel == 0 ? "speaker.slash.fill" : "speaker.fill")
                 .scaledFont(size: 12, weight: .semibold)
                 .foregroundStyle(.white.opacity(0.7))
                 .frame(width: 16, height: 16, alignment: hugsGlyphs ? .leading : .center)
                 .playerGlyph()
             GeometryReader { geo in
                 let w = max(geo.size.width, 1)
-                let x = w * min(max(controller.volume, 0), 1)
+                let x = w * min(max(volumeLevel, 0), 1)
                 ZStack(alignment: .leading) {
                     let trackHeight: CGFloat = volumeDragging ? 10 : 6
                     Capsule()
@@ -102,7 +118,7 @@ extension NowPlayingView {
                     DragGesture(minimumDistance: 0)
                         .onChanged { g in
                             volumeDragging = true
-                            controller.volume = min(max(0, g.location.x / w), 1)
+                            setVolumeLevel(min(max(0, g.location.x / w), 1))
                         }
                         .onEnded { _ in volumeDragging = false }
                 )
@@ -114,13 +130,20 @@ extension NowPlayingView {
                 .frame(width: 16, height: 16, alignment: hugsGlyphs ? .trailing : .center)
                 .playerGlyph()
         }
+        #if os(iOS)
+        .background(SystemVolumeHost().frame(width: 1, height: 1))
+        .onAppear {
+            SystemVolume.shared.refresh()
+            controller.volume = 1
+        }
+        #endif
         .accessibilityElement()
         .accessibilityLabel("Volume")
-        .accessibilityValue("\(Int(controller.volume * 100)) percent")
+        .accessibilityValue("\(Int(volumeLevel * 100)) percent")
         .accessibilityAdjustableAction { direction in
             switch direction {
-            case .increment: controller.volume = min(1, controller.volume + 0.1)
-            case .decrement: controller.volume = max(0, controller.volume - 0.1)
+            case .increment: setVolumeLevel(min(1, volumeLevel + 0.1))
+            case .decrement: setVolumeLevel(max(0, volumeLevel - 0.1))
             default: break
             }
         }

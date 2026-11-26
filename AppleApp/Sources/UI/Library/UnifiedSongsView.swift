@@ -54,7 +54,7 @@ struct UnifiedSongsView: View {
                                     .listRowBackground(Color.clear)
                             } else if let songsError, songs.isEmpty {
                                 VStack(alignment: .leading, spacing: 6) {
-                                    Text(songsError)
+                                    Text(FriendlyError.display(songsError))
                                         .font(.subheadline)
                                         .foregroundStyle(.secondary)
                                     Button("Try again") {
@@ -94,6 +94,7 @@ struct UnifiedSongsView: View {
                                         .foregroundStyle(.tertiary)
                                 }
                             }
+                            .contentShape(Rectangle())
                             .buttonStyle(.plain)
                         } else {
                             SongFilterControls(local: local)

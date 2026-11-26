@@ -93,7 +93,7 @@ struct ListenTogetherView: View {
                 // shown inside it — printing the same line down here as well means
                 // printing it where it cannot be read.
                 Section {
-                    Text(message)
+                    Text(FriendlyError.display(message))
                         .font(.callout)
                         .foregroundStyle(.red)
                 }

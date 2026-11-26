@@ -63,9 +63,9 @@ struct PushLink<Label: View, Destination: View>: View {
     var body: some View {
         if inBrowseStack {
             let make = destination
-            NavigationLink(value: PushRoute(id: id, make: { AnyView(make()) })) { label }
+            NavigationLink(value: PushRoute(id: id, make: { AnyView(make()) })) { label.contentShape(Rectangle()) }
         } else {
-            NavigationLink(destination: destination) { label }
+            NavigationLink(destination: destination) { label.contentShape(Rectangle()) }
         }
     }
 }

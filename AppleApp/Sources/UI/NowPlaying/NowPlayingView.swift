@@ -49,6 +49,7 @@ struct NowPlayingView: View {
     @AppStorage("player_lyric_line") var showsLyricLine = false
     @AppStorage("hide_status_bar_in_player") private var hideStatusBarInPlayer = false
     @State var showPipeline = false
+    @State var backdropArtwork: Data?
     @State var showLyricsOffset = false
     @State var showLyricsSources = false
     /// Lyric share-picking, driven from the lyrics header: upstream's header
@@ -75,6 +76,24 @@ struct NowPlayingView: View {
         #if os(iOS)
         .statusBarHidden(hideStatusBarInPlayer)
         #endif
+        .modifier(ToastSheets())
+        .task(id: controller.current?.id) {
+            guard let entry = controller.current else { return }
+            if let data = entry.artworkData {
+                backdropArtwork = data
+                return
+            }
+            guard let url = entry.thumbnailUrl,
+                  let image = await ArtworkCache.shared.load(SharedArtwork.sized(url, 160) ?? url),
+                  !Task.isCancelled
+            else { return }
+            #if os(iOS)
+            backdropArtwork = image.jpegData(compressionQuality: 0.7)
+            #else
+            backdropArtwork = image.tiffRepresentation
+            #endif
+        }
+        .menuOrder(.fixed)
         .sheet(isPresented: $showPipeline) {
             AudioPipelineSheet()
         }

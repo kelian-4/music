@@ -248,6 +248,7 @@ struct AccountProfileSheet: View {
                 .background(Color.accentColor, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
                 .foregroundStyle(.white)
             }
+            .contentShape(Rectangle())
             .buttonStyle(.plain)
         }
         .padding(.vertical, 4)

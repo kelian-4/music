@@ -196,6 +196,7 @@ struct AmberApp: App {
                 .onChange(of: scenePhase) { _, phase in
                     appModel.scenePhase = phase
                     LoadingMonitor.shared.setActive(phase == .active)
+                    if phase == .active { LocalLibrary.shared.refreshIfChanged() }
                     if phase == .background {
                         // No GPU work back here: a Music Understanding inference
                         // caught mid-flight aborts with

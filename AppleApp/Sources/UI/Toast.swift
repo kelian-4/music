@@ -84,7 +84,8 @@ final class ToastCenter {
 
     private func show(_ message: String, kind: Notice.Kind, action: Action? = nil, dwell: Duration) {
         dismissTask?.cancel()
-        current = Notice(message: message, kind: kind, action: action)
+        let shown = kind == .failure ? FriendlyError.sanitized(message) : message
+        current = Notice(message: shown, kind: kind, action: action)
         dismissTask = Task { [weak self] in
             try? await Task.sleep(for: dwell)
             guard !Task.isCancelled else { return }
@@ -170,21 +171,7 @@ struct ToastHost: View {
         // A toast is decorative confirmation; the action it announces has already
         // happened, and re-announcing it would double up with whatever caused it.
         .allowsHitTesting(center.current != nil)
-        .sheet(item: trackLogBinding) { entry in
-            TrackLogSheet(entry: entry)
-        }
-        .sheet(item: creditsBinding) { entry in
-            CreditsSheet(entry: entry)
-        }
-        .sheet(item: confirmationBinding) { request in
-            ConfirmationDialog(
-                title: request.title,
-                message: request.message,
-                confirm: request.confirm
-            ) {
-                center.resolveConfirmation()
-            }
-        }
+        .modifier(ToastSheets())
     }
 
     #if os(macOS)
@@ -192,6 +179,29 @@ struct ToastHost: View {
     #else
     private static let bottomClearance: CGFloat = 8
     #endif
+}
+
+struct ToastSheets: ViewModifier {
+    @Environment(ToastCenter.self) private var center
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: trackLogBinding) { entry in
+                TrackLogSheet(entry: entry)
+            }
+            .sheet(item: creditsBinding) { entry in
+                CreditsSheet(entry: entry)
+            }
+            .sheet(item: confirmationBinding) { request in
+                ConfirmationDialog(
+                    title: request.title,
+                    message: request.message,
+                    confirm: request.confirm
+                ) {
+                    center.resolveConfirmation()
+                }
+            }
+    }
 
     private var trackLogBinding: Binding<QueueEntry?> {
         Binding(
@@ -226,7 +236,7 @@ private struct ToastBanner: View {
                 .foregroundStyle(tint)
             // Never truncated: the failure messages are the ones that say what
             // to do, and their advice is in the last clause (issue 17).
-            Text(notice.message)
+            Text(LocalizedStringKey(notice.message))
                 .font(.callout)
                 .foregroundStyle(.primary)
                 .multilineTextAlignment(.leading)

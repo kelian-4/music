@@ -48,7 +48,7 @@ extension NowPlayingView {
             // translation mode across instead of resetting them.
             GeometryReader { geo in
                 ZStack {
-                    MeshBackdrop(seed: controller.current?.id.hashValue ?? 0, artwork: controller.current?.artworkData)
+                    MeshBackdrop(seed: controller.current?.id.hashValue ?? 0, artwork: backdropArtwork ?? controller.current?.artworkData)
                         .ignoresSafeArea()
                     if !isIPad && pane == .main && !PlayerLayout.takesLandscapeShape(width: geo.size.width, height: geo.size.height) && fullBleedOn && !videoShowing {
                         ArtworkContinuation(entry: controller.current, seam: geo.size.width)

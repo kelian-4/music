@@ -30,6 +30,14 @@ struct LibraryLandingView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
+                let _ = pinnedRevision
+                let pinnedCards = PinnedItems.cards()
+                if !pinnedCards.isEmpty {
+                    shelfSection(FeedShelf(title: String(localized: "Pinned"), items: pinnedCards))
+                        .padding(.horizontal, 24)
+                        .padding(.top, 4)
+                        .padding(.bottom, 18)
+                }
                 categoryList
                     .padding(.top, 4)
 

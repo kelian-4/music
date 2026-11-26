@@ -85,6 +85,7 @@ struct RootView: View {
         }
         #if os(iOS)
         .fullScreenCover(isPresented: $onboardingPresented) { OnboardingView() }
+        .menuOrder(.fixed)
         #else
         .sheet(isPresented: $onboardingPresented) { OnboardingView() }
         #endif

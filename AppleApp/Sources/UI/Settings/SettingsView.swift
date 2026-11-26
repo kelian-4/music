@@ -486,7 +486,7 @@ struct SettingsView: View {
             selection: $selectedMacSettingsSection,
             sidebarLabel: { section in
                 NavigationLink(value: section) {
-                    Label(section.title, systemImage: section.systemImage)
+                    Label(LocalizedStringKey(section.title), systemImage: section.systemImage)
                 }
             },
             detail: { section in
@@ -552,16 +552,16 @@ struct SettingsView: View {
         else { settingsSectionForm(section).navigationTitle(LocalizedStringKey(section.title)) }
     }
 
-    private func sectionSummary(_ section: SettingsSection) -> String {
+    private func sectionSummary(_ section: SettingsSection) -> LocalizedStringKey {
         switch section {
         case .sources:
             let state = SourceListState.shared
-            guard state.hasLoaded else { return "Addons, source order, renewal and your libraries" }
+            guard state.hasLoaded else { return LocalizedStringKey("Addons, source order, renewal and your libraries") }
             let enabled = state.configs.filter { $0.enabled }.count
             let attention = state.loadError != nil || state.configs.contains { config in
                 config.enabled && (state.health[config.id]?.name == "rejected" || state.health[config.id]?.name == "unreachable")
             }
-            return "\(enabled) enabled" + (attention ? " · needs attention" : "")
+            return attention ? LocalizedStringKey("\(enabled) enabled · needs attention") : LocalizedStringKey("\(enabled) enabled")
         case .audioQuality: return "Requested quality, decoded format, effects and device output"
         case .playback: return "Queue, transitions, speed and background playback"
         case .downloads: return "Offline quality, local folders and temporary storage"
@@ -582,7 +582,7 @@ struct SettingsView: View {
                         ForEach(SettingsSection.allCases) { section in
                             PushLink { settingsSectionPage(section) } label: {
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Label(section.title, systemImage: section.systemImage)
+                                    Label(LocalizedStringKey(section.title), systemImage: section.systemImage)
                                     Text(sectionSummary(section)).font(.caption).foregroundStyle(.secondary)
                                 }.padding(.vertical, 3)
                             }

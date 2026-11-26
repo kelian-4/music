@@ -566,6 +566,7 @@ struct ReplayCreditCardView: View {
             .clipShape(.rect(cornerRadius: 16, style: .continuous))
             .shadow(color: .black.opacity(0.35), radius: 12, y: 6)
         }
+        .contentShape(Rectangle())
         .buttonStyle(.plain)
     }
 }
@@ -643,6 +644,7 @@ struct ReplayBanner: View {
             }
             .clipShape(.rect(cornerRadius: 18, style: .continuous))
         }
+        .contentShape(Rectangle())
         .buttonStyle(.plain)
         .onAppear { model = ReplayModel.load(period: .thisYear, holder: "You") }
     }

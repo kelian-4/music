@@ -738,48 +738,24 @@ struct ArtistCreditText: View {
     }
 
     var body: some View {
-        line.lineLimit(1)
-    }
-
-    private var line: some View {
-        Text(attributed)
-            .font(font)
-            .foregroundStyle(color)
-            // Names are drawn in the line's own colour, as upstream draws them:
-            // a tappable credit, not a row of accent-blue links.
-            .tint(color)
-            .environment(\.openURL, OpenURLAction { url in
-                let items = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems
-                guard url.scheme == "amber", url.host == "artist",
-                      let name = items?.first(where: { $0.name == "name" })?.value else {
-                    return .systemAction
-                }
-                let index = items?.first(where: { $0.name == "index" })?.value.flatMap(Int.init) ?? 0
-                appModel.openArtist(named: name, knownId: index == 0 ? artistId : nil)
-                return .handled
-            })
-    }
-
-    private var attributed: AttributedString {
-        var out = AttributedString()
         let parts = names.isEmpty ? [credit] : names
-        for (index, name) in parts.enumerated() {
-            var piece = AttributedString(name)
-            var components = URLComponents()
-            components.scheme = "amber"
-            components.host = "artist"
-            components.queryItems = [
-                URLQueryItem(name: "name", value: name),
-                URLQueryItem(name: "index", value: String(index))
-            ]
-            piece.link = components.url
-            out += piece
-            if index < parts.count - 1 { out += AttributedString(", ") }
+        HStack(spacing: 0) {
+            ForEach(Array(parts.enumerated()), id: \.offset) { index, name in
+                Text(index < parts.count - 1 ? name + ", " : name)
+                    .font(font)
+                    .foregroundStyle(color)
+                    .lineLimit(1)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        guard !credit.isEmpty else { return }
+                        appModel.openArtist(named: name, knownId: index == 0 ? artistId : nil)
+                    }
+                    .accessibilityAddTraits(.isLink)
+            }
+            if let suffix, !suffix.isEmpty {
+                Text(suffix).font(font).foregroundStyle(color).lineLimit(1)
+            }
         }
-        if let suffix, !suffix.isEmpty {
-            out += AttributedString(suffix)
-        }
-        return out
     }
 }
 
@@ -1510,5 +1486,16 @@ enum FriendlyError {
         let markers = ["[url=", "http", "exception", "error domain", "kotlin", "ktor", "code=", "nsurl", "unexpected", "decod", "parse", "no results from", "json", "status "]
         if markers.contains(where: { lower.contains($0) }) { return .generic }
         return .plain
+    }
+
+    static func display(_ raw: String) -> LocalizedStringKey { LocalizedStringKey(sanitized(raw)) }
+
+    static func sanitized(_ message: String) -> String {
+        switch classify(message) {
+        case .timeout: return "Loading took too long. Check your connection and try again."
+        case .offline: return "You appear to be offline. Check your connection and try again."
+        case .generic: return "Something went wrong. Please try again in a moment."
+        case .plain: return message
+        }
     }
 }

@@ -155,7 +155,7 @@ struct SpotifyImportSheet: View {
 
             if let error {
                 Section {
-                    Text(error).foregroundStyle(.red)
+                    Text(FriendlyError.display(error)).foregroundStyle(.red)
                 }
             }
 

@@ -163,7 +163,7 @@ struct AutomixModelRow: View {
 
         case .failed(let message):
             VStack(alignment: .leading, spacing: 6) {
-                Text(message)
+                Text(FriendlyError.display(message))
                     .font(.footnote)
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
@@ -290,7 +290,7 @@ private struct AutomixModelCard: View {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .font(.caption)
                         .foregroundStyle(.red)
-                    Text(message)
+                    Text(FriendlyError.display(message))
                         .font(.caption)
                         .foregroundStyle(.red)
                         .lineLimit(2)

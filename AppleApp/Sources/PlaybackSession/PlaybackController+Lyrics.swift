@@ -38,9 +38,13 @@ extension PlaybackController {
         // A remote library's file is "local" in the sense that it needs no download,
         // but its `source` is an `https` address and cannot be opened for tags. Asking
         // again here is what keeps a remote row from trying to read a URL as a file.
-        let localPath = entry.isLocal && !entry.source.isEmpty && !entry.source.hasPrefix("http")
+        var localPath = entry.isLocal && !entry.source.isEmpty && !entry.source.hasPrefix("http")
             ? entry.source
             : nil
+        if let own = localPath,
+           let elsewhere = LocalLibrary.shared.lyricsPath(for: own, title: entry.title, artist: entry.artist) {
+            localPath = elsewhere
+        }
         let allowNetwork = PlatformSettings.shared.getBoolean(key: "synced_lyrics", default: true)
         if !allowNetwork, localPath == nil {
             // Not a search that found nothing — a search that was never going to

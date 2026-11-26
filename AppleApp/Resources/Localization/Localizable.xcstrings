@@ -22519,7 +22519,27 @@
         }
       }
     },
-    "InnerTubeX": {}
+    "InnerTubeX": {},
+    "%lld enabled": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld activée(s)"
+          }
+        }
+      }
+    },
+    "%lld enabled · needs attention": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld activée(s) · à vérifier"
+          }
+        }
+      }
+    }
   },
   "version": "1.0"
 }

@@ -105,8 +105,14 @@ struct MeshBackdrop: View {
         .ignoresSafeArea()
         .allowsHitTesting(false)
         .onAppear { settle(seed: seed, artwork: artwork, first: true) }
-        .onChange(of: seed) { _, new in settle(seed: new, artwork: artwork, first: false) }
-        .onChange(of: artwork) { _, data in apply(ArtworkPalette.meshBlobs(from: data, seed: seed), animated: true) }
+        .onChange(of: seed) { _, new in
+            guard artwork != nil else { return }
+            settle(seed: new, artwork: artwork, first: false)
+        }
+        .onChange(of: artwork) { _, data in
+            guard data != nil else { return }
+            apply(ArtworkPalette.meshBlobs(from: data, seed: seed), animated: true)
+        }
     }
 
     private func settle(seed: Int, artwork: Data?, first: Bool) {

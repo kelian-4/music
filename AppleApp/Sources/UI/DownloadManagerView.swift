@@ -43,7 +43,7 @@ struct DownloadManagerView: View {
                                         .font(.caption)
                                         .foregroundStyle(job.status == .failed ? .red : .secondary)
                                     if let message = job.message, job.status == .failed {
-                                        Text(message).font(.caption2).foregroundStyle(.red)
+                                        Text(FriendlyError.display(message)).font(.caption2).foregroundStyle(.red)
                                     }
                                 }
                                 Spacer()

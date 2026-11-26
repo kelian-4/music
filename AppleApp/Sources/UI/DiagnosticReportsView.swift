@@ -13,7 +13,7 @@ struct DiagnosticReportsView: View {
                     catch { message = error.localizedDescription }
                 }
                 if let report { ShareLink("Share Diagnostic Report", item: report) }
-                if let message { Text(message).foregroundStyle(.red) }
+                if let message { Text(FriendlyError.display(message)).foregroundStyle(.red) }
             }
             Section {
                 Button("Clear Diagnostic History", role: .destructive) {

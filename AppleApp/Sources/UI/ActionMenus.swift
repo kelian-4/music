@@ -627,7 +627,7 @@ struct PlaylistPickerView: View {
                     }
                 }
                 if let error {
-                    Section { Text(error).foregroundStyle(.red) }
+                    Section { Text(FriendlyError.display(error)).foregroundStyle(.red) }
                 }
             }
             .navigationTitle("Add to Playlist")
