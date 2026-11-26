@@ -994,7 +994,7 @@ struct PlaybackPillMount: ViewModifier {
             // iPhone from 26: Music's own bottom accessory, full width. A scroll
             // down minimizes the tab bar and the pill drops into it, between
             // the selected tab and Search.
-            accessory(content.tabBarMinimizeBehavior(.onScrollDown))
+            accessory(content.tabBarMinimizeBehavior(.never))
                 .overlay(alignment: .bottom) {
                     if keyboardUp {
                         PlaybackPill()

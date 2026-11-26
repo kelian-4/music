@@ -2,6 +2,8 @@ import Foundation
 import SwiftUI
 import WidgetKit
 import AppIntents
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 // The §9 widget, snapshot-driven per the parity contract: ready-to-play
 // state with no position, prev/next availability dimmed not removed, dark
@@ -67,74 +69,151 @@ struct MediaWidgetProvider: TimelineProvider {
     }
 }
 
+struct WidgetTint {
+    var background: Color
+    var backgroundDeep: Color
+    var accent: Color
+
+    static let neutral = WidgetTint(
+        background: Color(red: 0.22, green: 0.22, blue: 0.24),
+        backgroundDeep: Color(red: 0.12, green: 0.12, blue: 0.14),
+        accent: Color(white: 0.78)
+    )
+
+    static func from(_ data: Data?) -> WidgetTint {
+        guard let data, let image = CIImage(data: data) else { return .neutral }
+        let filter = CIFilter.areaAverage()
+        filter.inputImage = image
+        filter.extent = image.extent
+        guard let output = filter.outputImage else { return .neutral }
+        var pixel = [UInt8](repeating: 0, count: 4)
+        CIContext().render(
+            output, toBitmap: &pixel, rowBytes: 4,
+            bounds: CGRect(x: 0, y: 0, width: 1, height: 1),
+            format: .RGBA8, colorSpace: CGColorSpaceCreateDeviceRGB()
+        )
+        let r = Double(pixel[0]) / 255, g = Double(pixel[1]) / 255, b = Double(pixel[2]) / 255
+        let maxC = max(r, g, b), minC = min(r, g, b)
+        let delta = maxC - minC
+        var hue = 0.0
+        if delta > 0.0001 {
+            if maxC == r { hue = ((g - b) / delta).truncatingRemainder(dividingBy: 6) }
+            else if maxC == g { hue = (b - r) / delta + 2 }
+            else { hue = (r - g) / delta + 4 }
+            hue /= 6
+            if hue < 0 { hue += 1 }
+        }
+        let saturation = maxC == 0 ? 0 : delta / maxC
+        let tunedSaturation = min(1, max(saturation * 1.15, saturation > 0.08 ? 0.35 : 0))
+        return WidgetTint(
+            background: Color(hue: hue, saturation: tunedSaturation, brightness: 0.52),
+            backgroundDeep: Color(hue: hue, saturation: min(1, tunedSaturation + 0.05), brightness: 0.36),
+            accent: Color(hue: hue, saturation: tunedSaturation * 0.55, brightness: 0.92)
+        )
+    }
+}
+
 struct MediaWidgetView: View {
     var entry: MediaWidgetEntry
     @Environment(\.widgetFamily) private var family
 
+    private var tint: WidgetTint {
+        entry.hasSession ? WidgetTint.from(entry.artwork) : .neutral
+    }
+
     var body: some View {
         content
             .widgetURL(URL(string: "amber://open-player"))
-            .containerBackground(.fill.tertiary, for: .widget)
+            .containerBackground(for: .widget) {
+                LinearGradient(
+                    colors: [tint.background, tint.backgroundDeep],
+                    startPoint: .topLeading, endPoint: .bottomTrailing
+                )
+            }
     }
 
     @ViewBuilder
     private var content: some View {
         if entry.hasSession {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(spacing: 12) {
-                    artwork
-                        .frame(width: 56, height: 56)
-                        .clipShape(.rect(cornerRadius: 9, style: .continuous))
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(entry.title)
-                            .font(.callout.weight(.semibold))
-                            .lineLimit(1)
-                        Text(entry.artist)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .lineLimit(1)
-                        HStack(spacing: 6) {
-                            Image(systemName: entry.playing ? "pause.fill" : "play.fill")
-                                .font(.system(size: 10, weight: .bold))
-                            Text(entry.playing ? "Playing" : "Ready to play")
-                                .font(.caption2.weight(.medium))
-                        }
-                        .foregroundStyle(entry.playing ? Color.accentColor : .secondary)
-                    }
-                    Spacer(minLength: 0)
-                }
-                if family != .systemSmall {
-                    HStack(spacing: 16) {
-                        Button(intent: WidgetTransportIntent(command: "previous")) {
-                            Image(systemName: "backward.fill")
-                        }
-                        .disabled(!entry.canPrevious)
-                        Button(intent: WidgetTransportIntent(command: "toggle")) {
-                            Image(systemName: entry.playing ? "pause.fill" : "play.fill")
-                        }
-                        Button(intent: WidgetTransportIntent(command: "next")) {
-                            Image(systemName: "forward.fill")
-                        }
-                        .disabled(!entry.canNext)
-                        Spacer(minLength: 0)
-                    }
-                    .font(.title3)
-                    .tint(.primary)
-                }
+            if family == .systemSmall {
+                smallContent
+            } else {
+                mediumContent
             }
-            .padding(4)
         } else {
             VStack(spacing: 6) {
                 Image(systemName: "music.note")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.white.opacity(0.7))
                 Text("Amber")
                     .font(.callout.weight(.semibold))
+                    .foregroundStyle(.white)
                 Text(entry.artist)
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.white.opacity(0.7))
                     .multilineTextAlignment(.center)
             }
         }
+    }
+
+    private var mediumContent: some View {
+        HStack(spacing: 16) {
+            artwork
+                .aspectRatio(1, contentMode: .fit)
+                .clipShape(.rect(cornerRadius: 14, style: .continuous))
+                .shadow(color: .black.opacity(0.25), radius: 6, y: 2)
+            VStack(alignment: .leading, spacing: 2) {
+                Spacer(minLength: 0)
+                Text("NOW PLAYING")
+                    .font(.system(size: 11, weight: .semibold))
+                    .tracking(0.8)
+                    .foregroundStyle(tint.accent)
+                Text(entry.title)
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundStyle(.white)
+                    .lineLimit(1)
+                Text(entry.artist)
+                    .font(.system(size: 17, weight: .medium))
+                    .foregroundStyle(tint.accent)
+                    .lineLimit(1)
+                playPill
+                    .padding(.top, 8)
+                Spacer(minLength: 0)
+            }
+            Spacer(minLength: 0)
+        }
+        .overlay(alignment: .topTrailing) {
+            Image(systemName: "music.note")
+                .font(.system(size: 20, weight: .semibold))
+                .foregroundStyle(.white)
+        }
+    }
+
+    private var smallContent: some View {
+        ZStack(alignment: .bottomLeading) {
+            artwork
+                .aspectRatio(1, contentMode: .fill)
+                .clipShape(.rect(cornerRadius: 12, style: .continuous))
+            playPill
+                .padding(6)
+        }
+    }
+
+    private var playPill: some View {
+        Button(intent: WidgetTransportIntent(command: "toggle")) {
+            HStack(spacing: 6) {
+                Image(systemName: entry.playing ? "pause.fill" : "play.fill")
+                    .font(.system(size: 14, weight: .bold))
+                if family != .systemSmall {
+                    Text(entry.playing ? "Pause" : "Play")
+                        .font(.system(size: 17, weight: .semibold))
+                }
+            }
+            .foregroundStyle(.white)
+            .padding(.horizontal, family == .systemSmall ? 10 : 14)
+            .padding(.vertical, 8)
+            .background(.white.opacity(0.22), in: Capsule())
+        }
+        .buttonStyle(.plain)
     }
 
     @ViewBuilder
