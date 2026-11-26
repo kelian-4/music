@@ -22539,6 +22539,126 @@
           }
         }
       }
+    },
+    "Test YouTube Music Connection": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tester la connexion à YouTube Music"
+          }
+        }
+      }
+    },
+    "1 line selected": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 ligne sélectionnée"
+          }
+        }
+      }
+    },
+    "%lld lines selected": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld lignes sélectionnées"
+          }
+        }
+      }
+    },
+    "%lld of %lld characters": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld sur %lld caractères"
+          }
+        }
+      }
+    },
+    "Share Song": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager le morceau"
+          }
+        }
+      }
+    },
+    "Save to Photos": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrer dans Photos"
+          }
+        }
+      }
+    },
+    "Card": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carte"
+          }
+        }
+      }
+    },
+    "Story · 9:16": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Story · 9:16"
+          }
+        }
+      }
+    },
+    "Pick lines to share": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisis les lignes à partager"
+          }
+        }
+      }
+    },
+    "Allow Amber to add photos in Settings to save this card.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autorise Amber à ajouter des photos dans Réglages pour enregistrer cette carte."
+          }
+        }
+      }
+    },
+    "Saved to Photos.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistré dans Photos."
+          }
+        }
+      }
+    },
+    "Could not save the card. Please try again.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible d'enregistrer la carte. Réessaie."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

@@ -100,6 +100,10 @@ struct DetailView: View {
                 }
             } else if let page {
                 loadedPage(page)
+            } else {
+                EmptyStateView(icon: Image(.bchMusicNote), title: "Couldn't load", subtitle: "Something went wrong. Please try again in a moment.", buttonTitle: "Retry") {
+                    Task { await load() }
+                }
             }
         }
         .refreshable { await load(force: true) }

@@ -74,6 +74,29 @@ find "$stage/package/Payload/Amber.app" -name embedded.mobileprovision -type f -
 # A release IPA is deliberately unsigned; don't leave export/archive profiles
 # behind even if Xcode emitted one for a nested extension.
 find "$stage/package/Payload/Amber.app" -name embedded.provisionprofile -type f -delete
+entitlements_plist="$stage/app-groups.entitlements"
+cat > "$entitlements_plist" <<'ENTITLEMENTS'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>com.apple.security.application-groups</key>
+  <array>
+    <string>group.app.amber.Amber</string>
+  </array>
+</dict>
+</plist>
+ENTITLEMENTS
+# Sideloading tools read the app-group entitlement from the binaries to
+# register the group and re-sign the widget with it; an unsigned build carries
+# none, so the widget and the app end up with no shared container.
+while IFS= read -r -d '' nested; do
+  codesign --force --sign - "$nested"
+done < <(find "$staged_app" \( -name '*.framework' -o -name '*.dylib' \) -not -path '*/PlugIns/*' -print0)
+if [[ -d "$staged_app/PlugIns/AmberWidget.appex" ]]; then
+  codesign --force --sign - --entitlements "$entitlements_plist" "$staged_app/PlugIns/AmberWidget.appex"
+fi
+codesign --force --sign - --entitlements "$entitlements_plist" "$staged_app"
 # zip updates an existing archive instead of clearing entries that disappeared
 # from a rebuilt app, so start fresh when the caller explicitly allows overwrite.
 rm -f "$ipa"

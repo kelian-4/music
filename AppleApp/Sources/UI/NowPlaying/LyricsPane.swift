@@ -47,6 +47,7 @@ struct LyricsPane: View {
     /// reports back so the header can stop being the way out.
     var sharePicking: Bool = false
     var onSharePicking: ((Bool) -> Void)? = nil
+    var onShareLine: ((Int) -> Void)? = nil
     var onChangeSource: (() -> Void)? = nil
     var onRevealControls: (() -> Void)? = nil
     var onFocusLyrics: (() -> Void)? = nil
@@ -187,8 +188,12 @@ struct LyricsPane: View {
             )
             .equatable()
             .contextMenu {
-                Button(selection.contains(row.id) ? "Remove from Share" : "Add to Share") {
-                    toggleShareSelection(row.id)
+                if let onShareLine {
+                    Button("Share Lyrics", systemImage: "quote.bubble") { onShareLine(row.id) }
+                } else {
+                    Button(selection.contains(row.id) ? "Remove from Share" : "Add to Share") {
+                        toggleShareSelection(row.id)
+                    }
                 }
             }
             // While picking, the line is its own toggle: a tap adds or removes

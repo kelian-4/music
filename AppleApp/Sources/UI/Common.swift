@@ -1108,6 +1108,10 @@ struct ThinSlider: View {
     var transitionWindow: ClosedRange<Double>? = nil
     var onEditingChanged: (Double) -> Void
     var onDraggingChanged: (Bool) -> Void = { _ in }
+    var onLiveChange: ((Double) -> Void)? = nil
+    var valueText: (Double) -> String = { NowPlayingView.timestamp($0) }
+    var incrementStep: Double = 1
+    var decrementStep: Double = 5
 
     @State private var dragging = false
     @State private var dragValue: Double?
@@ -1152,6 +1156,7 @@ struct ThinSlider: View {
                         dragging = true
                         let f = min(max(g.location.x / geo.size.width, 0), 1)
                         dragValue = f * maximum
+                        onLiveChange?(f * maximum)
                     }
                     .onEnded { _ in
                         if let v = dragValue { onEditingChanged(v) }
@@ -1165,14 +1170,14 @@ struct ThinSlider: View {
         .frame(height: 34)
         .accessibilityElement()
         .accessibilityLabel(label)
-        .accessibilityValue(NowPlayingView.timestamp(current))
+        .accessibilityValue(valueText(current))
         // One second per increment, five seconds per decrement, matching what
         // Music does and what a seek bar is expected to feel like when driven from
         // a screen reader rather than a drag.
         .accessibilityAdjustableAction { direction in
             switch direction {
-            case .increment: onEditingChanged(min(maximum, current + 1))
-            case .decrement: onEditingChanged(max(0, current - 5))
+            case .increment: onEditingChanged(min(maximum, current + incrementStep))
+            case .decrement: onEditingChanged(max(0, current - decrementStep))
             @unknown default: break
             }
         }

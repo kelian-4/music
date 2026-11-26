@@ -56,6 +56,7 @@ struct NowPlayingView: View {
     /// three-dot becomes the way in (and the way out) of picking lines for a
     /// share card while the lyrics pane is up.
     @State var sharePicking = false
+    @State var shareInitialLine: Int?
     /// Whether the title is crawling, so the artist line waits a beat behind it.
     @State var titleCrawls = false
     /// The offset, held here so a change re-renders the lyrics without the sheet
@@ -77,6 +78,21 @@ struct NowPlayingView: View {
         .statusBarHidden(hideStatusBarInPlayer)
         #endif
         .modifier(ToastSheets())
+        #if os(iOS)
+        .sheet(isPresented: $sharePicking, onDismiss: { shareInitialLine = nil }) {
+            LyricsShareSheet(
+                lines: controller.displayedLyrics,
+                originalLines: controller.lyrics,
+                translator: controller.lyricsTranslator,
+                title: controller.current?.title ?? "",
+                artist: controller.current?.artist ?? "",
+                artworkData: backdropArtwork ?? controller.current?.artworkData,
+                artworkUrl: controller.current?.thumbnailUrl,
+                songURL: controller.current?.videoId.flatMap { URL(string: "https://music.youtube.com/watch?v=\($0)") },
+                initialSelection: shareInitialLine
+            )
+        }
+        #endif
         .task(id: controller.current?.id) {
             guard let entry = controller.current else { return }
             if let data = entry.artworkData {

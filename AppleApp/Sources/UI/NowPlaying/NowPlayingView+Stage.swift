@@ -39,6 +39,25 @@ extension NowPlayingView {
             )
     }
 
+    var sharePickingInline: Bool {
+        #if os(iOS)
+        false
+        #else
+        sharePicking
+        #endif
+    }
+
+    var shareLineHandler: ((Int) -> Void)? {
+        #if os(iOS)
+        { index in
+            shareInitialLine = index
+            sharePicking = true
+        }
+        #else
+        nil
+        #endif
+    }
+
     var lyricsClock: LyricsClock {
         LyricsClock(playing: controller.isPlaying) { [controller] in controller.livePosition(at: $0) }
     }
@@ -229,8 +248,9 @@ extension NowPlayingView {
                 trackId: controller.current?.id ?? "",
                 offsetMs: lyricsOffsetMs,
                 sourceVisible: lyricsControlsOpen,
-                sharePicking: sharePicking,
+                sharePicking: sharePickingInline,
                 onSharePicking: { sharePicking = $0 },
+                onShareLine: shareLineHandler,
                 onChangeSource: { showLyricsSources = true },
                 onRevealControls: { revealLyricsControls() },
                 onFocusLyrics: { hideLyricsControls() },

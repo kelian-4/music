@@ -95,35 +95,18 @@ extension NowPlayingView {
                 .foregroundStyle(.white.opacity(0.7))
                 .frame(width: 16, height: 16, alignment: hugsGlyphs ? .leading : .center)
                 .playerGlyph()
-            GeometryReader { geo in
-                let w = max(geo.size.width, 1)
-                let x = w * min(max(volumeLevel, 0), 1)
-                ZStack(alignment: .leading) {
-                    let trackHeight: CGFloat = volumeDragging ? 10 : 6
-                    Capsule()
-                        .fill(.white.opacity(0.22))
-                        .frame(height: trackHeight)
-                    Capsule()
-                        .fill(.white.opacity(0.75))
-                        .frame(width: max(trackHeight, x), height: trackHeight)
-                    Circle()
-                        .fill(.white)
-                        .frame(width: 10, height: 10)
-                        .offset(x: min(max(0, x - 5), w - 10))
-                        .shadow(color: .black.opacity(0.35), radius: 2, y: 1)
-                }
-                .frame(height: geo.size.height)
-                .contentShape(.rect)
-                .gesture(
-                    DragGesture(minimumDistance: 0)
-                        .onChanged { g in
-                            volumeDragging = true
-                            setVolumeLevel(min(max(0, g.location.x / w), 1))
-                        }
-                        .onEnded { _ in volumeDragging = false }
-                )
-            }
-            .frame(height: 14)
+            ThinSlider(
+                value: volumeLevel,
+                maximum: 1,
+                label: "Volume",
+                onEditingChanged: { setVolumeLevel($0) },
+                onDraggingChanged: { volumeDragging = $0 },
+                onLiveChange: { setVolumeLevel($0) },
+                valueText: { "\(Int($0 * 100)) %" },
+                incrementStep: 0.1,
+                decrementStep: 0.1
+            )
+            .tint(.white)
             Image(systemName: "speaker.wave.3.fill")
                 .scaledFont(size: 12, weight: .semibold)
                 .foregroundStyle(.white.opacity(0.7))
@@ -238,30 +221,37 @@ extension NowPlayingView {
     var moreMenu: some View {
         Menu {
             if let current = controller.current {
-                SongActionButtons(entry: current, showSleepTimer: true, showDebugLog: true)
+                SongActionButtons(entry: current, showSleepTimer: true, showDebugLog: false)
             }
             Divider()
-            #if os(iOS)
-            Toggle(isOn: Binding(
-                get: { controller.mixWithOtherAudio },
-                set: { controller.setMixWithOtherAudio($0) }
-            )) {
-                Label("Mix with Other Apps", systemImage: "waveform")
-            }
-            #endif
-            Toggle(isOn: $showMusicVideos) {
-                Label("Music Videos", systemImage: "play.rectangle")
-            }
-            Button(party.inParty ? "People Listening" : "Listen Together", systemImage: "person.2") {
-                if party.inParty {
-                    appModel.partyMembersPresented = true
-                } else {
-                    appModel.listenTogetherPresented = true
+            Menu {
+                #if os(iOS)
+                Toggle(isOn: Binding(
+                    get: { controller.mixWithOtherAudio },
+                    set: { controller.setMixWithOtherAudio($0) }
+                )) {
+                    Label("Mix with Other Apps", systemImage: "waveform")
                 }
-            }
-            if !controller.displayedLyrics.isEmpty {
-                Button("Share Lyrics", systemImage: "quote.bubble") { sharePicking = true }
-                Button("Lyrics Offset…", systemImage: "slider.horizontal.3") { showLyricsOffset = true }
+                #endif
+                Toggle(isOn: $showMusicVideos) {
+                    Label("Music Videos", systemImage: "play.rectangle")
+                }
+                Button(party.inParty ? "People Listening" : "Listen Together", systemImage: "person.2") {
+                    if party.inParty {
+                        appModel.partyMembersPresented = true
+                    } else {
+                        appModel.listenTogetherPresented = true
+                    }
+                }
+                if !controller.displayedLyrics.isEmpty {
+                    Button("Share Lyrics", systemImage: "quote.bubble") { sharePicking = true }
+                    Button("Lyrics Offset…", systemImage: "slider.horizontal.3") { showLyricsOffset = true }
+                }
+                if let current = controller.current {
+                    Button("Track Log…", systemImage: "doc.text") { toast.showTrackLog(current) }
+                }
+            } label: {
+                Label("More Options", systemImage: "ellipsis.circle")
             }
         } label: {
             Image(systemName: "ellipsis")

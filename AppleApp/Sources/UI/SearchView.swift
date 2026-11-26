@@ -328,6 +328,7 @@ struct SearchView: View {
     @Environment(\.openWindow) private var openWindow
     #endif
     @State private var query = ""
+    @State private var openedBrowse: OpenedBrowse?
     private let initialQuery: String?
     @State private var categories = MoodGenreLoader()
     @State private var historyRevision = 0
@@ -496,6 +497,9 @@ struct SearchView: View {
                     #endif
                 }
                 #if os(iOS)
+                .navigationDestination(item: $openedBrowse) { opened in
+                    DetailView(browseId: opened.browseId, initialTitle: opened.title)
+                }
                 .navigationBarTitleDisplayMode(titleRow ? .inline : .automatic)
                 .modifier(TopRow(enabled: titleRow) {
                     HStack(spacing: 16) {
@@ -1311,20 +1315,7 @@ struct SearchView: View {
     private func searchHitRow(_ hit: SearchHitDTO) -> some View {
         Group {
             if hit.isBrowse, let browseId = hit.browseId {
-                PushLink(destination: DetailView(browseId: browseId, initialTitle: hit.title)) {
-                    browseRow(hit)
-                }
-                .buttonStyle(.plain)
-                .simultaneousGesture(TapGesture().onEnded {
-                    // Tapping a result records the rich entity —
-                    // real artwork and type — for the recents list.
-                    RecentSearchStore.record(RecentSearchEntity(
-                        id: browseId, title: hit.title,
-                        subtitle: hit.subtitle ?? "",
-                        artworkUrl: hit.thumbnailUrl,
-                        entityType: browseEntityType(hit)
-                    ))
-                })
+                browseLink(hit, browseId: browseId)
                 .shelfCardContextMenu(
                     ShelfCard(
                         title: hit.title, subtitle: hit.subtitle,
@@ -1364,18 +1355,7 @@ struct SearchView: View {
     private func typeaheadRow(_ hit: SearchHitDTO) -> some View {
         Group {
             if hit.isBrowse, let browseId = hit.browseId {
-                PushLink(destination: DetailView(browseId: browseId, initialTitle: hit.title)) {
-                    browseRow(hit)
-                }
-                .buttonStyle(.plain)
-                .simultaneousGesture(TapGesture().onEnded {
-                    RecentSearchStore.record(RecentSearchEntity(
-                        id: browseId, title: hit.title,
-                        subtitle: hit.subtitle ?? "",
-                        artworkUrl: hit.thumbnailUrl,
-                        entityType: browseEntityType(hit)
-                    ))
-                })
+                browseLink(hit, browseId: browseId)
                 .shelfCardContextMenu(
                     ShelfCard(
                         title: hit.title, subtitle: hit.subtitle,
@@ -1510,6 +1490,32 @@ struct SearchView: View {
         }
         .padding(.vertical, 4)
         .searchRowChrome()
+    }
+
+    private func browseLink(_ hit: SearchHitDTO, browseId: String) -> some View {
+        let record = {
+            RecentSearchStore.record(RecentSearchEntity(
+                id: browseId, title: hit.title,
+                subtitle: hit.subtitle ?? "",
+                artworkUrl: hit.thumbnailUrl,
+                entityType: browseEntityType(hit)
+            ))
+        }
+        #if os(iOS)
+        return Button {
+            record()
+            openedBrowse = OpenedBrowse(browseId: browseId, title: hit.title)
+        } label: {
+            browseRow(hit)
+        }
+        .buttonStyle(.plain)
+        #else
+        return PushLink(destination: DetailView(browseId: browseId, initialTitle: hit.title)) {
+            browseRow(hit)
+        }
+        .buttonStyle(.plain)
+        .simultaneousGesture(TapGesture().onEnded { record() })
+        #endif
     }
 
     private func browseRow(_ hit: SearchHitDTO) -> some View {
@@ -2071,4 +2077,9 @@ private extension View {
         listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
     }
+}
+
+struct OpenedBrowse: Hashable {
+    let browseId: String
+    let title: String
 }
