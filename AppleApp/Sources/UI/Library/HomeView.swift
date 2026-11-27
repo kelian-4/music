@@ -22,7 +22,7 @@ struct HomeView: View {
     var scrollPosition: Binding<ScrollPosition>? = nil
 
     var body: some View {
-        PageStack {
+        PageStack(tab: .home) {
             content
                 .navigationTitle("Home")
                 .toolbar {

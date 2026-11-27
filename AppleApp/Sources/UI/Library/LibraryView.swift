@@ -38,7 +38,7 @@ struct LibraryView: View {
     @State private var showSpotifyImport = false
 
     var body: some View {
-        PageStack {
+        PageStack(tab: lockedSection == nil ? .library : (lockedSection == .podcasts ? .radio : nil)) {
             if let locked = lockedSection {
                 // One header only. The section page below owns its title and
                 // trailing buttons; an outer `.navigationTitle`/`.toolbar`

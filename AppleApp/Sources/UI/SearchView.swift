@@ -462,7 +462,7 @@ struct SearchView: View {
     }
 
     var body: some View {
-        PageStack {
+        PageStack(tab: .search) {
             resultsColumn
                 .navigationTitle("Search")
                 .toolbar {

@@ -24,7 +24,10 @@ extension EnvironmentValues {
 /// A browse page's navigation stack: its own on iOS, the window's on the Mac.
 struct PageStack<Content: View>: View {
     @Environment(\.inBrowseStack) private var inBrowseStack
+    @Environment(AppModel.self) private var appModel
+    var tab: AppModel.Tab? = nil
     @ViewBuilder var content: Content
+    @State private var pushed: BrowseDestination?
 
     var body: some View {
         if inBrowseStack {
@@ -33,7 +36,21 @@ struct PageStack<Content: View>: View {
             NavigationStack {
                 content
                     .navigationDestination(for: PushRoute.self) { $0.make() }
+                    #if os(iOS)
+                    .navigationDestination(item: $pushed) { destination in
+                        if case .detail(let id, let title) = destination {
+                            DetailView(browseId: id, initialTitle: title)
+                        }
+                    }
+                    #endif
             }
+            #if os(iOS)
+            .onChange(of: appModel.tabPush) { _, destination in
+                guard let destination, let tab, appModel.visibleTab == tab else { return }
+                appModel.tabPush = nil
+                pushed = destination
+            }
+            #endif
         }
     }
 }

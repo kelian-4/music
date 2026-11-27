@@ -408,7 +408,18 @@ final class AppModel {
     /// intent. Counting means the second tap is honoured even if the first is
     /// still being handled.
     var searchFocusTrigger = 0
-    var pendingDetail: BrowseDestination?
+    var pendingDetail: BrowseDestination? {
+        didSet {
+            #if os(iOS)
+            guard let destination = pendingDetail, let tab = visibleTab, [Tab.home, .explore, .library, .radio, .search].contains(tab), !nowPlayingPresented else { return }
+            pendingDetail = nil
+            tabPush = destination
+            #endif
+        }
+    }
+    /// A page to push on the visible tab's own stack, so the tab bar stays.
+    var tabPush: BrowseDestination?
+    var visibleTab: Tab?
     /// A page opened from the player, to push on the Mac window's browse stack
     /// with the player as the step back.
     var pendingArtistPage: BrowseDestination?

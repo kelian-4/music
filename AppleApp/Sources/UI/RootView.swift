@@ -89,6 +89,12 @@ struct RootView: View {
         #else
         .sheet(isPresented: $onboardingPresented) { OnboardingView() }
         #endif
+        .onChange(of: selection) { _, raw in
+            appModel.visibleTab = resolvedTab(AppModel.Tab(rawValue: raw) ?? .home)
+        }
+        .onAppear {
+            appModel.visibleTab = resolvedTab(AppModel.Tab(rawValue: selection) ?? .home)
+        }
         .onChange(of: appModel.requestedTab) { _, requested in
             guard let requested else { return }
             selection = resolvedTab(requested).rawValue

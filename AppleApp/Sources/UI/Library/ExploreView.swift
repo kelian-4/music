@@ -14,7 +14,7 @@ struct ExploreView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
-        PageStack {
+        PageStack(tab: .explore) {
             content
                 .navigationTitle("New")
                 .toolbar {
