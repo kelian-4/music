@@ -60,6 +60,7 @@ jobs:
           # The host slice is needed by the UniFFI bindgen step.
           NATIVE_TARGETS="aarch64-apple-darwin aarch64-apple-ios" scripts/build-native-core.sh
           CONFIG=release scripts/build-shared-framework.sh
+          sed -i '' "s/CURRENT_PROJECT_VERSION: \"[0-9]*\"/CURRENT_PROJECT_VERSION: \"$GITHUB_RUN_NUMBER\"/" AppleApp/project.yml
           (cd AppleApp && xcodegen generate --spec project.yml)
           AMBER_BUILD_REVISION="$(git rev-parse --short=12 HEAD)" \
             scripts/package-ios-ipa.sh "$version" --output-dir build/ipa --overwrite
@@ -79,10 +80,11 @@ jobs:
           ipa="$(ls build/ipa/*.ipa | head -1)"
           cp "$ipa" build/Amber.ipa
           version="$(sed -n 's/^ *MARKETING_VERSION: "\(.*\)"$/\1/p' AppleApp/project.yml | head -1)"
+          build="$(basename "$ipa" | sed -n 's/.*-build\([0-9]*\)-.*/\1/p')"
           size="$(stat -f%z build/Amber.ipa)"
           date="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           sha="$(git rev-parse --short=12 HEAD)"
-          python3 - "$version" "$size" "$date" "$sha" "$GITHUB_RUN_NUMBER" "$REPO" "${GITHUB_REF_NAME}" <<'PY'
+          python3 - "$version" "$size" "$date" "$sha" "$build" "$REPO" "${GITHUB_REF_NAME}" <<'PY'
           import json, sys
           version, size, date, sha, run, repo, ref = sys.argv[1:8]
           base = f"https://github.com/{repo}/releases/download/ios-nightly"
