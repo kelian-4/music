@@ -595,7 +595,7 @@ object AppSettings {
      * way — see the hero notes in
      * [NowPlayingScreen][com.music.amber.ui.player.NowPlayingScreen].
      */
-    val fullBleedArtwork = MutableStateFlow(true)
+    val fullBleedArtwork = MutableStateFlow(false)
 
     /**
      * The album and playlist page's answer to [fullBleedArtwork]: the sleeve
@@ -1082,7 +1082,7 @@ object AppSettings {
         prioritizeSpotifyCanvas.value = prefs.getBoolean(KEY_PRIORITIZE_SPOTIFY_CANVAS, false)
         signatureApiEnabled.value = prefs.getBoolean(KEY_SIGNATURE_API_ENABLED, false)
         signatureApiUrl.value = normalizeSignatureApiUrl(prefs.getString(KEY_SIGNATURE_API_URL, "").orEmpty())
-        fullBleedArtwork.value = prefs.getBoolean(KEY_FULL_BLEED_ARTWORK, true)
+        fullBleedArtwork.value = prefs.getBoolean(KEY_FULL_BLEED_ARTWORK, false)
         fullBleedDetailArtwork.value = prefs.getBoolean(KEY_FULL_BLEED_DETAIL_ARTWORK, false)
         // The old legacy mesh switch answers until a theme has been picked.
         playerTheme.value = runCatching {
