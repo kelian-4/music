@@ -27,8 +27,6 @@ final class PageCache: @unchecked Sendable {
     }
 }
 
-/// Pages stay for a short while so a page just visited reopens at once; on a
-/// failed fetch the last copy is shown rather than an error.
 @MainActor
 enum PageRequests {
     static let freshSeconds: TimeInterval = 180
