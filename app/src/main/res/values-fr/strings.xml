@@ -1488,4 +1488,6 @@
     <string name="sing_mode_subtitle">Atténue la voix au centre du mix en gardant les basses et la batterie. Titres stéréo uniquement</string>
     <string name="sing_mode_on">Mode chant : activer</string>
     <string name="sing_mode_off">Mode chant : désactiver</string>
+    <string name="connection_offline">Pas de connexion. Contenu enregistré affiché.</string>
+    <string name="connection_slow">Connexion lente. Le chargement peut être plus long.</string>
 </resources>

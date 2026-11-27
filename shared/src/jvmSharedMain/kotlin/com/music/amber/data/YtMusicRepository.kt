@@ -49,7 +49,8 @@ object YtMusicRepository {
     // bytes were warmed, without repeating a 10–30 second catalogue search.
     private val audioVersionCache = ConcurrentHashMap<String, Song>()
     // Cache for video version lookups from audio tracks (null means no video found).
-    private val videoVersionCache = ConcurrentHashMap<String, Song?>()
+    private val videoVersionCache = ConcurrentHashMap<String, Song>()
+    private val videoMisses = ConcurrentHashMap<String, Long>()
 
     // (from, to) -> YouTube's own alignment between two versions, kept for
     // both directions so switching back lines up without asking again.
@@ -477,13 +478,20 @@ object YtMusicRepository {
     suspend fun resolveVideo(song: Song): Song? {
         if (song.isVideo) return null
         videoVersionCache[song.videoId]?.let { return it }
+        videoMisses[song.videoId]?.let { at ->
+            if (System.currentTimeMillis() - at < 10 * 60 * 1000L) return null
+            videoMisses.remove(song.videoId)
+        }
         officialVersion(song, wantAudio = false)?.let { video ->
             videoVersionCache[song.videoId] = video
             return video
         }
         val target = TrackMatcher.targetOf(song)
+        var searchFailed = false
         for (query in TrackMatcher.queries(target)) {
-            val candidates = search(query, SearchFilter.VIDEOS)
+            val response = search(query, SearchFilter.VIDEOS)
+            if (response.isFailure) searchFailed = true
+            val candidates = response
                 .getOrNull()
                 ?.filterIsInstance<SearchResult.Track>()
                 ?.map { it.song }
@@ -495,7 +503,7 @@ object YtMusicRepository {
             }
         }
         Log.w(TAG, "video switch: no video match for '${song.title}' by '${song.artist}'")
-        videoVersionCache[song.videoId] = null
+        if (!searchFailed) videoMisses[song.videoId] = System.currentTimeMillis()
         return null
     }
 

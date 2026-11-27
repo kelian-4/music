@@ -461,6 +461,7 @@ class MainActivity : AppCompatActivity() {
                         windowHeight = maxHeight,
                         appBackdrop = appBackdrop,
                     )
+                    com.music.amber.ui.components.ConnectionBanner()
                 }
                 }
             }

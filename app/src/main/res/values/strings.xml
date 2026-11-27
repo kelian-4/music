@@ -1362,4 +1362,6 @@
     <string name="sing_mode_subtitle">Lowers the voice in the centre of the mix, keeping bass and drums. Stereo songs only</string>
     <string name="sing_mode_on">Sing mode: turn on</string>
     <string name="sing_mode_off">Sing mode: turn off</string>
+    <string name="connection_offline">No connection. Showing saved content.</string>
+    <string name="connection_slow">Slow connection. Loading may take longer.</string>
 </resources>
