@@ -40,7 +40,7 @@ struct SettingsView: View {
     @State var reduceBlur = PlatformSettings.shared.getBoolean(key: "reduce_dynamic_blur", default: false)
     @State var update = UpdateChecker.shared
     @State var reduceAnimation = PlatformSettings.shared.getBoolean(key: "reduce_animation", default: false)
-    @State var fullBleed = PlatformSettings.shared.getBoolean(key: "full_bleed_artwork", default: true)
+    @State var fullBleed = PlatformSettings.shared.getBoolean(key: "full_bleed_artwork", default: false)
     @AppStorage("lyrics_blur") var lyricsBlur = true
     @AppStorage("player_lyric_line") var playerLyricLine = true
     @AppStorage("show_music_videos") var showMusicVideos = false

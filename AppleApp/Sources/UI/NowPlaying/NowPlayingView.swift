@@ -227,7 +227,7 @@ struct NowPlayingView: View {
     /// Upstream `AppSettings.fullBleedArtwork`: the portrait sleeve runs as a
     /// full-bleed banner rather than a card.
     var fullBleedOn: Bool {
-        PlatformSettings.shared.getBoolean(key: "full_bleed_artwork", default: true)
+        PlatformSettings.shared.getBoolean(key: "full_bleed_artwork", default: false)
     }
 
     /// Upstream `AppSettings.hideSongStatus`: hides the playback-origin

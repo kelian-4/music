@@ -274,7 +274,7 @@ object AppSettings {
         settings.putBoolean("reduce_animation", value)
     }
 
-    private val _fullBleedArtwork = MutableStateFlow(settings.getBoolean("full_bleed_artwork", true))
+    private val _fullBleedArtwork = MutableStateFlow(settings.getBoolean("full_bleed_artwork", false))
     val fullBleedArtwork: StateFlow<Boolean> = _fullBleedArtwork.asStateFlow()
     fun setFullBleedArtwork(value: Boolean) {
         _fullBleedArtwork.value = value
