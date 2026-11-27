@@ -10,6 +10,9 @@ on:
     branches: ['feat/**', 'ci/**']
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 concurrency:
   group: build-ios-${{ github.ref }}
   cancel-in-progress: true
@@ -66,3 +69,57 @@ jobs:
           name: amber-ios-unsigned-ipa
           path: build/ipa/*.ipa
           retention-days: 14
+
+      - name: Publish to the SideStore source
+        if: github.ref == 'refs/heads/feat/ios-amber' || github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          ipa="$(ls build/ipa/*.ipa | head -1)"
+          cp "$ipa" build/Amber.ipa
+          version="$(sed -n 's/^ *MARKETING_VERSION: "\(.*\)"$/\1/p' AppleApp/project.yml | head -1)"
+          size="$(stat -f%z build/Amber.ipa)"
+          date="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          sha="$(git rev-parse --short=12 HEAD)"
+          python3 - "$version" "$size" "$date" "$sha" "$GITHUB_RUN_NUMBER" "$REPO" "${GITHUB_REF_NAME}" <<'PY'
+          import json, sys
+          version, size, date, sha, run, repo, ref = sys.argv[1:8]
+          base = f"https://github.com/{repo}/releases/download/ios-nightly"
+          source = {
+              "name": "Amber",
+              "identifier": "app.amber.source",
+              "subtitle": "Amber, direct from the repository",
+              "description": "Builds of Amber for iOS, published automatically from the repository.",
+              "iconURL": f"https://raw.githubusercontent.com/{repo}/{ref}/AppleApp/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+              "website": f"https://github.com/{repo}",
+              "tintColor": "#FF9F0A",
+              "apps": [{
+                  "name": "Amber",
+                  "bundleIdentifier": "app.amber.Amber",
+                  "developerName": "Kelian",
+                  "subtitle": "Music player for YouTube Music",
+                  "localizedDescription": "Amber is a music player for iOS built on YouTube Music.",
+                  "iconURL": f"https://raw.githubusercontent.com/{repo}/{ref}/AppleApp/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+                  "tintColor": "#FF9F0A",
+                  "category": "entertainment",
+                  "screenshotURLs": [],
+                  "versions": [{
+                      "version": version,
+                      "buildVersion": run,
+                      "date": date,
+                      "localizedDescription": f"Build {run} ({sha})",
+                      "downloadURL": f"{base}/Amber.ipa",
+                      "size": int(size),
+                      "minOSVersion": "18.0",
+                  }],
+                  "appPermissions": {"entitlements": [], "privacy": {}},
+              }],
+              "news": [],
+          }
+          json.dump(source, open("build/source.json", "w"), indent=2)
+          PY
+          gh release view ios-nightly --repo "$REPO" >/dev/null 2>&1 || \
+            gh release create ios-nightly --repo "$REPO" --prerelease --title "Amber (iOS, latest build)" \
+              --notes "Rolling build installed through the SideStore source. Source URL: https://github.com/$REPO/releases/download/ios-nightly/source.json"
+          gh release upload ios-nightly build/Amber.ipa build/source.json --repo "$REPO" --clobber
