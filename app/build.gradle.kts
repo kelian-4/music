@@ -109,7 +109,7 @@ android {
             reset()
             val only = providers.gradleProperty("amberAbi").orNull
             if (only != null) {
-                include(only)
+                only.split(",").forEach { include(it.trim()) }
                 isUniversalApk = false
             } else {
                 include("armeabi-v7a", "arm64-v8a", "x86_64")
