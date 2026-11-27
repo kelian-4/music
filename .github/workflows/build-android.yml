@@ -50,9 +50,9 @@ jobs:
             done < "$f"
           done
           if [ -n "$args" ]; then
-            ./gradlew :app:testDevDebugUnitTest $args :app:assembleDevDebug --stacktrace
+            ./gradlew :app:testDevDebugUnitTest $args :app:assembleDevDebug -PamberAbi=arm64-v8a --stacktrace
           else
-            ./gradlew :app:assembleDevDebug --stacktrace
+            ./gradlew :app:assembleDevDebug -PamberAbi=arm64-v8a --stacktrace
           fi
 
       - uses: actions/upload-artifact@v4

@@ -107,8 +107,14 @@ android {
         abi {
             isEnable = true
             reset()
-            include("armeabi-v7a", "arm64-v8a", "x86_64")
-            isUniversalApk = true
+            val only = providers.gradleProperty("amberAbi").orNull
+            if (only != null) {
+                include(only)
+                isUniversalApk = false
+            } else {
+                include("armeabi-v7a", "arm64-v8a", "x86_64")
+                isUniversalApk = true
+            }
         }
     }
 
