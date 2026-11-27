@@ -91,6 +91,7 @@ jobs:
           source = {
               "name": "Amber",
               "identifier": "app.amber.source",
+              "sourceURL": f"{base}/source.json",
               "subtitle": "Amber, direct from the repository",
               "description": "Builds of Amber for iOS, published automatically from the repository.",
               "iconURL": f"https://raw.githubusercontent.com/{repo}/{ref}/AppleApp/Assets.xcassets/AppIcon.appiconset/AppIcon.png",

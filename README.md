@@ -48,11 +48,19 @@ Features that depend on external services, sources, audio routes or optional mod
 
 ### iPhone and iPad
 
-1. Download the unsigned IPA (`amber-ios-unsigned-ipa`) from the latest successful run of the **Build iOS** workflow in the Actions tab.
-2. Sign and install it with [AltStore](https://altstore.io), [SideStore](https://sidestore.io) or [Sideloadly](https://sideloadly.io), using your Apple account or developer team.
-3. Trust the developer profile if iOS asks. To use the widget, install with a tool that registers the App Group (`group.app.amber.Amber`), then remove and add the widget again.
+**With a source (recommended).** Add this address as a source in [SideStore](https://sidestore.io) or [AltStore](https://altstore.io) (Sources, then +) and install Amber from it. Every new build shows up as an update.
 
-To update, install the new IPA over the old one with the same tool and identity. That keeps your data; don't delete the app first.
+```
+https://github.com/kelian-4/music/releases/download/ios-nightly/source.json
+```
+
+One tap: [Add to SideStore](sidestore://source?url=https://github.com/kelian-4/music/releases/download/ios-nightly/source.json) · [Add to AltStore](altstore://source?url=https://github.com/kelian-4/music/releases/download/ios-nightly/source.json)
+
+**By hand.** Download `Amber.ipa` from the [latest build](https://github.com/kelian-4/music/releases/tag/ios-nightly) and install it with AltStore, SideStore or [Sideloadly](https://sideloadly.io).
+
+To use the widget, install with a tool that registers the App Group (`group.app.amber.Amber`), then remove and add the widget again.
+
+To update by hand, install the new IPA over the old one with the same tool and identity. That keeps your data; don't delete the app first.
 
 ### Android
 
