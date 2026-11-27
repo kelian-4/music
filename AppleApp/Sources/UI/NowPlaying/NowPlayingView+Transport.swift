@@ -162,7 +162,7 @@ extension NowPlayingView {
                     .scaleEffect(y: 0.85)
                     .playerGlyph()
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressScaleStyle())
             .disabled(!controller.canPlayPrevious)
             .help("Previous")
             .accessibilityLabel("Previous track")
@@ -183,12 +183,15 @@ extension NowPlayingView {
                             .scaledToFit()
                             .frame(width: 74, height: 74)
                             .playerGlyph()
+                            .id(controller.isPlaying)
+                            .transition(.scale(scale: 0.6).combined(with: .opacity))
                     }
                 }
                 .frame(width: 92, height: 92)
                 .contentShape(Rectangle())
+                .animation(.spring(response: 0.34, dampingFraction: 0.66), value: controller.isPlaying)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressScaleStyle())
             .disabled(controller.current == nil && !controller.isBuffering)
             .help(controller.isPlaying ? "Pause" : "Play")
             .accessibilityLabel(controller.isBuffering ? "Buffering" : (controller.isPlaying ? "Pause" : "Play"))

@@ -113,7 +113,7 @@ Amber is built on the work of others, and this section keeps the notices their l
 
 - **BitChord**, the Android and shared client by [Kushagra Singh](https://github.com/kushagrasinghx/BitChord) and contributors, licensed under GPLv3. Amber's Android app and shared Kotlin core are derived from it.
 - **BitChord for Apple**, the Apple-platform port by [Martin BAGUMA](https://github.com/bagumamartin/BitChord), licensed under GPLv3. Amber's SwiftUI app, Rust audio engine and Automix are derived from it.
-- Amber's own changes are Copyright © 2026 Kelian (Nyx Digital), also under GPLv3.
+- Amber's own changes are Copyright © 2026 Kelian, also under GPLv3.
 - The upstream source is pinned as a Git submodule in `vendor/bitchord-upstream`, with its source, per-file notices and license, for comparison and attribution.
 - YouTube stream extraction uses [InnerTubeX](https://github.com/MetrolistGroup/innertubex), vendored in `vendor/innertubex` with its GPLv3 license and notices.
 - Some analyzer code was ported from [Orchard](https://github.com/SFG5453/Orchard) by SFG545, through the Android implementation; the relevant files retain their AGPLv3-or-later terms. The audio clarity contour credits the [LastWave-native](https://github.com/Clash-Projects/LastWave-native) reference. The Apple-like lyrics animation credits [binimum/am-lyrics](https://github.com/binimum/am-lyrics).

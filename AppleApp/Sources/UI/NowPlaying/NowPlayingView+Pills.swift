@@ -209,13 +209,20 @@ extension NowPlayingView {
                 .frame(width: 44, height: 44)
                 .background(.white.opacity(selected ? 0.28 : 0), in: Circle())
                 .contentShape(Circle())
+                .animation(.spring(response: 0.35, dampingFraction: 0.6), value: selected)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(PressScaleStyle())
         .accessibilityLabel(label)
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
     }
 
+    @ViewBuilder
     private var outputPartyPill: some View {
+        #if os(iOS)
+        NativeRoutePicker()
+            .frame(width: 64, height: 44)
+            .accessibilityLabel("Audio output")
+        #else
         Button {
             Haptics.play(.tap)
             showOutputDevice = true
@@ -228,6 +235,7 @@ extension NowPlayingView {
         }
         .buttonStyle(.plain)
         .accessibilityLabel("Audio output")
+        #endif
     }
 
     /// The phone queue keeps its established shuffle/repeat/AutoPlay pill.

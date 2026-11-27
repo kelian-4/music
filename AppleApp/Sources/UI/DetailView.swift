@@ -52,7 +52,7 @@ struct DetailView: View {
     @State private var privacyPresented = false
     @State private var canvasURL: URL?
     @State private var canvasFallbackURL: URL?
-    @State private var pinned = false
+    private var pinned: Bool { PlaylistPinning.pinnedIds().contains(browseId) }
     @State private var scrolledPastHeader = false
     /// Narrows the track list in place, like upstream's search circle in the
     /// release header. Off until tapped, so a long list reads as a list first.
@@ -134,8 +134,10 @@ struct DetailView: View {
         .task(id: auth.sessionEpoch) {
             page = nil; continuation = nil; headerArt = nil
             saving = false; subscribing = false; subscriptionOverride = nil
-            pinned = PlaylistPinning.pinnedIds().contains(browseId)
             await load()
+        }
+        .onChange(of: NetworkQuality.shared.connected) { _, connected in
+            if connected, page == nil { Task { await load() } }
         }
         .onAppear { mirrorPlaybackContext() }
         .onChange(of: controller.playbackContextRevision) { _, _ in mirrorPlaybackContext() }
@@ -704,10 +706,8 @@ struct DetailView: View {
                 toast.queueNotice("Added \(page.songs.count) tracks to the queue")
             }
             .disabled(page.songs.isEmpty)
-            Button(pinned ? "Unpin" : "Pin") {
-                if PlaylistPinning.toggle(browseId: browseId, title: initialTitle) {
-                    pinned.toggle()
-                } else {
+            Button(pinned ? LocalizedStringKey("Unpin") : LocalizedStringKey("Pin")) {
+                if !PlaylistPinning.toggle(browseId: browseId, title: initialTitle) {
                     appModel.pinLimitAlert = true
                 }
             }
@@ -1291,7 +1291,8 @@ struct DetailView: View {
     }
 
     private func toEntry(_ s: DetailPageModel.SongPayload, fallbackArt: String? = nil) -> QueueEntry {
-        s.asEntry(fallbackArt: fallbackArt)
+        let isAlbum = browseId.hasPrefix("MPREb") || browseId.hasPrefix("OLAK")
+        return s.asEntry(fallbackArt: fallbackArt, fallbackAlbum: isAlbum ? (page?.title ?? initialTitle) : nil, fallbackAlbumId: isAlbum ? browseId : nil)
     }
 
     private func fallbackArt(_ page: DetailPageModel) -> String? {

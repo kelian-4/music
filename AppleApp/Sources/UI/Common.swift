@@ -1225,11 +1225,19 @@ private struct MixSheenBar: View {
 }
 
 /// Transport haptics — upstream `Haptics.kt`, respecting system settings.
+@Observable
+final class PinState {
+    nonisolated(unsafe) static let shared = PinState()
+    var revision = 0
+    func bump() { revision &+= 1 }
+}
+
 enum PlaylistPinning {
     static let maxPins = 6
 
     static func pinnedIds() -> [String] {
-        PlatformSettings.shared.getString(key: "pinned_playlists", default: "")
+        _ = PinState.shared.revision
+        return PlatformSettings.shared.getString(key: "pinned_playlists", default: "")
             .split(separator: ",").map(String.init).filter { !$0.isEmpty }
     }
 
@@ -1241,6 +1249,7 @@ enum PlaylistPinning {
         let change = AppSettings.shared.togglePinnedItem(
             kind: "PLAYLIST", id: browseId, title: title, subtitle: "", thumbnailUrl: nil
         )
+        PinState.shared.bump()
         return change != "LIMIT"
     }
 }

@@ -43,6 +43,7 @@ actor PageRequestCoordinator {
     }
     func invalidate(partition: String? = nil) {
         revision &+= 1
+        PageCache.shared.clear()
         flights.values.forEach { $0.task.cancel() }; flights.removeAll()
     }
     /// One-time removal of the retired page cache, outside the main actor.

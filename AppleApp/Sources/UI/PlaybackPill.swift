@@ -619,6 +619,7 @@ struct PlaybackPill: View {
                 } else {
                     Image(systemName: controller.isPlaying ? "pause.fill" : "play.fill")
                         .scaledFont(size: 20, weight: .semibold)
+                        .contentTransition(.symbolEffect(.replace))
                 }
             }
             .buttonStyle(.plain)
@@ -674,6 +675,7 @@ struct PlaybackPill: View {
                     controller.togglePlayPause()
                 } label: {
                     Image(systemName: controller.isPlaying ? "pause.fill" : "play.fill")
+                        .contentTransition(.symbolEffect(.replace))
                         .scaledFont(size: 18, weight: .semibold)
                         .frame(width: 34, height: 34)
                         .contentShape(.rect)

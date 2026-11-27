@@ -313,6 +313,34 @@ struct PlayPauseIntent: AppIntent {
     }
 }
 
+struct NextTrackIntent: AppIntent {
+    static var title: LocalizedStringResource = "Next Song"
+    static var description = IntentDescription("Skip to the next song in Amber.")
+    static var openAppWhenRun = false
+
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        let controller = AppServices.shared.controller
+        guard controller.current != nil else { throw AmberIntentError.nothingPlaying }
+        controller.next()
+        return .result()
+    }
+}
+
+struct PreviousTrackIntent: AppIntent {
+    static var title: LocalizedStringResource = "Previous Song"
+    static var description = IntentDescription("Go back to the previous song in Amber.")
+    static var openAppWhenRun = false
+
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        let controller = AppServices.shared.controller
+        guard controller.current != nil else { throw AmberIntentError.nothingPlaying }
+        controller.previous()
+        return .result()
+    }
+}
+
 /// Play a song by name. The app opens because the match is a guess — the player
 /// and the queue are where a listener checks it — and because a cold launch's
 /// stream wiring settles behind the first window.
@@ -423,6 +451,21 @@ struct AmberShortcuts: AppShortcutsProvider {
             ],
             shortTitle: "Play or Pause",
             systemImageName: "pause.fill"
+        )
+        AppShortcut(
+            intent: NextTrackIntent(),
+            phrases: [
+                "Next song in \(.applicationName)",
+                "Skip in \(.applicationName)"
+            ],
+            shortTitle: "Next Song",
+            systemImageName: "forward.fill"
+        )
+        AppShortcut(
+            intent: PreviousTrackIntent(),
+            phrases: ["Previous song in \(.applicationName)"],
+            shortTitle: "Previous Song",
+            systemImageName: "backward.fill"
         )
         AppShortcut(
             intent: SearchIntent(),

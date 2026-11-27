@@ -452,8 +452,9 @@ final class DownloadStore {
             guard accountId == scope, generation == PageSession.generation() else { return .ignoredLocalTrack }
             let quality = PlatformSettings.shared.getString(key: "download_quality", default: "LOSSLESS")
             var requests: [String] = []
+            let isAlbum = page.type?.uppercased() == "ALBUM" || browseId.hasPrefix("MPREb") || browseId.hasPrefix("OLAK")
             for song in page.songs {
-                let entry = song.asEntry(fallbackArt: page.thumbnailUrl), id = requestId(entry, quality: quality)
+                let entry = song.asEntry(fallbackArt: page.thumbnailUrl, fallbackAlbum: isAlbum ? page.title : nil, fallbackAlbumId: isAlbum ? browseId : nil), id = requestId(entry, quality: quality)
                 requests.append(id); _ = enqueue(entry, quality: quality)
             }
             index.owners[ownerId] = Owner(id: ownerId, browseId: browseId, accountId: scope, title: page.title, requests: requests)

@@ -94,6 +94,18 @@ struct ToolbarVolumeSlider: View {
 }
 
 #if os(iOS)
+struct NativeRoutePicker: UIViewRepresentable {
+    func makeUIView(context: Context) -> AVRoutePickerView {
+        let view = AVRoutePickerView()
+        view.prioritizesVideoDevices = false
+        view.tintColor = UIColor.white.withAlphaComponent(0.88)
+        view.activeTintColor = UIColor.white
+        view.backgroundColor = .clear
+        return view
+    }
+    func updateUIView(_ uiView: AVRoutePickerView, context: Context) {}
+}
+
 struct AirPlayRouteButton: UIViewRepresentable {
     func makeUIView(context: Context) -> AVRoutePickerView {
         let view = AVRoutePickerView()

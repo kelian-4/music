@@ -22679,6 +22679,96 @@
           }
         }
       }
+    },
+    "No connection. Showing saved content.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas de connexion. Contenu enregistré affiché."
+          }
+        }
+      }
+    },
+    "Slow connection. Loading may take longer.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connexion lente. Le chargement peut être plus long."
+          }
+        }
+      }
+    },
+    "Next Song": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morceau suivant"
+          }
+        }
+      }
+    },
+    "Previous Song": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morceau précédent"
+          }
+        }
+      }
+    },
+    "Skip to the next song in Amber.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passer au morceau suivant dans Amber."
+          }
+        }
+      }
+    },
+    "Go back to the previous song in Amber.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revenir au morceau précédent dans Amber."
+          }
+        }
+      }
+    },
+    "Play a Song": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lire un morceau"
+          }
+        }
+      }
+    },
+    "Play or Pause": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lecture ou pause"
+          }
+        }
+      }
+    },
+    "Like This Song": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aimer ce morceau"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

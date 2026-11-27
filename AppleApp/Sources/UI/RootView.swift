@@ -246,6 +246,7 @@ struct RootView: View {
             // reason upstream puts `QueueActionNoticeHost` above everything else.
             ToastHost()
         }
+        .overlay { ConnectionBanner() }
         // Playback failures are reported here rather than as a banner inside each
         // feed. `lastError` is a *playback* error — "Audio engine failed to start"
         // has nothing to do with a feed that happened to be on screen — and it

@@ -27,10 +27,10 @@ import kotlin.time.Clock
 
 /** The catalogue music-video counterpart for a song's video toggle. */
 object VideoVersionBridge {
-    private const val CACHE_KEY = "video_version_bridge_cache_v2"
+    private const val CACHE_KEY = "video_version_bridge_cache_v3"
     private const val CACHE_CAPACITY = 128
     private const val POSITIVE_TTL_MS = 14L * 24 * 60 * 60 * 1000
-    private const val NEGATIVE_TTL_MS = 24L * 60 * 60 * 1000
+    private const val NEGATIVE_TTL_MS = 2L * 60 * 60 * 1000
 
     private val bridgeScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val json = Json { encodeDefaults = true; ignoreUnknownKeys = true }
@@ -80,11 +80,13 @@ object VideoVersionBridge {
             }
             try {
                 Innertube.checkSession(generation)
+                var counterpartError: Throwable? = null
                 val counterpart = try {
                     parseCounterpart(Innertube.next(videoId), videoId)
                 } catch (error: CancellationException) {
                     throw error
-                } catch (_: Throwable) {
+                } catch (error: Throwable) {
+                    counterpartError = error
                     null
                 }
                 val found = if (counterpart != null) {
@@ -93,6 +95,10 @@ object VideoVersionBridge {
                     searchOfficialVideos(videoId, title, artist, durationText, generation)
                 }
                 Innertube.checkSession(generation)
+                if (found.isEmpty() && counterpartError != null) {
+                    callback.onResult(null, "counterpart lookup failed: " + (counterpartError.message ?: counterpartError.toString()))
+                    return@launch
+                }
                 cacheLock.withLock { store(videoId, found, Clock.System.now().toEpochMilliseconds()) }
                 callback.onResult(encode(found), null)
             } catch (e: Throwable) {

@@ -1,0 +1,106 @@
+{
+  "sourceLanguage": "en",
+  "version": "1.0",
+  "strings": {
+    "Play ${song} in ${applicationName}": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lance ${song} dans ${applicationName}"
+          }
+        }
+      }
+    },
+    "Play ${song} on ${applicationName}": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Joue ${song} sur ${applicationName}"
+          }
+        }
+      }
+    },
+    "Pause ${applicationName}": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mets ${applicationName} en pause"
+          }
+        }
+      }
+    },
+    "Play or pause ${applicationName}": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lecture ou pause ${applicationName}"
+          }
+        }
+      }
+    },
+    "Search in ${applicationName}": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cherche dans ${applicationName}"
+          }
+        }
+      }
+    },
+    "Like this song in ${applicationName}": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aime ce morceau dans ${applicationName}"
+          }
+        }
+      }
+    },
+    "Add ${song} to the queue in ${applicationName}": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute ${song} à la file dans ${applicationName}"
+          }
+        }
+      }
+    },
+    "Next song in ${applicationName}": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morceau suivant dans ${applicationName}"
+          }
+        }
+      }
+    },
+    "Skip in ${applicationName}": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passe le morceau dans ${applicationName}"
+          }
+        }
+      }
+    },
+    "Previous song in ${applicationName}": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morceau précédent dans ${applicationName}"
+          }
+        }
+      }
+    }
+  }
+}

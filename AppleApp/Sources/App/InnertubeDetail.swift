@@ -182,11 +182,12 @@ struct DetailPageModel: Codable {
             self.setVideoId = setVideoId
         }
 
-        func asEntry(fallbackArt: String? = nil) -> QueueEntry {
+        func asEntry(fallbackArt: String? = nil, fallbackAlbum: String? = nil, fallbackAlbumId: String? = nil) -> QueueEntry {
             QueueEntry.youtube(
                 videoId: videoId, title: title, artist: artist,
                 thumbnailUrl: thumbnailUrl ?? fallbackArt, durationText: durationText,
-                albumName: albumName, artistId: artistId, albumId: albumId, setVideoId: setVideoId
+                albumName: (albumName?.isEmpty == false ? albumName : nil) ?? fallbackAlbum,
+                artistId: artistId, albumId: (albumId?.isEmpty == false ? albumId : nil) ?? fallbackAlbumId, setVideoId: setVideoId
             )
         }
     }

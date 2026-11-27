@@ -10,6 +10,22 @@ final class NetworkQuality {
     static let shared = NetworkQuality()
     private(set) var metered = false
     private(set) var connected = true
+    private(set) var slow = false
+    @ObservationIgnored private var slowSince: Date?
+
+    func noteLatency(_ seconds: TimeInterval, failed: Bool) {
+        if failed || seconds > 6 {
+            slowSince = Date()
+            if !slow { slow = true }
+        } else if seconds < 2.5, slow {
+            slow = false
+            slowSince = nil
+        }
+    }
+
+    func expireSlow() {
+        if slow, let slowSince, Date().timeIntervalSince(slowSince) > 45 { slow = false }
+    }
     @ObservationIgnored private let monitor = NWPathMonitor()
     /// Which interface carries traffic, and whether it is up. A change here is
     /// what strands a request on a dead socket (leaving Wi-Fi, a VPN coming up).

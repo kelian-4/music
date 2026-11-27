@@ -55,6 +55,7 @@ enum PinnedItems {
     }
 
     static func isPinned(_ card: ShelfCard) -> Bool {
+        _ = PinState.shared.revision
         guard let kind = kind(of: card), let id = identifier(of: card) else { return false }
         return all().contains { $0.kind == kind && $0.id == id }
     }
@@ -69,6 +70,7 @@ enum PinnedItems {
             subtitle: card.subtitle ?? "",
             thumbnailUrl: card.thumbnailUrl
         )
+        PinState.shared.bump()
         return change != "LIMIT"
     }
 }
@@ -79,7 +81,7 @@ struct PinMenuButton: View {
 
     var body: some View {
         if PinnedItems.kind(of: card) != nil {
-            Button(PinnedItems.isPinned(card) ? String(localized: "Unpin") : String(localized: "Pin")) {
+            Button(PinnedItems.isPinned(card) ? LocalizedStringKey("Unpin") : LocalizedStringKey("Pin")) {
                 if !PinnedItems.toggle(card) {
                     appModel.pinLimitAlert = true
                 }

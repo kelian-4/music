@@ -310,3 +310,13 @@ extension View {
         shadow(color: .black.opacity(0.55), radius: 5, y: 1)
     }
 }
+
+struct PressScaleStyle: ButtonStyle {
+    var pressed: CGFloat = 0.86
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? pressed : 1)
+            .opacity(configuration.isPressed ? 0.8 : 1)
+            .animation(.spring(response: 0.28, dampingFraction: 0.55), value: configuration.isPressed)
+    }
+}
