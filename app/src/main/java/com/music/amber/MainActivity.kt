@@ -96,6 +96,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -4170,7 +4171,11 @@ private fun AmberApp(
                     }
                 }
 
-                if (glassActive) Column(
+                val onSettingsPage = navigator.visibleRoute().let {
+                    it == AppRoute.Settings || it is AppRoute.SettingsSection || it is AppRoute.SettingsChoice
+                }
+                if (onSettingsPage) SideEffect { floatingBarsHeight.intValue = 0 }
+                if (!onSettingsPage) if (glassActive) Column(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .widthIn(max = FLOATING_BAR_MAX_WIDTH)
