@@ -5412,15 +5412,6 @@ private fun AmberApp(
             var captureFailed by remember(mode) { mutableStateOf(false) }
             var pageReady by remember(mode) { mutableStateOf(false) }
             var confirmingProfile by remember(mode) { mutableStateOf(false) }
-            var autoConnect by remember(mode) { mutableStateOf(mode == WebSessionMode.SIGN_IN) }
-            var autoAttempt by remember(mode) { mutableIntStateOf(0) }
-            LaunchedEffect(pageReady, autoAttempt, autoConnect) {
-                if (pageReady && autoConnect && autoAttempt < 4) {
-                    kotlinx.coroutines.delay(1300)
-                    confirmingProfile = true
-                    captureRequest++
-                }
-            }
             Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                 Column(Modifier.fillMaxSize()) {
                     Row(
@@ -5482,12 +5473,7 @@ private fun AmberApp(
                         onPageReady = { pageReady = it },
                         onCaptureUnavailable = {
                             confirmingProfile = false
-                            if (autoConnect) {
-                                autoAttempt++
-                                if (autoAttempt >= 4) autoConnect = false
-                            } else {
-                                captureFailed = true
-                            }
+                            captureFailed = true
                         },
                         onCaptured = { session ->
                             viewModel.onWebSession(session, mode) { accepted ->
@@ -5499,14 +5485,13 @@ private fun AmberApp(
                                         selectedTab = TAB_LIBRARY
                                     }
                                 } else {
-                                    autoConnect = false
                                     captureFailed = true
                                 }
                             }
                         },
                     )
                         if (mode == WebSessionMode.SIGN_IN && pageReady) {
-                            val working = autoConnect || confirmingProfile
+                            val working = confirmingProfile
                             Column(
                                 Modifier
                                     .fillMaxSize()
@@ -5525,7 +5510,15 @@ private fun AmberApp(
                                     )
                                 } else {
                                     Text(
-                                        text = stringResource(R.string.profile_unavailable),
+                                        text = stringResource(R.string.confirm_your_profile),
+                                        style = MaterialTheme.typography.titleLarge,
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                    )
+                                    Spacer(Modifier.height(8.dp))
+                                    Text(
+                                        text = stringResource(
+                                            if (captureFailed) R.string.profile_unavailable else R.string.connect_profile_to_amber,
+                                        ),
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         textAlign = androidx.compose.ui.text.style.TextAlign.Center,

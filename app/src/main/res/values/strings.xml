@@ -1366,4 +1366,6 @@
     <string name="connection_slow">Slow connection. Loading may take longer.</string>
     <string name="connecting_youtube_music">Signing in…</string>
     <string name="use_this_session">Use this session</string>
+    <string name="confirm_your_profile">Confirm your profile</string>
+    <string name="connect_profile_to_amber">Connect your YouTube Music profile to Amber.</string>
 </resources>
