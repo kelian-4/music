@@ -5446,7 +5446,7 @@ private fun AmberApp(
                                 style = MaterialTheme.typography.titleMedium,
                                 color = MaterialTheme.colorScheme.onBackground,
                             )
-                            if (pageReady) {
+                            if (pageReady && mode != WebSessionMode.SIGN_IN) {
                                 Text(
                                     text = if (captureFailed) {
                                          stringResource(R.string.profile_unavailable)
@@ -5459,7 +5459,7 @@ private fun AmberApp(
                                 )
                             }
                         }
-                        if (pageReady) {
+                        if (pageReady && mode != WebSessionMode.SIGN_IN) {
                             TextButton(onClick = {
                                 captureFailed = false
                                 confirmingProfile = true
@@ -5505,24 +5505,42 @@ private fun AmberApp(
                             }
                         },
                     )
-                        if (autoConnect && pageReady) {
+                        if (mode == WebSessionMode.SIGN_IN && pageReady) {
+                            val working = autoConnect || confirmingProfile
                             Column(
                                 Modifier
                                     .fillMaxSize()
-                                    .background(MaterialTheme.colorScheme.background),
+                                    .background(MaterialTheme.colorScheme.background)
+                                    .padding(24.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center,
                             ) {
-                                CircularProgressIndicator()
-                                Spacer(Modifier.height(20.dp))
-                                Text(
-                                    text = stringResource(R.string.connecting_youtube_music),
-                                    style = MaterialTheme.typography.titleMedium,
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                )
-                                Spacer(Modifier.height(8.dp))
-                                TextButton(onClick = { autoConnect = false }) {
-                                    Text(stringResource(R.string.choose_profile_manually))
+                                if (working) {
+                                    CircularProgressIndicator()
+                                    Spacer(Modifier.height(20.dp))
+                                    Text(
+                                        text = stringResource(R.string.connecting_youtube_music),
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                    )
+                                } else {
+                                    Text(
+                                        text = stringResource(R.string.profile_unavailable),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                                    )
+                                    Spacer(Modifier.height(20.dp))
+                                    androidx.compose.material3.Button(onClick = {
+                                        captureFailed = false
+                                        confirmingProfile = true
+                                        captureRequest++
+                                    }) {
+                                        Text(stringResource(R.string.use_this_session))
+                                    }
+                                    TextButton(onClick = { webSession = null }) {
+                                        Text(stringResource(R.string.cancel))
+                                    }
                                 }
                             }
                         }

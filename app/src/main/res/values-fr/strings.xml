@@ -1491,5 +1491,5 @@
     <string name="connection_offline">Pas de connexion. Contenu enregistré affiché.</string>
     <string name="connection_slow">Connexion lente. Le chargement peut être plus long.</string>
     <string name="connecting_youtube_music">Connexion en cours…</string>
-    <string name="choose_profile_manually">Choisir un profil manuellement</string>
+    <string name="use_this_session">Utiliser cette session</string>
 </resources>
