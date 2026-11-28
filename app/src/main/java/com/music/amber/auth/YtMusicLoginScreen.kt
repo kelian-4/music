@@ -1,7 +1,9 @@
 package com.music.amber.auth
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.webkit.CookieManager
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.fillMaxSize
@@ -101,7 +103,20 @@ fun YtMusicLoginScreen(
                 settings.domStorageEnabled = true
                 configureWebView(this)
 
+                var storeRedirects = 0
                 webViewClient = object : WebViewClient() {
+                    override fun shouldOverrideUrlLoading(
+                        view: WebView,
+                        request: WebResourceRequest,
+                    ): Boolean {
+                        if (!isAppStoreRedirect(request.url)) return false
+                        if (storeRedirects++ == 0) {
+                            view.settings.userAgentString = DESKTOP_USER_AGENT
+                            view.loadUrl("$MUSIC_ORIGIN/")
+                        }
+                        return true
+                    }
+
                     override fun onPageFinished(view: WebView?, url: String?) {
                         // Reaching the Music origin only enables confirmation.
                         // A multi-channel login can still be waiting for the
@@ -117,6 +132,17 @@ fun YtMusicLoginScreen(
             }
         },
     )
+}
+
+private const val DESKTOP_USER_AGENT =
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) " +
+        "Chrome/129.0.0.0 Safari/537.36"
+
+private fun isAppStoreRedirect(uri: Uri): Boolean {
+    val scheme = uri.scheme?.lowercase()
+    if (scheme == "market" || scheme == "intent") return true
+    val host = uri.host?.lowercase() ?: return false
+    return host == "play.google.com" || host.endsWith(".play.google.com")
 }
 
 /**
