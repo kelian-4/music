@@ -1364,4 +1364,6 @@
     <string name="sing_mode_off">Sing mode: turn off</string>
     <string name="connection_offline">No connection. Showing saved content.</string>
     <string name="connection_slow">Slow connection. Loading may take longer.</string>
+    <string name="connecting_youtube_music">Connecting to YouTube Music…</string>
+    <string name="choose_profile_manually">Choose a profile manually</string>
 </resources>

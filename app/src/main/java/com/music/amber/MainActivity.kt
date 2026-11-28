@@ -79,6 +79,7 @@ import com.music.amber.data.listentogether.ServerConnectionState
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -5411,6 +5412,15 @@ private fun AmberApp(
             var captureFailed by remember(mode) { mutableStateOf(false) }
             var pageReady by remember(mode) { mutableStateOf(false) }
             var confirmingProfile by remember(mode) { mutableStateOf(false) }
+            var autoConnect by remember(mode) { mutableStateOf(mode == WebSessionMode.SIGN_IN) }
+            var autoAttempt by remember(mode) { mutableIntStateOf(0) }
+            LaunchedEffect(pageReady, autoAttempt, autoConnect) {
+                if (pageReady && autoConnect && autoAttempt < 4) {
+                    kotlinx.coroutines.delay(1300)
+                    confirmingProfile = true
+                    captureRequest++
+                }
+            }
             Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                 Column(Modifier.fillMaxSize()) {
                     Row(
@@ -5462,6 +5472,7 @@ private fun AmberApp(
                             }
                         }
                     }
+                    Box(Modifier.weight(1f).fillMaxWidth()) {
                     YtMusicLoginScreen(
                         mode = mode,
                         initialCookie = if (mode == WebSessionMode.SWITCH_CHANNEL) {
@@ -5471,7 +5482,12 @@ private fun AmberApp(
                         onPageReady = { pageReady = it },
                         onCaptureUnavailable = {
                             confirmingProfile = false
-                            captureFailed = true
+                            if (autoConnect) {
+                                autoAttempt++
+                                if (autoAttempt >= 4) autoConnect = false
+                            } else {
+                                captureFailed = true
+                            }
                         },
                         onCaptured = { session ->
                             viewModel.onWebSession(session, mode) { accepted ->
@@ -5483,11 +5499,34 @@ private fun AmberApp(
                                         selectedTab = TAB_LIBRARY
                                     }
                                 } else {
+                                    autoConnect = false
                                     captureFailed = true
                                 }
                             }
                         },
                     )
+                        if (autoConnect && pageReady) {
+                            Column(
+                                Modifier
+                                    .fillMaxSize()
+                                    .background(MaterialTheme.colorScheme.background),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center,
+                            ) {
+                                CircularProgressIndicator()
+                                Spacer(Modifier.height(20.dp))
+                                Text(
+                                    text = stringResource(R.string.connecting_youtube_music),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.onBackground,
+                                )
+                                Spacer(Modifier.height(8.dp))
+                                TextButton(onClick = { autoConnect = false }) {
+                                    Text(stringResource(R.string.choose_profile_manually))
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
