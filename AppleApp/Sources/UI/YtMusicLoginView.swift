@@ -13,14 +13,6 @@ struct YtMusicLoginView: View {
 
     @State private var flow = LoginFlow()
     @State private var adoptingSharedSession = false
-    @State private var autoTried = false
-
-    private var autoReady: Bool {
-        auth.sharedSessionOffer == nil && flow.showsCompletion && flow.pageReady
-            && !flow.loadingProfile && !flow.checkingPage && !flow.taking
-            && flow.captureFailedMessage == nil && !autoTried
-    }
-
     var body: some View {
         VStack(spacing: 0) {
             if let offer = auth.sharedSessionOffer {
@@ -67,13 +59,6 @@ struct YtMusicLoginView: View {
         .navigationBarTitleDisplayMode(.inline)
         #endif
         .interactiveDismissDisabled(flow.taking || adoptingSharedSession)
-        .task(id: autoReady) {
-            guard autoReady else { return }
-            try? await Task.sleep(for: .milliseconds(1500))
-            guard autoReady, !Task.isCancelled else { return }
-            autoTried = true
-            flow.session.take?()
-        }
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Close", action: onDismiss)
